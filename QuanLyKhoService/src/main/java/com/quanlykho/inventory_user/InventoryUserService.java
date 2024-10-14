@@ -1,0 +1,143 @@
+package com.quanlykho.inventory_user;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import com.quanlykho.common.InventoryUser;
+import com.quanlykho.common.exception.UserAlreadyExistException;
+import com.quanlykho.common.exception.UserNotExistException;
+
+@Service
+public class InventoryUserService {
+   
+	@Autowired
+	private InventoryUserRepository inventoryUserRepository;
+	
+	//Load All User
+	public List<InventoryUser> listAll(){
+		List<InventoryUser> results = inventoryUserRepository.findAll();
+		return results;
+	}
+	
+	//Lưu User
+	public void saveUser(InventoryUser inventoryUser) throws UserAlreadyExistException {
+		
+		//Kiểm Tra UserId có bị trùng không
+		String userId = inventoryUser.getUserId();
+		Optional<InventoryUser> userByUserId = inventoryUserRepository.findById(userId);
+		if(userByUserId.isPresent()) {
+			throw new UserAlreadyExistException("User with Email " + userId + "has already exist");
+		}
+		
+		
+		//Kiểm tra email có bị trùng không
+		String emailFromRequest = inventoryUser.getEmail();
+		if(checkEmailIsDupplicate(inventoryUser.getUserId(), emailFromRequest)) {
+			throw new UserAlreadyExistException("User with Email " + emailFromRequest + "has already exist");
+		}
+		
+		//Kiểm tra số chứng minh nhân dân có bị trùng không
+		String identityNumberFromUser = inventoryUser.getIdentityNumber();
+		if(checkIdentityNumberlIsDupplicate(inventoryUser.getUserId(), identityNumberFromUser)) {
+			throw new UserAlreadyExistException("User with Identity Number " + identityNumberFromUser + "has already exist");
+		}
+		inventoryUserRepository.save(inventoryUser);
+	}
+	
+	//Cập nhật User
+	public void updateUser(InventoryUser inventoryUser) throws UserAlreadyExistException, UserNotExistException {
+		
+		//Kiểm tra xem userId có tồn tại không
+		String userId = inventoryUser.getUserId();
+		InventoryUser inventoryUserFromDatabase = this.getByUserId(userId);
+		if(inventoryUserFromDatabase == null) {
+			throw new UserNotExistException("User with userId " + userId + " does not exist in database");
+		}
+		
+		
+		// Kiểm tra số chứng minh nhân dân có bị trùng không
+		String identityNumberFromUser = inventoryUser.getIdentityNumber();
+		if (checkIdentityNumberlIsDupplicate(inventoryUser.getUserId(), identityNumberFromUser)) {
+			throw new UserAlreadyExistException("User with Identity Number " + identityNumberFromUser + "has already exist");
+		}
+		
+		inventoryUser.setInventoryRole(inventoryUserFromDatabase.getInventoryRole());
+		inventoryUserRepository.save(inventoryUser);
+	}
+	
+	
+	
+	//Hàm check Email có bị trùng lặp hay không
+	public boolean checkEmailIsDupplicate(String userId,String email) {
+		InventoryUser userCheckDupplicate = inventoryUserRepository.findByEmail(email);
+		if(userCheckDupplicate == null) {
+			return false;
+		}
+		boolean isCreatingNewUser = userId == null ? true : false;
+		if(isCreatingNewUser) {
+			if(userCheckDupplicate != null) {
+				return true;
+			}
+		}else {
+			if(!userCheckDupplicate.getUserId().equals(userId)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	//Hàm check Số điện thoại có bị trùng lặp hay không
+	public boolean checkIdentityNumberlIsDupplicate(String userId,String identityNumber) {
+		InventoryUser userCheckDupplicate = inventoryUserRepository.findByIdentityNumber(identityNumber);
+		if(userCheckDupplicate == null) {
+			return false;
+		}
+		boolean isCreatingNewUser = userId == null ? true : false;
+		if(isCreatingNewUser) {
+			if(userCheckDupplicate != null) {
+				return true;
+			}
+		}else {
+			if(!userCheckDupplicate.getUserId().equals(userId)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	//Hàm lấy thông tin User by UserId
+	public InventoryUser getByUserId(String userId) throws UserNotExistException {
+		Optional<InventoryUser> inventoryUser = inventoryUserRepository.findById(userId);
+		if(!inventoryUser.isPresent()) {
+			throw new UserNotExistException("User with userId " + userId + " does not exist in database");
+		}
+		return inventoryUser.get();
+	}
+	
+	//Hàm delete User By UserId
+	public void deleteById(String userId) throws UserNotExistException {
+		//Kiểm tra có tồn tại hay không
+		Optional<InventoryUser> inventoryUser = inventoryUserRepository.findById(userId);
+		if(!inventoryUser.isPresent()) {
+			throw new UserNotExistException("User with userId " + userId + " does not exist in database");
+		}
+		inventoryUserRepository.deleteById(userId);
+	}
+	
+	//Hàm lấy danh sách user có phân trang
+	public Page<InventoryUser> findByPage(Integer pageNum, Integer pageSize, String sortField, String sortDir){
+		Pageable pageable = PageRequest.of(pageNum - 1,pageSize);
+		Sort sort = Sort.by(sortField);
+		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+		return inventoryUserRepository.findAll(pageable);
+	}
+	
+	
+}
