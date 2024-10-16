@@ -2,10 +2,12 @@ package com.quanlykho.inventory_user;
 
 import java.util.List;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,9 +23,11 @@ import com.quanlykho.common.exception.UserAlreadyExistException;
 import com.quanlykho.common.exception.UserNotExistException;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/inventory_users/")
+@Validated
 public class InventoryUserController {
    
 	@Autowired
@@ -61,7 +65,7 @@ public class InventoryUserController {
 	
 	
 	@PostMapping("createUser")
-	public ResponseEntity<?> createUser(@RequestBody InventoryUser inventoryUser){
+	public ResponseEntity<?> createUser(@RequestBody @Valid InventoryUser inventoryUser){
 		try {
 			inventoryUser.setInventoryRole(new InventoryRole(1));
 			inventoryUser.setPhotos("Thumbnail.png");
@@ -78,7 +82,7 @@ public class InventoryUserController {
 	}
 	
 	@GetMapping("findByUserID/{userId}")
-	public ResponseEntity<?> getUserByUserId(@PathVariable("userId") String userId){
+	public ResponseEntity<?> getUserByUserId(@PathVariable("userId") @Length(max = 15) String userId){
 		try {
 			InventoryUser inventoryUser = inventoryUserService.getByUserId(userId);
 			return ResponseEntity.ok(inventoryUser);
@@ -90,7 +94,7 @@ public class InventoryUserController {
 	}
 	
 	@PostMapping("updateUser")
-	public ResponseEntity<?> updateUser(@RequestBody InventoryUser inventoryUser){
+	public ResponseEntity<?> updateUser(@RequestBody @Valid InventoryUser inventoryUser){
 		try {
 			inventoryUserService.updateUser(inventoryUser);
 			return ResponseEntity.ok().build();
@@ -106,7 +110,7 @@ public class InventoryUserController {
 	}
 	
 	@DeleteMapping("deleteUser/{userId}")
-	public ResponseEntity<?> deleteUserById(@PathVariable("userId") String userId){
+	public ResponseEntity<?> deleteUserById(@PathVariable("userId") @Length(max = 15)  String userId){
 		try {
 			inventoryUserService.deleteById(userId);
 			return ResponseEntity.ok().build();

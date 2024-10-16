@@ -1,5 +1,7 @@
 package com.quanlykho.common;
 
+import org.hibernate.validator.constraints.Length;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -7,6 +9,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "inventory_user")
@@ -14,27 +19,38 @@ public class InventoryUser {
    
 	@Id
 	@Column(name = "user_id")
+	@Length(max = 30,min = 10)
+	@NotNull(message = "UserId must not be null")
 	private String userId;
 	
 	@Column(name = "identity_number")
+	@Length(min = 12,max = 12)
+	@NotNull(message = "Identity Number must not be null")
 	private String identityNumber;
 	
 	@Column(name = "first_name")
+	@Length(min = 2, max = 20)
+	@NotNull(message = "First Name must not be null")
 	private String firstName;
 	
 	@Column(name = "last_name")
+	@Length(min = 2, max = 20)
+	@NotNull(message = "Last Name must not be null")
 	private String lastName;
 	
 	@Column(name = "address")
 	private String address;
 	
 	@Column(name = "phone_number")
+	@Length(max = 10, min = 10)
+	@NotNull(message = "Phone number must not be null")
 	private String phoneNumber;
 	
 	@Column(name = "photos")
 	private String photos;
 	
 	@Column(name = "email")
+	@Email(message = "Email must follow pattern abc@gmail.com")
 	private String email;
 	
 	@Column(name = "password")
