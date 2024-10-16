@@ -2,11 +2,15 @@ package com.quanlykho.common;
 
 import java.util.Date;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 import jakarta.persistence.Table;
 
 @Entity
@@ -35,6 +39,17 @@ public class Product {
 	
 	@Column(name = "unit")
 	private String unit;
+	
+	@Column(name = "short_description")
+	private String short_description;
+	
+	@ManyToOne
+	@JoinColumn(name = "category_id")
+	private Category category;
+	
+	@ManyToOne
+	@JoinColumn(name = "brand_id")
+	private Brand brand;
 
 	public Product() {
 		
@@ -94,6 +109,37 @@ public class Product {
 
 	public void setUnit(String unit) {
 		this.unit = unit;
+	}
+
+	public String getShort_description() {
+		return short_description;
+	}
+
+	public void setShort_description(String short_description) {
+		this.short_description = short_description;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Brand getBrand() {
+		return brand;
+	}
+
+	public void setBrand(Brand brand) {
+		this.brand = brand;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", alias=" + alias + ", enabled=" + enabled + ", createdTime="
+				+ createdTime + ", updatedTime=" + updatedTime + ", unit=" + unit + ", short_description="
+				+ short_description + ", category=" + category + ", brand=" + brand + "]";
 	}
 	
 	
