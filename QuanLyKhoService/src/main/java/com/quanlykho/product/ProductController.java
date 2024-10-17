@@ -17,11 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.quanlykho.common.Brand;
 import com.quanlykho.common.Category;
-import com.quanlykho.common.InventoryRole;
 import com.quanlykho.common.Product;
 import com.quanlykho.common.exception.ProductNotFoundException;
-import com.quanlykho.common.exception.UserAlreadyExistException;
-import com.quanlykho.common.exception.UserNotExistException;
+
 
 import jakarta.servlet.http.HttpServletRequest;
 

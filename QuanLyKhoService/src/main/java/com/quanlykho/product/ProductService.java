@@ -1,6 +1,6 @@
 package com.quanlykho.product;
 
-import java.util.Date;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -55,19 +55,13 @@ public class ProductService {
 	}
 	
 	//Save products
-	public void saveProduct(Product product) {		
-		if(product.getId() == null) {
-			product.setCreatedTime(new Date());
-		}
-		
+	public void saveProduct(Product product) {				
 		if(product.getAlias() == null || product.getAlias().isEmpty()) {
 			String defaultAlias = product.getName().replaceAll(" ", "-");
 			product.setAlias(defaultAlias);
 		}else {
 			product.setAlias(product.getAlias().replaceAll(" ", "-"));
 		}
-		
-		product.setUpdatedTime(new Date());
 		
 		productRepo.save(product);
 	}
