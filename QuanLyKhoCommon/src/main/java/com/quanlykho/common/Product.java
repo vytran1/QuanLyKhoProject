@@ -41,7 +41,7 @@ public class Product {
 	private String unit;
 	
 	@Column(name = "short_description")
-	private String short_description;
+	private String shortDescription;
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id")
@@ -112,11 +112,11 @@ public class Product {
 	}
 
 	public String getShort_description() {
-		return short_description;
+		return shortDescription;
 	}
 
 	public void setShort_description(String short_description) {
-		this.short_description = short_description;
+		this.shortDescription = short_description;
 	}
 
 	public Category getCategory() {
@@ -139,7 +139,7 @@ public class Product {
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", alias=" + alias + ", enabled=" + enabled + ", createdTime="
 				+ createdTime + ", updatedTime=" + updatedTime + ", unit=" + unit + ", short_description="
-				+ short_description + ", category=" + category + ", brand=" + brand + "]";
+				+ shortDescription + ", category=" + category + ", brand=" + brand + "]";
 	}
 	
 	
