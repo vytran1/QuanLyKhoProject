@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.quanlykho.common.Brand;
+import com.quanlykho.common.Category;
+import com.quanlykho.common.InventoryRole;
 import com.quanlykho.common.Product;
 import com.quanlykho.common.exception.ProductNotFoundException;
-
+import com.quanlykho.common.exception.UserAlreadyExistException;
+import com.quanlykho.common.exception.UserNotExistException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -65,8 +69,16 @@ public class ProductController {
 	
 	@PostMapping("createProduct")
 	public ResponseEntity<?> createProduct(@RequestBody Product product){
+		try {
+			product.setBrand(new Brand(1));
+			product.setCategory(new Category(2));
 		
-		return null;
+			productService.saveProduct(product);
+			return ResponseEntity.ok().build();
+		} catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 	
 	@GetMapping("findByProductID/{productId}")
@@ -83,8 +95,13 @@ public class ProductController {
 	
 	@PostMapping("updateProduct")
 	public ResponseEntity<?> updateProduct(@RequestBody Product product){
-		
-		return null;
+		try {	
+			productService.saveProduct(product);
+			return ResponseEntity.ok().build();
+		} catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 	
 	@DeleteMapping("deleteProduct/{productId}")

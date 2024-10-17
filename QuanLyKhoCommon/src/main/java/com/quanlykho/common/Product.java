@@ -111,12 +111,12 @@ public class Product {
 		this.unit = unit;
 	}
 
-	public String getShort_description() {
+	public String getShortDescription() {
 		return shortDescription;
 	}
 
-	public void setShort_description(String short_description) {
-		this.shortDescription = short_description;
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
 	}
 
 	public Category getCategory() {

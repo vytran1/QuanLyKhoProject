@@ -39,7 +39,7 @@ public class ProductRepositoryTest {
 		Product product = new Product();
 		product.setName("Acer Asprire Desktop");
 		product.setAlias("acer_aspire_desktop");
-		product.setShort_description("Short Description for Acer laptops");
+		product.setShortDescription("Short Description for Acer laptops");
 		
 		product.setBrand(brand);
 		product.setCategory(category);
@@ -77,13 +77,13 @@ public class ProductRepositoryTest {
 	public void testUpdateProduct() {
 		Integer id = 1;
 		Product product = productRepository.findById(id).get();
-		product.setShort_description("Test Update Short_description for product with id = 1");;
+		product.setShortDescription("Test Update Short_description for product with id = 1");;
 		
 		productRepository.save(product);
 		
 		Product updatedProduct = entityManager.find(Product.class, id);
 		
-		assertThat(updatedProduct.getShort_description()).isEqualTo("Test Update Short_description for product with id = 1");
+		assertThat(updatedProduct.getShortDescription()).isEqualTo("Test Update Short_description for product with id = 1");
 	}
 	
 	@Test
