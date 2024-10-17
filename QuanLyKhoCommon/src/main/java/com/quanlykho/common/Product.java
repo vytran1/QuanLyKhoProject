@@ -1,5 +1,6 @@
 package com.quanlykho.common;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -10,7 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -142,5 +144,18 @@ public class Product {
 				+ short_description + ", category=" + category + ", brand=" + brand + "]";
 	}
 	
+	
+	@PrePersist
+	@PreUpdate
+	public void setUpdateTime() {
+		this.updatedTime = new Date();
+		System.out.println("Update time has been refresh");
+	}
+	
+	@PrePersist
+	public void setCreateTime() {
+		this.createdTime = new Date();
+		System.out.println("Product was created");
+	}
 	
 }
