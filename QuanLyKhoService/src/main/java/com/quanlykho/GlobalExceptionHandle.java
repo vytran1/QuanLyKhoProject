@@ -19,6 +19,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.quanlykho.security.jwt.JwtValidationException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
@@ -57,6 +58,22 @@ public class GlobalExceptionHandle extends ResponseEntityExceptionHandler {
 		contrasinInValid.forEach(item -> {
 			error.addError(item.getPropertyPath() + ": " + item.getMessage());
 		});
+		error.setPath(request.getServletPath());
+		
+		LOGGER.error(exception.getMessage(),exception);
+		return error;
+	}
+	
+	@ResponseBody
+	@ExceptionHandler(JwtValidationException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorDTO handleJwtValidationException(HttpServletRequest request,Exception exception) {
+		
+		
+		ErrorDTO error = new ErrorDTO();
+		error.setTimestamp(new Date());
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		error.addError(exception.getMessage());
 		error.setPath(request.getServletPath());
 		
 		LOGGER.error(exception.getMessage(),exception);

@@ -8,17 +8,24 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.quanlykho.common.InventoryUser;
 import com.quanlykho.common.exception.UserAlreadyExistException;
 import com.quanlykho.common.exception.UserNotExistException;
+import com.quanlykho.common.exception.UserNotFoundException;
+
+import net.bytebuddy.utility.RandomString;
 
 @Service
 public class InventoryUserService {
    
 	@Autowired
 	private InventoryUserRepository inventoryUserRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	//Load All User
 	public List<InventoryUser> listAll(){
@@ -48,9 +55,18 @@ public class InventoryUserService {
 		if(checkIdentityNumberlIsDupplicate(inventoryUser.getUserId(), identityNumberFromUser)) {
 			throw new UserAlreadyExistException("User with Identity Number " + identityNumberFromUser + "has already exist");
 		}
+		inventoryUser.setEnabled(true);
+		encodePassword(inventoryUser);
 		inventoryUserRepository.save(inventoryUser);
 	}
 	
+	private void encodePassword(InventoryUser inventoryUser) {
+		// TODO Auto-generated method stub
+		String rawPassword = inventoryUser.getPassword();
+		String encodePassword = passwordEncoder.encode(rawPassword);
+		inventoryUser.setPassword(encodePassword);
+	}
+
 	//Cập nhật User
 	public void updateUser(InventoryUser inventoryUser) throws UserAlreadyExistException, UserNotExistException {
 		
@@ -139,5 +155,27 @@ public class InventoryUserService {
 		return inventoryUserRepository.findAll(pageable);
 	}
 	
+	public String updatePasswordToken(String email) throws UserNotFoundException {
+		InventoryUser inventoryUser = inventoryUserRepository.findByEmail(email);
+		if(inventoryUser == null) {
+			throw new UserNotFoundException("Not exist account with email: " + email);
+		}else {
+			String token = RandomString.make(30);
+			inventoryUser.setResetPasswordToken(token);;
+			inventoryUserRepository.save(inventoryUser);
+			return token;
+		}
+	}
 	
+	public void updatePassword(String newPassword, String token) throws UserNotFoundException {
+		InventoryUser inventoryUser = inventoryUserRepository.findByResetPasswordToken(token);
+		if(inventoryUser == null) {
+			throw new UserNotFoundException("Invalid Token Found"); 
+		}else {
+			inventoryUser.setPassword(newPassword);
+			this.encodePassword(inventoryUser);
+			inventoryUser.setResetPasswordToken(null);;
+			inventoryUserRepository.save(inventoryUser);
+		}
+	}
 }

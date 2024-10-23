@@ -3,7 +3,6 @@ package com.quanlykho.common;
 import java.time.LocalDate;
 import java.util.Date;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -147,15 +146,15 @@ public class Product {
 	
 	@PrePersist
 	@PreUpdate
-	public void setUpdateTime() {
-		this.updatedTime = new Date();
-		System.out.println("Update time has been refresh");
+	public void updateTimestamps() {
+	    this.updatedTime = new Date();
+	    
+	    if (this.createdTime == null) { // Chỉ đặt createdTime nếu nó chưa có giá trị (khi đối tượng lần đầu được lưu vào DB)
+	        this.createdTime = new Date();
+	    }
+	    
+	    System.out.println("Timestamps have been updated");
 	}
-	
-	@PrePersist
-	public void setCreateTime() {
-		this.createdTime = new Date();
-		System.out.println("Product was created");
-	}
+
 	
 }

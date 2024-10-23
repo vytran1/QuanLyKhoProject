@@ -57,12 +57,14 @@ public class InventoryUser {
 	private String password;
 	
 	@Column(name = "reset_password_token")
-	private String resetpasswordToken;
+	private String resetPasswordToken;
 	
 	@ManyToOne(targetEntity = InventoryRole.class)
 	@JoinColumn(name = "inventory_role_id", referencedColumnName = "id")
 	private InventoryRole inventoryRole;
 	
+	@Column(name = "enabled")
+	private Boolean enabled;
 	
 	
 	public InventoryUser() {
@@ -141,12 +143,14 @@ public class InventoryUser {
 		this.password = password;
 	}
 
-	public String getResetpasswordToken() {
-		return resetpasswordToken;
+	
+
+	public String getResetPasswordToken() {
+		return resetPasswordToken;
 	}
 
-	public void setResetpasswordToken(String resetpasswordToken) {
-		this.resetpasswordToken = resetpasswordToken;
+	public void setResetPasswordToken(String resetPasswordToken) {
+		this.resetPasswordToken = resetPasswordToken;
 	}
 
 	public InventoryRole getInventoryRole() {
@@ -155,6 +159,16 @@ public class InventoryUser {
 
 	public void setInventoryRole(InventoryRole inventoryRole) {
 		this.inventoryRole = inventoryRole;
+	}
+     
+	
+	
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	@Override

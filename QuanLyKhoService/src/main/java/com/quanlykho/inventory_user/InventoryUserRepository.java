@@ -15,4 +15,7 @@ public interface InventoryUserRepository extends JpaRepository<InventoryUser,Str
 	
 	@Query("SELECT u FROM InventoryUser u")
 	public Page<InventoryUser> findAll(Pageable pageable);
+	
+	
+	public InventoryUser findByResetPasswordToken(String resetpasswordToken);
 }

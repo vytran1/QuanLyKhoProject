@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 
 import com.quanlykho.common.InventoryRole;
@@ -23,6 +25,8 @@ public class InventoryUserRepositoryTest {
    
 	@Autowired
 	private InventoryUserRepository inventoryUserRepository;
+	
+	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	@Test
 	public void loadAllUserTest() {
@@ -78,5 +82,23 @@ public class InventoryUserRepositoryTest {
 		inventoryUserRepository.deleteById(userID);
 		InventoryUser inventoryUser = inventoryUserRepository.findById(userID).get();
 		assertThat(inventoryUser).isNull();
+	}
+	
+	@Test
+	public void updatePassword() {
+		String rawPassword = "123456789";
+		String encodedPassword = passwordEncoder.encode(rawPassword);
+		InventoryUser inventoryUser = inventoryUserRepository.findById("N21DCCN120").get();
+		inventoryUser.setPassword(encodedPassword);
+		inventoryUserRepository.save(inventoryUser);
+		assertThat(inventoryUser).isNotNull();
+	}
+	
+	@Test
+	public void testFindByEmail() {
+		String email = "vietvo@gmail.com";
+		InventoryUser inventoryUser = inventoryUserRepository.findByEmail(email);
+		assertThat(inventoryUser).isNotNull();
+		System.out.println(inventoryUser);
 	}
 }
