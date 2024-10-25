@@ -19,6 +19,9 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.quanlykho.common.exception.CountryNotFoundException;
+import com.quanlykho.common.exception.DistrictNotFoundException;
+import com.quanlykho.common.exception.StateNotFoundException;
 import com.quanlykho.security.jwt.JwtValidationException;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -79,4 +82,21 @@ public class GlobalExceptionHandle extends ResponseEntityExceptionHandler {
 		LOGGER.error(exception.getMessage(),exception);
 		return error;
 	}
+	
+	@ResponseBody
+	@ExceptionHandler({CountryNotFoundException.class,StateNotFoundException.class,DistrictNotFoundException.class})
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ErrorDTO handleAddressNotFoundWhenCreateInventory(HttpServletRequest request,Exception exception) {
+		
+		
+		ErrorDTO error = new ErrorDTO();
+		error.setTimestamp(new Date());
+		error.setStatus(HttpStatus.NOT_FOUND.value());
+		error.addError(exception.getMessage());
+		error.setPath(request.getServletPath());
+		
+		LOGGER.error(exception.getMessage(),exception);
+		return error;
+	}
+	
 }
