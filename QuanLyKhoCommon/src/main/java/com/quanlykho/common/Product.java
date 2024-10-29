@@ -48,6 +48,9 @@ public class Product {
 	@Column(name = "short_description")
 	private String shortDescription;
 	
+	@Column(name = "price")
+	private float price;
+	
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
@@ -62,6 +65,15 @@ public class Product {
 	public Product() {
 		
 	}
+    
+	
+	
+	public Product(Integer id) {
+		super();
+		this.id = id;
+	}
+
+
 
 	public Integer getId() {
 		return id;

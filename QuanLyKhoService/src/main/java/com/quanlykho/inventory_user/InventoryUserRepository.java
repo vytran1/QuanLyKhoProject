@@ -4,6 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 
 import com.quanlykho.common.InventoryUser;
 
@@ -18,4 +20,11 @@ public interface InventoryUserRepository extends JpaRepository<InventoryUser,Str
 	
 	
 	public InventoryUser findByResetPasswordToken(String resetpasswordToken);
+	
+	@Query("SELECT iu FROM InventoryUser iu WHERE CONCAT(iu.userId,' ',iu.firstName,' ',iu.lastName,' ',iu.email) LIKE %?1%")
+	public Page<InventoryUser> search(String keyWord,Pageable pageable);
+	
+	@Procedure(name = "checkIsUserJoinBussiness")
+	public boolean checkIsUserJoinBussiness(@Param("userId") String userId);
+	
 }

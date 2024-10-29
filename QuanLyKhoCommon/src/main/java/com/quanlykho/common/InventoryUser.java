@@ -70,6 +70,15 @@ public class InventoryUser {
 	public InventoryUser() {
 		
 	}
+	
+	
+
+	public InventoryUser(@Length(max = 30, min = 10) @NotNull(message = "UserId must not be null") String userId) {
+		super();
+		this.userId = userId;
+	}
+
+
 
 	public String getUserId() {
 		return userId;
@@ -177,6 +186,13 @@ public class InventoryUser {
 				+ ", lastName=" + lastName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", photos="
 				+ photos + ", email=" + email + ", inventoryRole=" + inventoryRole + "]";
 	}
+	
+	
+	@Transient
+	public String getFullName() {
+		return this.firstName + " " + this.lastName;
+	}
+	
 	
     
 }

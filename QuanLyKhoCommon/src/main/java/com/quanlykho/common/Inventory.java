@@ -16,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "inventory")
@@ -51,6 +52,15 @@ public class Inventory {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public Inventory(String inventoryId) {
+		super();
+		this.inventoryId = inventoryId;
+	}
+
+
 
 	public String getInventoryId() {
 		return inventoryId;
@@ -123,7 +133,11 @@ public class Inventory {
 				+ inventoryAddress + ", country=" + country.getName() + ", state=" + state.getName() + ", district=" + district.getName() + "]";
 	}
 	
-	
+	@Transient
+	public String getDetailAddress() {
+		String detailAddress = this.getInventoryAddress()+ ", " +this.getDistrict().getName() + ", " + this.getState().getName()+ ", " + this.getCountry().getName();
+	    return detailAddress;
+	}
 	
 	
 }

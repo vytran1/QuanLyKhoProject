@@ -4,6 +4,7 @@ package com.quanlykho.product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.quanlykho.common.Product;
@@ -29,4 +30,9 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
 			+ "OR p.category.name LIKE %?3%)")
 	public Page<Product> searchInCategory(Integer categoryId, String categoryIdMatch, 
 							String keyword, Pageable pageable);
+	
+	
+	@Query("UPDATE Product p SET p.price = ?2 WHERE p.id = ?1")
+	@Modifying
+	public void updatePriceOfProduct(Integer productId,float averagePrice);
 }

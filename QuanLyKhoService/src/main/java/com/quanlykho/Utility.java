@@ -3,7 +3,10 @@ package com.quanlykho;
 import java.util.Properties;
 
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.quanlykho.common.InventoryUser;
+import com.quanlykho.security.InventoryUserDetails;
 import com.quanlykho.setting.EmailSettingBag;
 
 
@@ -24,6 +27,14 @@ public class Utility {
 		   
 		   mailSender.setJavaMailProperties(mailProperties);
 		   return mailSender;
-	   }
+	}
+	 
+	 
+    public static String getMaNhanVien() {
+    	InventoryUserDetails inventoryUserDetails = (InventoryUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	InventoryUser inventoryUser = inventoryUserDetails.getInventoryUser();
+    	String userId = inventoryUser.getUserId();
+    	return userId;
+    }
 	
 }

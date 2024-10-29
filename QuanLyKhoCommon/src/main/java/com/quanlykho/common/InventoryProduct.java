@@ -57,6 +57,24 @@ public class InventoryProduct {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+	
+	
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
 	@Override
 	public String toString() {

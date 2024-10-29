@@ -1,7 +1,12 @@
 package com.quanlykho.inventory_user;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,13 +21,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.quanlykho.Utility;
 import com.quanlykho.common.InventoryRole;
 import com.quanlykho.common.InventoryUser;
+import com.quanlykho.common.exception.CannotDeleteThisItemException;
 import com.quanlykho.common.exception.UserAlreadyExistException;
 import com.quanlykho.common.exception.UserNotExistException;
 
+import jakarta.mail.Multipart;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @RestController
@@ -60,6 +70,25 @@ public class InventoryUserController {
 			listWithPageInfo.setTotalItems(pages.getTotalElements());
 			listWithPageInfo.setTotalPage(pages.getTotalPages());
 			return ResponseEntity.ok(listWithPageInfo);			
+		}
+	}
+	
+	@GetMapping("/search")
+	public ResponseEntity<?> searchKeyWord(@RequestParam("keyWord") String keyWord, 
+			                               @RequestParam("pageNum") int pageNum, 
+			                               @RequestParam("pageSize") int pageSize,
+			                               @RequestParam("sortField") String sortField,
+			                               @RequestParam("sortDir") String sortDir
+			){
+		Page<InventoryUser> pages = inventoryUserService.search(keyWord,pageNum,pageSize, sortField, sortDir);
+		if(pages.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}else {
+			List<InventoryUser> listResults = pages.getContent();
+			InventoryUserList listWithPageInfo = new InventoryUserList(listResults, pageNum, pageSize, sortField, sortDir, sortDir);
+			listWithPageInfo.setTotalItems(pages.getTotalElements());
+			listWithPageInfo.setTotalPage(pages.getTotalPages());
+			return ResponseEntity.ok(listWithPageInfo);
 		}
 	}
 	
@@ -112,13 +141,82 @@ public class InventoryUserController {
 	@DeleteMapping("deleteUser/{userId}")
 	public ResponseEntity<?> deleteUserById(@PathVariable("userId") @Length(max = 15)  String userId){
 		try {
+			String currentUserIdLoggin = Utility.getMaNhanVien();
+			System.out.println("Current User Logged: " + currentUserIdLoggin);
+			boolean isEqualToCurrentLogin = currentUserIdLoggin.equals(userId);
+			if(isEqualToCurrentLogin) {
+				return new ResponseEntity("You could not delete yourself",HttpStatus.BAD_REQUEST);
+			}
 			inventoryUserService.deleteById(userId);
 			return ResponseEntity.ok().build();
 		} catch (UserNotExistException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+		} catch (CannotDeleteThisItemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@PostMapping("/createByExcel")
+	public ResponseEntity<?> createUsersByExcelFile(@RequestParam("file") MultipartFile file){
+		System.out.println(file);
+		List<InventoryUser> listUsers = new ArrayList<>();
+		try {
+			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+			XSSFSheet sheet = workbook.getSheetAt(0);
+			for(int i =1; i<sheet.getPhysicalNumberOfRows();i++) {
+				InventoryUser inventoryUser = new InventoryUser();
+				XSSFRow row = sheet.getRow(i);
+				inventoryUser.setUserId((String) row.getCell(0).getStringCellValue());
+				String identityNumber = (String)row.getCell(1).getStringCellValue();
+				if(identityNumber.startsWith("'")) {
+					identityNumber = identityNumber.substring(1);
+				}
+				inventoryUser.setIdentityNumber(identityNumber);
+				inventoryUser.setFirstName((String)row.getCell(2).getStringCellValue());
+				inventoryUser.setLastName((String)row.getCell(3).getStringCellValue());
+				inventoryUser.setAddress((String)row.getCell(4).getStringCellValue());
+				String phoneNumberCell = (String)row.getCell(5).getStringCellValue();
+				if(phoneNumberCell.startsWith("'")) {
+					phoneNumberCell = phoneNumberCell.substring(1);
+				}
+				inventoryUser.setPhoneNumber(phoneNumberCell);
+				inventoryUser.setEmail((String)row.getCell(6).getStringCellValue());
+				inventoryUser.setPhotos("photos.png");
+				inventoryUser.setPassword("123456789ASD");
+				inventoryUser.setInventoryRole(new InventoryRole(2));
+				inventoryUser.setEnabled(true);
+				listUsers.add(inventoryUser);
+			}
+			listUsers.forEach(user -> {
+				System.out.println(user.getUserId());
+				System.out.println(user.getFirstName());
+				System.out.println(user.getIdentityNumber());
+				System.out.println(user.getPhoneNumber());
+			});
+			inventoryUserService.createMultipleUsers(listUsers);
+			return ResponseEntity.ok().build();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return new ResponseEntity(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	@GetMapping("/excel")
+	public ResponseEntity<?> reportUserThroughExcel(HttpServletResponse response) throws IOException{
+		List<InventoryUser> listUsers = inventoryUserService.listAll();
+		InventoryUserExcelExport excelReport = new InventoryUserExcelExport();
+		excelReport.export(listUsers, response);
+		return ResponseEntity.ok().build();
 	}
 	
 }

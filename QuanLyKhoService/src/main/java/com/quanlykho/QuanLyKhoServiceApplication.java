@@ -13,13 +13,27 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 import com.quanlykho.account.AccountDTO;
 import com.quanlykho.common.Inventory;
 import com.quanlykho.common.InventoryUser;
+import com.quanlykho.common.Product;
 import com.quanlykho.common.exception.CountryNotFoundException;
 import com.quanlykho.common.exception.DistrictNotFoundException;
 import com.quanlykho.common.exception.StateNotFoundException;
+import com.quanlykho.common.exporting_form.ExportingForm;
+import com.quanlykho.common.exporting_form.ExportingFormDetail;
+import com.quanlykho.common.importing_form.ImportingForm;
+import com.quanlykho.common.importing_form.ImportingFormDetail;
+import com.quanlykho.common.inventory_order.InventoryOrder;
+import com.quanlykho.common.inventory_order.InventoryOrderDetail;
 import com.quanlykho.common.setting.Country;
 import com.quanlykho.common.setting.District;
 import com.quanlykho.common.setting.State;
+import com.quanlykho.exporting_form.ExportingFormDTO;
+import com.quanlykho.exporting_form.ExportingFormDetailDTO;
+import com.quanlykho.importing_form.ImportingFormDTO;
+import com.quanlykho.importing_form.ImportingFormDetailDTO;
 import com.quanlykho.inventory.InventoryDTO;
+import com.quanlykho.inventory_order.InventoryOrderDTO;
+import com.quanlykho.inventory_order.InventoryOrderDetailDTO;
+import com.quanlykho.inventory_order.InventoryOrderWithoutImportingFormDTO;
 import com.quanlykho.setting.country.CountryRepository;
 import com.quanlykho.setting.district.DistrictRepository;
 import com.quanlykho.setting.state.StateRepository;
@@ -82,6 +96,62 @@ public class QuanLyKhoServiceApplication {
 			mapper.map(src -> src.getInventoryRole().getName(),AccountDTO::setRole);
 		});
 		
+		modelMapper.typeMap(InventoryOrder.class,InventoryOrderDTO.class).addMappings(mapper ->{
+			mapper.map(src -> src.getInventory().getInventoryId(),InventoryOrderDTO::setInventoryId);
+			mapper.map(src -> src.getInventoryUser().getFullName(),InventoryOrderDTO::setCreateUser);
+		});
+		
+		modelMapper.typeMap(InventoryOrderDTO.class,InventoryOrder.class).addMappings(mapper -> {
+			mapper.map(src -> src.getInventoryId(),(dest,v) -> {
+				Inventory inventory = new Inventory();
+				inventory.setInventoryId((String)v);
+				dest.setInventory(inventory);
+				//System.out.println("Setting inventoryId in InventoryOrder: " + (String)v);
+			});
+		});
+		
+		modelMapper.typeMap(InventoryOrderDetail.class,InventoryOrderDetailDTO.class).addMappings(mapper -> {
+			mapper.map(src -> src.getInventoryOrder().getOrderId(),InventoryOrderDetailDTO::setOrderId);
+			mapper.map(src -> src.getProduct().getId(),InventoryOrderDetailDTO::setProductId);
+		});
+		
+		modelMapper.typeMap(InventoryOrderDetailDTO.class,InventoryOrderDetail.class).addMappings(mapper -> {
+			mapper.map(src -> {
+				Integer productId = src.getProductId();
+				Product product = new Product();
+				product.setId(productId);
+				return product;
+			},InventoryOrderDetail::setProduct);
+		});
+		
+		//ImportingFormGuideMapper
+		modelMapper.typeMap(ImportingForm.class,ImportingFormDTO.class).addMappings(mapper -> {
+			mapper.map(src -> src.getInventoryOrder().getOrderId(),ImportingFormDTO::setInventoryOrder);
+			mapper.map(src -> src.getInventoryUser().getFullName(),ImportingFormDTO::setInventoryUser);
+			mapper.map(src -> src.getInventory().getInventoryId(),ImportingFormDTO::setInventory);
+		});
+		
+		modelMapper.typeMap(ImportingFormDetail.class,ImportingFormDetailDTO.class).addMappings(mapper -> {
+			mapper.map(src -> src.getProduct().getId(),ImportingFormDetailDTO::setProductId);
+			mapper.map(src -> src.getImportingForm().getImportingFormId(),ImportingFormDetailDTO::setImportingFormId);
+		});
+		
+		modelMapper.typeMap(InventoryOrder.class,InventoryOrderWithoutImportingFormDTO.class).addMappings(mapper -> {
+			mapper.map(src -> src.getInventoryUser().getFullName(),InventoryOrderWithoutImportingFormDTO::setInventoryUser);
+			mapper.map(src -> src.getInventory().getInventoryId(),InventoryOrderWithoutImportingFormDTO::setInventory);
+		});
+		
+		//ExportingFormGuideMapper
+		modelMapper.typeMap(ExportingForm.class,ExportingFormDTO.class).addMappings(mapper -> {
+			mapper.map(src -> src.getInventoryUser().getFullName(),ExportingFormDTO::setInventoryUser);
+			mapper.map(src -> src.getInventory().getInventoryId(),ExportingFormDTO::setInventory);
+		});
+		
+		modelMapper.typeMap(ExportingFormDetail.class,ExportingFormDetailDTO.class).addMappings(mapper -> {
+			mapper.map(src -> src.getExportingFormDetailId().getExportingFormId(),ExportingFormDetailDTO::setExportingFormId);
+			mapper.map(src -> src.getExportingFormDetailId().getProductId(),ExportingFormDetailDTO::setProductId);
+		});
+		
 		return modelMapper;
 	}
 	
@@ -89,5 +159,7 @@ public class QuanLyKhoServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(QuanLyKhoServiceApplication.class, args);
 	}
-
+    
+	
+	
 }

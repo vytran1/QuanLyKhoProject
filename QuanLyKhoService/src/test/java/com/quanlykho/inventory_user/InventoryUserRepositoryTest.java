@@ -101,4 +101,18 @@ public class InventoryUserRepositoryTest {
 		assertThat(inventoryUser).isNotNull();
 		System.out.println(inventoryUser);
 	}
+	
+	@Test 
+	public void testSpCheckUserBusinessFalse() {
+		String userId = "N21DCVT128";
+		Boolean result = inventoryUserRepository.checkIsUserJoinBussiness(userId);
+		assertThat(result).isFalse();
+	}
+	
+	@Test 
+	public void testSpCheckUserBusinessTrue() {
+		String userId = "N21DCCN091";
+		Boolean result = inventoryUserRepository.checkIsUserJoinBussiness(userId);
+		assertThat(result).isTrue();
+	}
 }

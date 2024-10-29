@@ -86,4 +86,16 @@ public class InventoryRepositoryTests {
 		assertThat(deletedInventory).isNotPresent();
 	}
 	
+	@Test
+	public void testCheckInventoryJoinBusinessTrue() {
+		String inventoryID = "VNTPHCMQ3";
+		boolean result = inventoryRepository.checkIsInventoryJoinBussiness(inventoryID);
+		assertThat(result).isFalse();
+	    if(!result) {
+	    	System.out.println("You can not delete this inventory because it already has join business forming");
+	    }else {
+	    	System.out.println("You can delete this inventory");
+	    }
+	}
+	
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.quanlykho.common.Inventory;
+import com.quanlykho.common.exception.CannotDeleteThisItemException;
 import com.quanlykho.common.exception.InventoryAlreadyExistInDatabaseException;
 import com.quanlykho.common.exception.InventoryNotFoundException;
 import com.quanlykho.common.setting.Country;
@@ -71,6 +72,34 @@ public class InventoryController {
 			return ResponseEntity.ok(inventoryListResult);
 		}else {
 			return ResponseEntity.noContent().build();
+		}
+	}
+	
+	@GetMapping("/search")
+	public ResponseEntity<?> search(
+			@RequestParam("keyWord") String keyWord,
+			@RequestParam("pageNum") int pageNum,
+			@RequestParam("pageSize") int pageSize,
+			@RequestParam("sortField") String sortField,
+			@RequestParam("sortDir") String sortDir
+			){
+		Page<Inventory> pages = inventoryService.search(keyWord, pageNum, pageSize, sortField, sortDir);
+		if(pages.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}else {
+			List<Inventory> inventories = pages.getContent();
+			List<InventoryDTO> inventoryDTOs = inventories.stream().map(this::convertEntityToDTO).toList();
+			InventoryListResult inventoryListResult = new InventoryListResult();
+			inventoryListResult.setInventoryDTOs(inventoryDTOs);
+			inventoryListResult.setPageNum(pageNum);
+			inventoryListResult.setPageSize(pageSize);
+			inventoryListResult.setSortField(sortField);
+			inventoryListResult.setSortDir(sortDir);
+			String reverseSort = sortDir.equals("asc") ? "desc" : "asc";
+			inventoryListResult.setReverseDir(reverseSort);
+			inventoryListResult.setTotalItems(pages.getTotalElements());
+			inventoryListResult.setTotalPage(pages.getTotalPages());
+			return ResponseEntity.ok(inventoryListResult);
 		}
 	}
 	
@@ -130,6 +159,10 @@ public class InventoryController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+		} catch (CannotDeleteThisItemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
 		}
 		
 	}

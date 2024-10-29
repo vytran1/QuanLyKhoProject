@@ -11,14 +11,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.quanlykho.Utility;
 import com.quanlykho.common.InventoryUser;
+import com.quanlykho.common.exception.CannotDeleteThisItemException;
 import com.quanlykho.common.exception.UserAlreadyExistException;
 import com.quanlykho.common.exception.UserNotExistException;
 import com.quanlykho.common.exception.UserNotFoundException;
 
+import jakarta.transaction.Transactional;
 import net.bytebuddy.utility.RandomString;
 
 @Service
+@Transactional
 public class InventoryUserService {
    
 	@Autowired
@@ -138,11 +142,18 @@ public class InventoryUserService {
 	}
 	
 	//Hàm delete User By UserId
-	public void deleteById(String userId) throws UserNotExistException {
+	public void deleteById(String userId) throws UserNotExistException, CannotDeleteThisItemException {
 		//Kiểm tra có tồn tại hay không
 		Optional<InventoryUser> inventoryUser = inventoryUserRepository.findById(userId);
 		if(!inventoryUser.isPresent()) {
 			throw new UserNotExistException("User with userId " + userId + " does not exist in database");
+		}
+		
+		boolean canDelete = inventoryUserRepository.checkIsUserJoinBussiness(userId);
+		if(!canDelete) {
+			throw new CannotDeleteThisItemException("User with id: " + userId + "has take part in creating business form");
+		}else {
+			System.out.println("You can delete this User");
 		}
 		inventoryUserRepository.deleteById(userId);
 	}
@@ -153,6 +164,13 @@ public class InventoryUserService {
 		Sort sort = Sort.by(sortField);
 		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
 		return inventoryUserRepository.findAll(pageable);
+	}
+	
+	public Page<InventoryUser> search(String keyWord,Integer pageNum, Integer pageSize, String sortField, String sortDir){
+		Sort sort = Sort.by(sortField);
+		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+		Pageable pageable = PageRequest.of(pageNum -1,pageSize, sort);
+		return inventoryUserRepository.search(keyWord, pageable);
 	}
 	
 	public String updatePasswordToken(String email) throws UserNotFoundException {
@@ -178,4 +196,13 @@ public class InventoryUserService {
 			inventoryUserRepository.save(inventoryUser);
 		}
 	}
+	
+	public void createMultipleUsers(List<InventoryUser> inventoryUsers) {
+		inventoryUsers.forEach(user -> {
+			encodePassword(user);
+		});
+		inventoryUserRepository.saveAll(inventoryUsers);
+	}
+	
+	
 }

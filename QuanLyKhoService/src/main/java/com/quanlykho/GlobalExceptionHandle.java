@@ -24,6 +24,8 @@ import com.quanlykho.common.exception.DistrictNotFoundException;
 import com.quanlykho.common.exception.StateNotFoundException;
 import com.quanlykho.security.jwt.JwtValidationException;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 
@@ -98,5 +100,22 @@ public class GlobalExceptionHandle extends ResponseEntityExceptionHandler {
 		LOGGER.error(exception.getMessage(),exception);
 		return error;
 	}
+	
+	@ResponseBody
+	@ExceptionHandler(EntityNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ErrorDTO handleEntityNotFoundException(HttpServletRequest request,Exception exception) {
+		
+		
+		ErrorDTO error = new ErrorDTO();
+		error.setTimestamp(new Date());
+		error.setStatus(HttpStatus.NOT_FOUND.value());
+		error.addError(exception.getMessage());
+		error.setPath(request.getServletPath());
+		
+		LOGGER.error(exception.getMessage(),exception);
+		return error;
+	}
+	
 	
 }

@@ -16,7 +16,10 @@ import com.quanlykho.common.Product;
 
 import com.quanlykho.common.exception.ProductNotFoundException;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class ProductService {
 
 	@Autowired
@@ -99,5 +102,9 @@ public class ProductService {
 			throw new ProductNotFoundException("Could not found any product with ID " + id);
 		}
 		productRepo.deleteById(id);
+	}
+	
+	public void updatePriceOfProduct(Integer productId, float averagePrice) {
+		
 	}
 }
