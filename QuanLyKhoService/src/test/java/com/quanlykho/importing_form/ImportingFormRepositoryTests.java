@@ -2,6 +2,10 @@ package com.quanlykho.importing_form;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
@@ -59,6 +63,35 @@ public class ImportingFormRepositoryTests {
 		System.out.println("Order ID: " + orderId + "does not have importing form");
 	}
 	
+	@Test
+	public void callSpChitietSoluongTriGiaHangHoaNhapXuat() {
+		Date startDate = new GregorianCalendar(2024, Calendar.OCTOBER, 1, 23, 59, 59).getTime();
+        Date endDate = new Date();
+        String type = "NHAP";
+        List<Object[]> results = importingFormRepository.spChitietSoLuongTriGiaHangHoaNhapXuat(type, startDate, endDate);
+        assertThat(results.size()).isGreaterThan(0);
+        for(Object [] object : results) {
+        	String thangName = (String) object[0];
+        	String tenVT = (String) object[1];
+        	BigDecimal tongSoLuong = (BigDecimal) object[2];
+        	Double triGia = (Double) object[3];
+        	System.out.println("Tháng Năm: " + thangName + " tên vật tư: " + tenVT +  " tổng số lượng: " + tongSoLuong + " trị giá: " + triGia);
+        }
+	}
 	
-	
+	@Test
+	public void callSpTongHopNhapXuat() {
+		Date startDate = new GregorianCalendar(2024, Calendar.OCTOBER, 1, 23, 59, 59).getTime();
+        Date endDate = new Date();
+        List<Object[]> results = importingFormRepository.spTongHopNhapXuat(startDate, endDate);
+        assertThat(results.size()).isGreaterThan(0);
+        for(Object[] object : results) {
+        	Date NGAY = (Date) object[0];
+        	BigDecimal NHAP = BigDecimal.valueOf((Double)object[1]);
+        	Double TYLENHAP = (Double) object[2];
+        	BigDecimal XUAT = BigDecimal.valueOf((Double) object[3]);
+        	Double TYLEXUAT = (Double) object[4];
+        	System.out.println("NGAY: " + NGAY + " NHAP: " + NHAP + " TYLENHAP: " + TYLENHAP + " XUAT: " + XUAT + " TYLEXUAT: " + TYLEXUAT);
+        }
+	}
 }

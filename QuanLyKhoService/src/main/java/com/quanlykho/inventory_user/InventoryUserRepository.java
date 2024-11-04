@@ -1,5 +1,8 @@
 package com.quanlykho.inventory_user;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,4 +30,6 @@ public interface InventoryUserRepository extends JpaRepository<InventoryUser,Str
 	@Procedure(name = "checkIsUserJoinBussiness")
 	public boolean checkIsUserJoinBussiness(@Param("userId") String userId);
 	
+	@Procedure(name = "spHoatDongNhanVien")
+	public List<Object[]>  spHoatDongNhanVien(@Param("start_date") Date startDate,@Param("end_date") Date endDate,@Param("user_id") String userId);
 }

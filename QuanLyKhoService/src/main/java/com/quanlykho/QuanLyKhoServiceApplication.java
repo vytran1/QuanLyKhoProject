@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
@@ -31,9 +33,11 @@ import com.quanlykho.exporting_form.ExportingFormDetailDTO;
 import com.quanlykho.importing_form.ImportingFormDTO;
 import com.quanlykho.importing_form.ImportingFormDetailDTO;
 import com.quanlykho.inventory.InventoryDTO;
+import com.quanlykho.inventory.InventoryReportDTO;
 import com.quanlykho.inventory_order.InventoryOrderDTO;
 import com.quanlykho.inventory_order.InventoryOrderDetailDTO;
 import com.quanlykho.inventory_order.InventoryOrderWithoutImportingFormDTO;
+import com.quanlykho.product.ProductReportDTO;
 import com.quanlykho.setting.country.CountryRepository;
 import com.quanlykho.setting.district.DistrictRepository;
 import com.quanlykho.setting.state.StateRepository;
@@ -152,6 +156,8 @@ public class QuanLyKhoServiceApplication {
 			mapper.map(src -> src.getExportingFormDetailId().getProductId(),ExportingFormDetailDTO::setProductId);
 		});
 		
+		configureModelMapperForProduct(modelMapper);
+		configureModelMapperForInventory(modelMapper);
 		return modelMapper;
 	}
 	
@@ -160,6 +166,21 @@ public class QuanLyKhoServiceApplication {
 		SpringApplication.run(QuanLyKhoServiceApplication.class, args);
 	}
     
+	public void configureModelMapperForProduct(ModelMapper modelMapper) {
+		var typeMap = modelMapper.typeMap(Product.class,ProductReportDTO.class);
+		typeMap.addMappings(mapper -> {
+			mapper.map(src -> src.getBrand().getName(),ProductReportDTO::setBrand);
+			mapper.map(src -> src.getCategory().getName(),ProductReportDTO::setCategory);
+		});
+	}
 	
+	public void configureModelMapperForInventory(ModelMapper modelMapper) {
+		var typeMap = modelMapper.typeMap(Inventory.class,InventoryReportDTO.class);
+		typeMap.addMappings(mapper -> {
+			mapper.map(src -> src.getCountry().getName(),InventoryReportDTO::setCountry);
+			mapper.map(src -> src.getState().getName(),InventoryReportDTO::setState);
+			mapper.map(src -> src.getDistrict().getName(),InventoryReportDTO::setDistrict);
+		});
+	}
 	
 }
