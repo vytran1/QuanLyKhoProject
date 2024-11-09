@@ -1,0 +1,78 @@
+.login-container {
+  display: flex;
+  align-items: center; /* Aligns the items vertically in the center */
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #e0f7fa;
+}
+
+.login-image {
+  max-width: 50%; /* Adjusts the image to take half of the available width */
+  height: auto;
+  margin-right: 20px; /* Adds spacing between image and form */
+}
+
+form {
+  width: 100%;
+  max-width: 500px; /* Increased max-width for a larger form */
+  padding: 30px; /* Increased padding for a larger form */
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.error-message p {
+  color: #e74c3c; /* Red color for error messages */
+  font-size: 0.875rem;
+  margin: 5px 0 0 0;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  background-color: #3498db; /* Blue button color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #bdc3c7; /* Gray color for disabled button */
+  cursor: not-allowed;
+}
+
+.forgot-password-link {
+  display: block;
+  text-align: center;
+  margin-top: 15px; /* Space above the link */
+  color: #3498db; /* Link color */
+  text-decoration: none; /* Remove underline */
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline; /* Add underline on hover */
+}

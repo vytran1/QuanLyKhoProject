@@ -1,0 +1,103 @@
+import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+  HttpResponse,
+} from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
+import { AuthRequest } from '../model/auth/auth-request.model';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { ForgotPasswordRequest } from '../model/auth/forgot-password-request.model';
+import { ResetPasswordRequest } from '../model/auth/reset-password-request.model';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthenticationService {
+  public host = environment.apiUrl;
+  private jwtToken: any = null;
+  private loggedInUsername = null;
+  private jwtHelper = new JwtHelperService();
+  private role = null;
+
+  constructor(private httpClient: HttpClient) {}
+
+  public login(authRequest: AuthRequest): Observable<HttpResponse<any>> {
+    return this.httpClient
+      .post<HttpResponse<any> | HttpErrorResponse>(
+        `${this.host}/api/auth/token`,
+        authRequest,
+        { observe: 'response' }
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return throwError(() => error);
+        })
+      );
+  }
+
+  public forgotPassword(
+    request: ForgotPasswordRequest
+  ): Observable<HttpResponse<any> | HttpErrorResponse> {
+    return this.httpClient.post<HttpResponse<any> | HttpErrorResponse>(
+      `${this.host}/api/forgot_password`,
+      request,
+      { observe: 'response' }
+    );
+  }
+
+  public resetPassword(
+    request: ResetPasswordRequest,
+    token: string
+  ): Observable<HttpResponse<any>> {
+    const params = new HttpParams().set('token', token);
+    return this.httpClient.post(`${this.host}/api/reset_password`, request, {
+      observe: 'response',
+      params: params,
+    });
+  }
+
+  public logout(): void {
+    this.jwtToken = null;
+    this.loggedInUsername = null;
+    this.role = null;
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+  }
+
+  public saveToken(token: string) {
+    this.jwtToken = token;
+    this.setRole();
+    localStorage.setItem('token', token);
+  }
+
+  public loadToken() {
+    this.jwtToken = localStorage.getItem('token');
+    //console.log('Get token: ' + this.jwtToken);
+  }
+
+  public getToken() {
+    return this.jwtToken;
+  }
+
+  public isLogged(): boolean {
+    this.loadToken();
+    if (this.jwtToken != null && this.jwtToken !== '') {
+      if (this.jwtHelper.decodeToken(this.jwtToken).sub != null || '') {
+        if (!this.jwtHelper.isTokenExpired(this.jwtToken)) {
+          this.loggedInUsername = this.jwtHelper.decodeToken(this.jwtToken).sub;
+          return true;
+        }
+      }
+    }
+    this.logout();
+    return false;
+  }
+
+  public setRole(): any {
+    this.role = this.jwtHelper.decodeToken(this.jwtToken).role;
+    return this.role != null ? this.role : null;
+  }
+}

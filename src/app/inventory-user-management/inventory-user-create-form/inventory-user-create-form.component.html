@@ -1,0 +1,153 @@
+<!-- create-user.component.html -->
+<div class="full-screen-form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h2 class="form-header">CREATE USER</h2>
+    <!-- form fields here -->
+    <div class="form-group">
+      <label for="userId">User ID</label>
+      <input
+        formControlName="userId"
+        type="text"
+        class="form-control"
+        id="userId"
+        placeholder="Enter User ID"
+      />
+      @if(form.get('userId').invalid && form.get('userId').touched){
+      @if(form.get('userId').errors?.['required']){
+      <div class="text-danger">User Id is required</div>
+      } @if(form.get('userId').errors?.['minlength']){
+      <div class="text-danger">Min Length of user id is 9</div>
+      } @if(form.get('userId').errors?.['maxlength']){
+      <div class="text-danger">Max length of user id is 30</div>
+      } @if(form.get('userId').errors?.['userIdExists']){
+      <div class="text-danger">User id has been used please choose another</div>
+      } }
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        formControlName="email"
+        type="email"
+        class="form-control"
+        id="email"
+        placeholder="Enter Email"
+      />
+      @if(form.get('email').invalid && form.get('email').touched){
+      @if(form.get('email').errors?.['required']){
+      <div class="text-danger">Email is required</div>
+      } @if(form.get('email').errors?.['email']){
+      <div class="text-danger">Invalid email</div>
+      } @if(form.get('email').errors?.['emailExists']){
+      <div class="text-danger">Email has been used please choose another</div>
+      } }
+    </div>
+
+    <div class="form-group">
+      <label for="identityNumber">Identity Number</label>
+      <input
+        formControlName="identityNumber"
+        type="text"
+        class="form-control"
+        id="identityNumber"
+        placeholder="Enter Identity Number"
+      />
+      @if(form.get('identityNumber').invalid &&
+      form.get('identityNumber').touched){
+      @if(form.get('identityNumber').errors?.['required']){
+      <div class="text-danger">Identity Number is required</div>
+      } @if(form.get('identityNumber').errors?.['pattern']){
+      <div class="text-danger">
+        Invalid identity number, Identity Number must contain exactly 9 digits
+      </div>
+      } @if(form.get('identityNumber').errors?.['identityNumberExists']){
+      <div class="text-danger">
+        Identity Number has been used please choose another
+      </div>
+      } }
+    </div>
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input
+        formControlName="firstName"
+        type="text"
+        class="form-control"
+        id="firstName"
+        placeholder="Enter First Name"
+      />
+      @if(form.get('firstName').invalid && form.get('firstName').touched){
+      @if(form.get('firstName').errors?.['required']){
+      <div class="text-danger">First Name is required</div>
+      } @if(form.get('firstName').errors?.['minlength']){
+      <div class="text-danger">
+        First Name must be at least 2 characters long
+      </div>
+      } @if(form.get('firstName').errors?.['maxlength']){
+      <div class="text-danger">
+        First Name must be at most 20 characters long
+      </div>
+      } }
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input
+        formControlName="lastName"
+        type="text"
+        class="form-control"
+        id="lastName"
+        placeholder="Enter Last Name"
+      />
+      @if(form.get('lastName').invalid && form.get('lastName').touched){
+      @if(form.get('lastName').errors?.['required']){
+      <div class="text-danger">Last Name is required</div>
+      } @if(form.get('lastName').errors?.['minlength']){
+      <div class="text-danger">
+        Last Name must be at least 2 characters long
+      </div>
+      } @if(form.get('lastName').errors?.['maxlength']){
+      <div class="text-danger">
+        Last Name must be at most 20 characters long
+      </div>
+      } }
+    </div>
+
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number</label>
+      <input
+        formControlName="phoneNumber"
+        type="tel"
+        class="form-control"
+        id="phoneNumber"
+        placeholder="Enter Phone Number"
+      />
+      @if(form.get('phoneNumber').invalid && form.get('phoneNumber').touched){
+      @if(form.get('phoneNumber').errors?.['required']){
+      <div class="text-danger">Phone Number is required</div>
+      } @if(form.get('phoneNumber').errors?.['pattern']){
+      <div class="text-danger">
+        Phone number must contains exactly 10 digits
+      </div>
+      } }
+    </div>
+
+    <div class="button-container">
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+        Add
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        onclick="window.location.href='/inventory/inventory_users'"
+      >
+        Close
+      </button>
+    </div>
+  </form>
+  @if(showModal){
+  <app-message-modal
+    [message]="message"
+    [type]="type"
+    (close)="closeModal()"
+  ></app-message-modal>
+  }
+</div>

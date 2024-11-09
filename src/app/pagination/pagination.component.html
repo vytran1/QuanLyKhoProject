@@ -1,0 +1,10 @@
+<div class="pagination-container">
+  <button (click)="goToPreviousPage()" [disabled]="pageNum <= 1">
+    Previous
+  </button>
+  <span>Page {{ pageNum }} of {{ totalPages }}</span>
+  <button (click)="goToNextPage()" [disabled]="pageNum >= totalPages">
+    Next
+  </button>
+  <div>Total Items: {{ totalItems }}</div>
+</div>

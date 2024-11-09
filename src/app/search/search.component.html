@@ -1,0 +1,19 @@
+<div class="search-container">
+  <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+    <input formControlName="keyWord" placeholder="Enter keyword" />
+    <button type="submit" [disabled]="searchForm.invalid">Search</button>
+    <button type="button" (click)="clearSearch()" class="btn btn-secondary">
+      <i class="fas fa-eraser"></i>
+    </button>
+  </form>
+  @if(searchForm.get('keyWord')?.invalid && (searchForm.get('keyWord')?.dirty ||
+  searchForm.get('keyWord')?.touched)){
+  <div>
+    @if(searchForm.get('keyWord').errors?.['required']){
+    <small>Keyword is required</small>
+    } @if(searchForm.get('keyWord').errors?.['pattern']){
+    <small>Keyword cannot be empty or have white space or blank</small>
+    }
+  </div>
+  }
+</div>

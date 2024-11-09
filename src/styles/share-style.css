@@ -1,0 +1,74 @@
+/* Các quy tắc CSS hiện tại */
+
+.form-container {
+  position: relative; /* Đảm bảo các phần tử con có thể định vị tương đối */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-header {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.form-container label {
+  font-weight: bold;
+  margin-bottom: 5px; /* Đảm bảo khoảng cách giữa label và input */
+}
+
+.form-container input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 15px; /* Đảm bảo khoảng cách giữa các input */
+  width: calc(100% - 22px); /* Đảm bảo input chiếm hết chiều rộng container */
+}
+
+.form-container input[readonly] {
+  background-color: #e9ecef; /* Màu nền xám */
+  border: 1px solid #ced4da; /* Viền màu xám nhạt */
+  color: #495057; /* Màu chữ xám */
+}
+
+.btn-primary {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #2c3e50;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #34495e;
+}
+
+button:disabled {
+  background-color: #bdc3c7; /* Màu xám cho nút bị vô hiệu hóa */
+  cursor: not-allowed; /* Con trỏ hiển thị không cho phép */
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: -10px; /* Đảm bảo lỗi gần với input */
+  margin-bottom: 10px;
+}
+.img-preview {
+  max-width: 100%;
+  max-height: 300px;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}

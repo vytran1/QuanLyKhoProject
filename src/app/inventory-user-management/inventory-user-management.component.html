@@ -1,0 +1,153 @@
+<div class="container">
+  <div class="search-container">
+    <app-search (searchEvent)="onSearch($event)"></app-search>
+  </div>
+  <div class="page-size-container">
+    <app-change-page-size
+      (pageSizeChange)="onPageSizeChange($event)"
+    ></app-change-page-size>
+  </div>
+  <div class="table-container">
+    <div class="button-container">
+      <button class="btn btn-primary" (click)="addEmployee()">
+        Add Employee
+      </button>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <a
+                href="#"
+                (click)="changeSort('userId'); $event.preventDefault()"
+              >
+                UserId @if(sortField === 'userId'){
+                <i
+                  class="fas"
+                  [ngClass]="{
+                    'fa-arrow-up': sortDir === 'asc',
+                    'fa-arrow-down': sortDir === 'desc'
+                  }"
+                ></i>
+                }
+              </a>
+            </th>
+            <th>
+              <a href="#" (click)="changeSort('email'); $event.preventDefault()"
+                >Email @if(sortField === 'email'){
+                <i
+                  class="fas"
+                  [ngClass]="{
+                    'fa-arrow-up': sortDir === 'asc',
+                    'fa-arrow-down': sortDir === 'desc'
+                  }"
+                ></i>
+                }
+              </a>
+            </th>
+            <th>Image</th>
+            <th>
+              <a
+                href="#"
+                (click)="changeSort('firstName'); $event.preventDefault()"
+                >FirstName @if(sortField === 'firstName'){
+                <i
+                  class="fas"
+                  [ngClass]="{
+                    'fa-arrow-up': sortDir === 'asc',
+                    'fa-arrow-down': sortDir === 'desc'
+                  }"
+                ></i>
+                }
+              </a>
+            </th>
+            <th>
+              <a
+                href="#"
+                (click)="changeSort('lastName'); $event.preventDefault()"
+                >LastName @if(sortField === 'lastName'){
+                <i
+                  class="fas"
+                  [ngClass]="{
+                    'fa-arrow-up': sortDir === 'asc',
+                    'fa-arrow-down': sortDir === 'desc'
+                  }"
+                ></i>
+                }
+              </a>
+            </th>
+            <th>Enabled</th>
+            <th>Role:</th>
+            <th>Actions:</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of inventoryUsers; track $index) {
+          <tr>
+            <td>{{ item.userId }}</td>
+            <td>{{ item.email }}</td>
+            <td>
+              <img [src]="getProfileImage(item.userId)" alt="Profile Image" />
+            </td>
+            <td>{{ item.firstName }}</td>
+            <td>{{ item.lastName }}</td>
+            <td>{{ item.enabled }}</td>
+            <td>{{ item.inventoryRole?.name }}</td>
+            <td>
+              <button
+                class="btn btn-secondary btn-sm"
+                (click)="showEmployeeDetail(item)"
+              >
+                Details
+              </button>
+              <button
+                class="btn btn-primary btn-sm"
+                [routerLink]="['/inventory/edit_user', item.userId]"
+              >
+                Edit
+              </button>
+              <button
+                class="btn btn-danger btn-sm"
+                (click)="openDeleteModal(item)"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <app-pagination
+      [pageNum]="pageNum"
+      [totalPages]="totalPage"
+      [totalItems]="totalItems"
+      (pageChange)="onChangePage($event)"
+    >
+    </app-pagination>
+
+    @if(showModal){
+    <app-inventory-user-detail-modal
+      [selectedInventoryUser]="selectedEmployee"
+      (close)="closeEmployeeDetail()"
+    >
+    </app-inventory-user-detail-modal>
+    } @if(showModalDelete){
+    <app-delete-inventory-user-warning-modal
+      [isVisible]="showModalDelete"
+      (canceled)="cancelDeleteOperation()"
+      (confirmed)="confirmDeleteOperation()"
+      [message]="deleteMessage"
+    >
+    </app-delete-inventory-user-warning-modal>
+    } @if(showModalMessage){
+    <app-message-modal
+      [message]="message"
+      [type]="type"
+      (close)="closeModelMessage()"
+    >
+    </app-message-modal>
+    }
+  </div>
+  <router-outlet></router-outlet>
+</div>

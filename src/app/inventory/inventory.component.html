@@ -1,0 +1,22 @@
+<div class="layout">
+  <div class="sidebar">
+    <div class="profile">
+      <!-- Display profile picture and name here -->
+      <img [src]="profileImage" alt="personal" class="profile-picture" />
+      <h3>{{ accountInfo.firstName + " " + accountInfo.lastName }}</h3>
+    </div>
+    <nav>
+      <a routerLink="/inventory/dashboard" routerLinkActive="active"
+        >Thông tin cá nhân</a
+      >
+      <a routerLink="/inventory/inventory_users" routerLinkActive="active"
+        >Quản lý Nhân Viên</a
+      >
+    </nav>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

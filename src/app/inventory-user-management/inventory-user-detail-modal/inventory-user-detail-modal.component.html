@@ -1,0 +1,84 @@
+<!-- employee-detail-modal.component.html -->
+<div class="modal fade show d-block" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Employee Details</h5>
+        <button type="button" class="close" (click)="closeModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        @if(selectedInventoryUser){
+        <form>
+          <div class="form-group">
+            <label for="userId">User ID</label>
+            <input
+              type="text"
+              id="userId"
+              class="form-control"
+              [value]="selectedInventoryUser.userId"
+              readonly
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              id="email"
+              class="form-control"
+              [value]="selectedInventoryUser.email"
+              readonly
+            />
+          </div>
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              class="form-control"
+              [value]="selectedInventoryUser.firstName"
+              readonly
+            />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              class="form-control"
+              [value]="selectedInventoryUser.lastName"
+              readonly
+            />
+          </div>
+          <div class="form-group">
+            <label for="enabled">Enabled</label>
+            <input
+              type="text"
+              id="enabled"
+              class="form-control"
+              [value]="selectedInventoryUser.enabled"
+              readonly
+            />
+          </div>
+          <div class="form-group">
+            <label for="role">Role</label>
+            <input
+              type="text"
+              id="role"
+              class="form-control"
+              [value]="selectedInventoryUser.inventoryRole?.name"
+              readonly
+            />
+          </div>
+        </form>
+        }
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
