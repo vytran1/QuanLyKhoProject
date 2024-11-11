@@ -1,0 +1,181 @@
+<div
+  class="container inventory-form-container d-flex justify-content-center align-items-center"
+>
+  <form
+    class="bg-light p-5 rounded shadow-lg larger-form needs-validation"
+    novalidate
+    [formGroup]="form"
+    (ngSubmit)="updateInventory()"
+  >
+    <h2 class="text-center mb-4">Edit Inventory</h2>
+
+    <div class="row mb-4 align-items-center">
+      <label for="inventoryId" class="col-sm-4 col-form-label"
+        >Inventory Id</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          id="inventoryId"
+          name="inventoryId"
+          class="form-control"
+          required
+          formControlName="inventoryId"
+          [readonly]="true"
+          [ngClass]="{ readonly: true }"
+        />
+      </div>
+      @if(form.get('inventoryId').invalid && form.get('inventoryId').touched){
+      <div class="error">
+        @if(form.get('inventoryId').errors?.['required']){
+        <div>Inventory Id is required</div>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="row mb-4 align-items-center">
+      <label for="inventoryName" class="col-sm-4 col-form-label"
+        >Inventory Name</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          id="inventoryName"
+          name="inventoryName"
+          class="form-control"
+          required
+          formControlName="inventoryName"
+        />
+        @if(form.get('inventoryName').invalid &&
+        form.get('inventoryName').touched){
+        <div class="error">
+          @if(form.get('inventoryName').errors?.['required']){
+          <div>Inventory Name is required</div>
+          } @if(form.get('inventoryName').errors?.['minlength']){
+          <div>Inventory Name must contains at least 9 characters</div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="row mb-4 align-items-center">
+      <label for="inventoryAddress" class="col-sm-4 col-form-label"
+        >Inventory Address</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          id="inventoryAddress"
+          name="inventoryAddress"
+          class="form-control"
+          required
+          formControlName="inventoryAddress"
+        />
+        @if(form.get('inventoryAddress').invalid &&
+        form.get('inventoryAddress').touched){
+        <div class="error">
+          @if(form.get('inventoryAddress').errors?.['required']){
+          <div>Inventory Address is required</div>
+          } @if(form.get('inventoryAddress').errors?.['minlength']){
+          <div>Inventory Address must contains at least 9 characters</div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="row mb-4 align-items-center">
+      <label for="countryId" class="col-sm-4 col-form-label">Country</label>
+      <div class="col-sm-8">
+        <select
+          name="countryId"
+          id="countryId"
+          class="form-select"
+          required
+          formControlName="countryId"
+          [ngClass]="{ disable: true }"
+        >
+          <!-- <option value="">Select Country</option>
+          @for (item of countries; track $index) {
+          <option value="{{ item.id }}">{{ item.name }}</option>
+          } -->
+          <option value="{{ inventory?.countryId }}">
+            {{ inventory?.countryName }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row mb-4 align-items-center">
+      <label for="stateId" class="col-sm-4 col-form-label">State</label>
+      <div class="col-sm-8">
+        <select
+          name="stateId"
+          id="stateId"
+          class="form-select"
+          required
+          formControlName="stateId"
+          [ngClass]="{ disable: true }"
+        >
+          <!-- <option value="">Select State</option>
+          @for (item of states; track $index) {
+          <option value="{{ item.id }}">{{ item.name }}</option>
+          } -->
+          <option value="{{ inventory?.stateId }}">
+            {{ inventory?.stateName }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row mb-4 align-items-center">
+      <label for="districtId" class="col-sm-4 col-form-label">District</label>
+      <div class="col-sm-8">
+        <select
+          name="districtId"
+          id="districtId"
+          class="form-select"
+          required
+          formControlName="districtId"
+          [ngClass]="{ disable: true }"
+        >
+          <!-- <option value="">Select District</option>
+          @for (item of districts; track $index) {
+          <option value="{{ item.id }}">{{ item.name }}</option>
+          } -->
+          <option value="{{ inventory?.districtId }}">
+            {{ inventory?.districtName }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Centered buttons -->
+    <div class="text-center">
+      <button
+        type="submit"
+        [disabled]="form.invalid"
+        class="btn btn-primary mx-2"
+      >
+        Submit
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary mx-2"
+        routerLink="/inventory/inventories"
+      >
+        Close
+      </button>
+    </div>
+  </form>
+  @if(showModal){
+  <app-message-modal
+    [message]="message"
+    [type]="type"
+    (close)="closeModalMessage()"
+  >
+  </app-message-modal>
+  }
+</div>

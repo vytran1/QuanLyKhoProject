@@ -1,0 +1,35 @@
+<div class="pagination-container">
+  <button
+    (click)="goToPreviousPage()"
+    [disabled]="pageNum <= 1"
+    class="pagination-button"
+  >
+    Previous
+  </button>
+
+  <!-- Dòng hiển thị từng trang để người dùng chọn -->
+  @for(page of generatePages(); track $index){
+  <ng-container>
+    <button
+      (click)="goToPage(page)"
+      [class.active]="page === pageNum"
+      [disabled]="page === pageNum"
+      class="pagination-button"
+    >
+      {{ page }}
+    </button>
+  </ng-container>
+  }
+
+  <button
+    (click)="goToNextPage()"
+    [disabled]="pageNum >= totalPage"
+    class="pagination-button"
+  >
+    Next
+  </button>
+
+  <div class="pagination-info">
+    Total Items: {{ totalItems }} | Total Pages: {{ totalPage }}
+  </div>
+</div>

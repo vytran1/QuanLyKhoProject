@@ -1,0 +1,41 @@
+@if(showModal) {
+<div class="modal" (click)="closeModal()" [ngClass]="{ show: showModal }">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h4 class="modal-title">Inventory Details</h4>
+      <button class="close-btn" (click)="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <form action="" class="inventory-form">
+        <div class="form-group">
+          <label for="inventoryId">InventoryId:</label>
+          <input type="text" [value]="inventory?.inventoryId" readonly />
+        </div>
+        <div class="form-group">
+          <label for="inventoryName">Inventory Name:</label>
+          <input type="text" [value]="inventory?.inventoryName" readonly />
+        </div>
+        <div class="form-group">
+          <label for="inventoryAddress">Inventory Address:</label>
+          <input type="text" [value]="inventory?.inventoryAddress" readonly />
+        </div>
+        <div class="form-group">
+          <label for="countryName">Country Name:</label>
+          <input type="text" [value]="inventory?.countryName" readonly />
+        </div>
+        <div class="form-group">
+          <label for="stateName">State Name:</label>
+          <input type="text" [value]="inventory?.stateName" readonly />
+        </div>
+        <div class="form-group">
+          <label for="districtName">District Name:</label>
+          <input type="text" [value]="inventory?.districtName" readonly />
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+}

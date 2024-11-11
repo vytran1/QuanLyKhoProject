@@ -1,0 +1,144 @@
+<div class="container mt-5">
+  <div class="search-table-container">
+    <div class="search-container">
+      <app-search (searchEvent)="onSearch($event)"></app-search>
+      <button
+        class="btn btn-primary btn-lg-custom"
+        routerLink="/inventory/create_inventory"
+      >
+        Add Inventory
+      </button>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover text-center">
+        <thead class="thead-dark">
+          <tr>
+            <th>
+              <a
+                href="#"
+                (click)="changeSort('inventoryId'); $event.preventDefault()"
+              >
+                InventoryId @if(sortField === 'inventoryId'){
+                <i
+                  class="fas"
+                  [ngClass]="{
+                    'fa-arrow-up': sortDir === 'asc',
+                    'fa-arrow-down': sortDir === 'desc'
+                  }"
+                ></i>
+                }
+              </a>
+            </th>
+            <th>
+              <a
+                href="#"
+                (click)="changeSort('inventoryName'); $event.preventDefault()"
+              >
+                InventoryName @if(sortField === 'inventoryName'){
+                <i
+                  class="fas"
+                  [ngClass]="{
+                    'fa-arrow-up': sortDir === 'asc',
+                    'fa-arrow-down': sortDir === 'desc'
+                  }"
+                ></i>
+                }
+              </a>
+            </th>
+            <th>
+              <a
+                href="#"
+                (click)="
+                  changeSort('inventoryAddress'); $event.preventDefault()
+                "
+              >
+                Inventory Address @if(sortField === 'inventoryAddress'){
+                <i
+                  class="fas"
+                  [ngClass]="{
+                    'fa-arrow-up': sortDir === 'asc',
+                    'fa-arrow-down': sortDir === 'desc'
+                  }"
+                ></i>
+                }
+              </a>
+            </th>
+            <th>Country Name:</th>
+            <th>State Name:</th>
+            <th>District Name:</th>
+            <th>Actions:</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of inventories; track $index) {
+          <tr>
+            <td>{{ item.inventoryId }}</td>
+            <td>{{ item.inventoryName }}</td>
+            <td>{{ item.inventoryAddress }}</td>
+            <td>{{ item.countryName }}</td>
+            <td>{{ item.stateName }}</td>
+            <td>{{ item.districtName }}</td>
+            <td>
+              <div class="action-buttons">
+                <button
+                  class="btn btn-success"
+                  (click)="showModalDetails(item)"
+                >
+                  Details
+                </button>
+                <button
+                  class="btn btn-primary btn-sm"
+                  [routerLink]="['/inventory/edit_inventory', item.inventoryId]"
+                >
+                  Edit
+                </button>
+                <button
+                  class="btn btn-danger btn-sm"
+                  (click)="openModalWarningDelete(item)"
+                >
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <app-improved-pagination
+    [pageNum]="pageNum"
+    [totalPage]="totalPage"
+    [totalItems]="totalItems"
+    (pageChange)="onPageChange($event)"
+  >
+  </app-improved-pagination>
+  <app-change-page-size
+    (pageSizeChange)="onPageSizeChange($event)"
+  ></app-change-page-size>
+
+  @if(showModal){
+
+  <app-inventories-modal-details
+    [showModal]="showModal"
+    [inventory]="selectedInventory"
+    (closeModalEvent)="closeModal()"
+  >
+  </app-inventories-modal-details>
+  } @if(showModalWarning){
+  <app-delete-inventory-user-warning-modal
+    [isVisible]="showModalWarning"
+    [message]="messageDelete"
+    (canceled)="cancelDeleteOperation()"
+    (confirmed)="confirmDeleteOperation()"
+  >
+  </app-delete-inventory-user-warning-modal>
+  } @if(showModalMessage){
+  <app-message-modal
+    [message]="message"
+    [type]="type"
+    (close)="closeModalMessage()"
+  >
+  </app-message-modal>
+  }
+</div>

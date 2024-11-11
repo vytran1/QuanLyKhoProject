@@ -8,6 +8,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { InventoryUserManagementComponent } from './inventory-user-management/inventory-user-management.component';
 import { InventoryUserCreateFormComponent } from './inventory-user-management/inventory-user-create-form/inventory-user-create-form.component';
 import { InventoryUserEditFormComponent } from './inventory-user-management/inventory-user-edit-form/inventory-user-edit-form.component';
+import { InventoriesManagementComponent } from './inventories-management/inventories-management.component';
+import { InventoryCreateFormComponent } from './inventories-management/inventory-create-form/inventory-create-form.component';
+import { InventoriesEditFormComponent } from './inventories-management/inventories-edit-form/inventories-edit-form.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -33,6 +36,12 @@ export const routes: Routes = [
         path: 'edit_user/:id',
         component: InventoryUserEditFormComponent,
       },
+      {
+        path: 'inventories',
+        component: InventoriesManagementComponent,
+      },
+      { path: 'create_inventory', component: InventoryCreateFormComponent },
+      { path: 'edit_inventory/:id', component: InventoriesEditFormComponent },
     ],
   },
   { path: 'forgot_password', component: ForgotPasswordComponent },

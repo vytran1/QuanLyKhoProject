@@ -109,8 +109,9 @@ export class InventoryUserEditFormComponent implements OnInit, OnDestroy {
 
   closeModal() {
     if (this.type === 'success') {
-      this.router.navigate(['/inventory/inventory_users']);
       this.showModal = false;
+      this.inventoryUserService.setPageNum(1);
+      this.router.navigate(['/inventory/inventory_users']);
     } else {
       this.showModal = false;
     }

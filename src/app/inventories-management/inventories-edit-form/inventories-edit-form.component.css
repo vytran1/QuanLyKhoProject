@@ -1,0 +1,109 @@
+.inventory-form-container {
+  min-height: 100vh; /* Full height to center vertically */
+}
+
+/* Add this CSS for form size and spacing */
+.larger-form {
+  width: 1000px; /* Adjust width as needed */
+  padding: 60px; /* Extra padding for spacious look */
+}
+
+.mb-4 {
+  margin-bottom: 2rem; /* Spacing between form groups */
+}
+
+.col-form-label {
+  font-size: 1.25rem; /* Increase label font size */
+}
+
+.form-control,
+.form-select {
+  font-size: 1.25rem; /* Increase input and select font size */
+}
+/* Style for disabled elements */
+.form-control:disabled,
+.form-select:disabled,
+.btn:disabled {
+  background-color: #e9ecef; /* Light gray background */
+  opacity: 0.65; /* Slightly transparent */
+  cursor: not-allowed; /* Disabled cursor */
+}
+
+/* Optional: You can also add a border style to make it more noticeable */
+.form-control:disabled,
+.form-select:disabled {
+  border: 1px solid #ced4da; /* Light gray border */
+}
+/* Style for submit button */
+.btn-primary {
+  background-color: #007bff; /* Bootstrap primary color */
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 1.25rem; /* Increase font size */
+  border-radius: 50px; /* Rounded corners */
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Darker shade of primary color */
+  transform: scale(1.05); /* Slightly larger on hover */
+}
+
+.btn-primary:disabled {
+  background-color: #6c757d; /* Gray background for disabled button */
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+/* Style for error messages */
+.error {
+  color: #ff0000; /* Red color for errors */
+  font-size: 1rem; /* Adjust font size */
+  margin-top: 5px; /* Space above the error message */
+}
+
+/* Style for invalid inputs */
+.form-control.ng-invalid.ng-touched,
+.form-select.ng-invalid.ng-touched {
+  border-color: #ff0000; /* Red border for invalid inputs */
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); /* Add a subtle red shadow */
+}
+
+/* Style for submit button */
+.btn-primary:disabled {
+  background-color: #6c757d; /* Gray background for disabled button */
+  cursor: not-allowed; /* Disabled cursor */
+  opacity: 0.65;
+}
+
+/* Optional: Animation for error message */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.error {
+  animation: fadeIn 0.5s ease-in-out;
+}
+/* Add styles for readonly fields */
+.readonly {
+  background-color: #f0f0f0; /* Lighter background color to show it's read-only */
+  border: 1px solid #ccc; /* Gray border */
+  color: #555; /* Text color */
+  cursor: not-allowed; /* Change cursor to indicate that it's not editable */
+}
+.readonly input {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  color: #555;
+  cursor: not-allowed;
+}
+.disable {
+  background-color: #f1f1f1;
+  pointer-events: none; /* Vô hiệu hóa sự kiện chuột */
+  opacity: 0.6; /* Làm cho trường trông mờ đi */
+}
