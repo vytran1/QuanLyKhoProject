@@ -2,6 +2,8 @@ package com.quanlykho.common;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -54,6 +56,7 @@ public class InventoryUser {
 	private String email;
 	
 	@Column(name = "password")
+	@JsonIgnore
 	private String password;
 	
 	@Column(name = "reset_password_token")

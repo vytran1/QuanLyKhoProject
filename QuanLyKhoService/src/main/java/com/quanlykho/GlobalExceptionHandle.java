@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.quanlykho.common.exception.CountryNotFoundException;
@@ -116,6 +117,21 @@ public class GlobalExceptionHandle extends ResponseEntityExceptionHandler {
 		LOGGER.error(exception.getMessage(),exception);
 		return error;
 	}
+
+	@Override
+	protected ResponseEntity<Object> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex,
+			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+		// TODO Auto-generated method stub
+		ErrorDTO error = new ErrorDTO();
+	    error.setTimestamp(new Date());
+	    error.setStatus(HttpStatus.BAD_REQUEST.value());
+	    error.addError("File size exceeds the allowable limit.");
+	    error.setPath(((ServletWebRequest) request).getRequest().getServletPath());
+	    LOGGER.error(ex.getMessage(), ex);
+	    return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+	}
+	
+	
 	
 	
 }

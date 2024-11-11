@@ -128,7 +128,7 @@ public class InventoryController {
 		inventory.setState(new State(Integer.valueOf(inventoryDTO.getStateId())));
 		try {
 			inventoryService.createInventory(inventory);
-			return new ResponseEntity("Successful creating inventory",HttpStatus.OK);
+			return ResponseEntity.ok().build();
 		} catch (InventoryAlreadyExistInDatabaseException e) {
 			// TODO Auto-generated catch block
 			return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
@@ -165,6 +165,11 @@ public class InventoryController {
 			return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
 		}
 		
+	}
+	
+	@GetMapping("/isExist/{inventoryId}")
+	public ResponseEntity<?> checkIsExistInventoryId(@PathVariable("inventoryId") String inventoryId){
+		return new ResponseEntity(this.inventoryService.isExist(inventoryId),HttpStatus.OK);
 	}
 	
 	

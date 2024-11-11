@@ -1,8 +1,22 @@
 package com.quanlykho.account;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,8 +25,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.quanlykho.Utility;
 import com.quanlykho.common.InventoryUser;
 import com.quanlykho.common.exception.UserNotExistException;
 import com.quanlykho.inventory_user.InventoryUserService;
@@ -37,6 +54,8 @@ public class AccountController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Value("${upload_directory}")
+	private String directory;
 	
 	@GetMapping("")
 	public ResponseEntity<?> getPersonalInformation(){
@@ -108,8 +127,94 @@ public class AccountController {
 		}
 	}
 	
+	@PostMapping(value = "/updateImage",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<?> uploadImage(@RequestParam("photo") MultipartFile file){
+		System.out.println("Uploaded file content type: " + file.getContentType());
+		if(!file.getContentType().startsWith("image/")) {
+			return new ResponseEntity("Chỉ chấp nhận ảnh",HttpStatus.BAD_REQUEST);
+		}
+		
+		String userId = Utility.getMaNhanVien();
+		
+		String originalFileName = file.getOriginalFilename();
+		System.out.println("Original File Name: " + originalFileName);
+		String extensionFileName = originalFileName != null && originalFileName.contains(".") ? originalFileName.substring(originalFileName.lastIndexOf(".")) : ".png";
+		System.out.println("Extension File Name: " +extensionFileName);
+		String date = LocalDate.now().format(DateTimeFormatter.ofPattern("ddMMyyyy"));
+		String officialFilename = date + userId+extensionFileName;
+		System.out.println("Official file name: " + officialFilename);
+		String directoryStoring = directory + "/" +userId;
+		System.out.println("Directory Storing: " + directoryStoring);
+		File file2 = new File(directoryStoring);
+		
+		if(!file2.exists()) {
+			file2.mkdirs();
+		}else {
+            for (File oldFile : file2.listFiles((dir, name) -> name.endsWith(".png") || name.endsWith(".jpeg") || name.endsWith(".jpg"))) {
+                oldFile.delete();
+            }
+		}
+		
+		String filePath =  directoryStoring + "/" + officialFilename;
+		try {
+			file.transferTo(new File(filePath));
+			InventoryUser inventoryUser = inventoryUserService.getByUserId(userId);
+			inventoryUser.setPhotos(filePath);
+			inventoryUserService.simpleSave(inventoryUser);
+			System.out.println("Upload Success");
+			return ResponseEntity.ok().build();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		    return new ResponseEntity(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (UserNotExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	
 	public AccountDTO convertEntityToDTO(InventoryUser inventoryUser) {
 		return modelMapper.map(inventoryUser,AccountDTO.class);
 	}
 	
+	@GetMapping("/profileImage")
+	public ResponseEntity<?> getProfileImage(){
+		//Example: D:/inventory_images/N21DCVT128/05112024N21DCVT128.jpeg from database
+		String userId = Utility.getMaNhanVien();
+		try {
+			InventoryUser inventoryUser = inventoryUserService.getByUserId(userId);
+			Path path = Paths.get(inventoryUser.getPhotos());
+			if (!Files.exists(path)) {
+		            return new ResponseEntity<>("Image not found", HttpStatus.NOT_FOUND);
+		    }
+			Resource resource = new UrlResource(path.toUri());
+			String contentType = Files.probeContentType(path);
+			if (contentType == null) { 
+				contentType = "application/octet-stream"; 
+			}
+			return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).body(resource);
+		} catch (UserNotExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

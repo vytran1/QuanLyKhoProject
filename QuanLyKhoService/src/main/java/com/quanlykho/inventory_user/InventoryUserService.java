@@ -89,10 +89,16 @@ public class InventoryUserService {
 		}
 		
 		inventoryUser.setInventoryRole(inventoryUserFromDatabase.getInventoryRole());
-		inventoryUserRepository.save(inventoryUser);
+		inventoryUserFromDatabase.setFirstName(inventoryUser.getFirstName());
+		inventoryUserFromDatabase.setLastName(inventoryUser.getLastName());
+		inventoryUserFromDatabase.setIdentityNumber(inventoryUser.getIdentityNumber());
+		inventoryUserFromDatabase.setPhoneNumber(inventoryUser.getPhoneNumber());
+		inventoryUserRepository.save(inventoryUserFromDatabase);
 	}
 	
-	
+	public void simpleSave(InventoryUser user) {
+		inventoryUserRepository.save(user);
+	}
 	
 	//Hàm check Email có bị trùng lặp hay không
 	public boolean checkEmailIsDupplicate(String userId,String email) {
@@ -132,6 +138,11 @@ public class InventoryUserService {
 		return false;
 	}
 	
+	public boolean checkUserIdIsDupplicate(String userId) {
+		boolean isExist = inventoryUserRepository.existsById(userId);
+		return isExist;
+	}
+	
 	//Hàm lấy thông tin User by UserId
 	public InventoryUser getByUserId(String userId) throws UserNotExistException {
 		Optional<InventoryUser> inventoryUser = inventoryUserRepository.findById(userId);
@@ -160,9 +171,9 @@ public class InventoryUserService {
 	
 	//Hàm lấy danh sách user có phân trang
 	public Page<InventoryUser> findByPage(Integer pageNum, Integer pageSize, String sortField, String sortDir){
-		Pageable pageable = PageRequest.of(pageNum - 1,pageSize);
 		Sort sort = Sort.by(sortField);
 		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+		Pageable pageable = PageRequest.of(pageNum - 1,pageSize,sort);
 		return inventoryUserRepository.findAll(pageable);
 	}
 	

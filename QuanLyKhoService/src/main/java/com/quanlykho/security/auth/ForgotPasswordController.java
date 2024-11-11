@@ -59,7 +59,7 @@ public class ForgotPasswordController {
 			try {
 				String newPassword = resetPasswordRequest.getNewPassword();
 				inventoryUserService.updatePassword(newPassword, token);
-				return ResponseEntity.ok("Your Password was updated successfully");
+				return ResponseEntity.ok().build();
 			} catch (UserNotFoundException e) {
 				// TODO Auto-generated catch block
 				return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);

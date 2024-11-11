@@ -1,6 +1,10 @@
 package com.quanlykho.inventory_user;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +13,12 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,6 +50,11 @@ public class InventoryUserController {
    
 	@Autowired
 	private InventoryUserService inventoryUserService;
+	
+	@Value("${upload_directory}")
+	private String directory;
+	
+	private static final String anonymouseImage = "D:/inventory_images/anomyus.jpg";
 	
 	@Deprecated
 	@GetMapping("findAll")
@@ -98,6 +111,7 @@ public class InventoryUserController {
 		try {
 			inventoryUser.setInventoryRole(new InventoryRole(1));
 			inventoryUser.setPhotos("Thumbnail.png");
+			inventoryUser.setPassword("123456789ASD");
 			inventoryUserService.saveUser(inventoryUser);
 			return ResponseEntity.ok().build();
 		} catch (UserAlreadyExistException e) {
@@ -217,6 +231,51 @@ public class InventoryUserController {
 		InventoryUserExcelExport excelReport = new InventoryUserExcelExport();
 		excelReport.export(listUsers, response);
 		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/profileImage/{userId}")
+	public ResponseEntity<?> getPersonalImage(@PathVariable("userId") String userId){
+		try {
+			InventoryUser inventoryUser = inventoryUserService.getByUserId(userId);
+			String photoPath = inventoryUser.getPhotos();
+			if(photoPath == null || photoPath.isEmpty() || !Files.exists(Paths.get(photoPath))) {
+				photoPath = anonymouseImage;
+			}
+			Path path = Paths.get(photoPath);
+			Resource resource = new UrlResource(path.toUri());
+			String contentType = Files.probeContentType(path);
+			if(contentType == null) {
+				contentType = "application/octet-stream";
+			}
+			return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).body(resource);
+		} catch (UserNotExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/checkUserId/{userId}")
+	public ResponseEntity<?> checkUserIdIsDupplicate(@PathVariable("userId") String userId){
+		return ResponseEntity.ok(inventoryUserService.checkUserIdIsDupplicate(userId));
+	}
+	
+	@GetMapping("/checkEmail/{email}")
+	public ResponseEntity<?> checkEmailIsDupplicate(@PathVariable("email") String email){
+		return ResponseEntity.ok(inventoryUserService.checkEmailIsDupplicate(null, email));
+	}
+	
+	@GetMapping("/checkIdentityNumber/{identityNumber}")
+	public ResponseEntity<?> checkIdentityNumberIsDupplicate(@PathVariable("identityNumber") String identityNumber){
+		return ResponseEntity.ok(inventoryUserService.checkIdentityNumberlIsDupplicate(null, identityNumber));
 	}
 	
 }

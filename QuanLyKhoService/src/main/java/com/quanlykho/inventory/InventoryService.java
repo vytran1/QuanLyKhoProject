@@ -83,4 +83,8 @@ public class InventoryService {
 	public boolean checkInventoryIdIsUnique(Inventory inventory) {
 		return inventoryRepository.existsById(inventory.getInventoryId());
 	}
+	
+	public boolean isExist(String inventoryId) {
+		return this.inventoryRepository.existsById(inventoryId);
+	}
 }
