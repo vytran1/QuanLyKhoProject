@@ -11,6 +11,7 @@ import { InventoryUserEditFormComponent } from './inventory-user-management/inve
 import { InventoriesManagementComponent } from './inventories-management/inventories-management.component';
 import { InventoryCreateFormComponent } from './inventories-management/inventory-create-form/inventory-create-form.component';
 import { InventoriesEditFormComponent } from './inventories-management/inventories-edit-form/inventories-edit-form.component';
+import { FindStockComponent } from './find-stock/find-stock.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -42,6 +43,7 @@ export const routes: Routes = [
       },
       { path: 'create_inventory', component: InventoryCreateFormComponent },
       { path: 'edit_inventory/:id', component: InventoriesEditFormComponent },
+      { path: 'find_stock', component: FindStockComponent },
     ],
   },
   { path: 'forgot_password', component: ForgotPasswordComponent },

@@ -1,0 +1,57 @@
+<div class="container">
+  <!-- Title -->
+  <h2>Tìm Tồn Kho</h2>
+
+  <!-- Search Form -->
+  <form (ngSubmit)="onSearch()" [formGroup]="form">
+    <label for="productCode">Nhập Mã Sản Phẩm Cần Tìm:</label>
+    <input
+      type="text"
+      id="productCode"
+      formControlName="product_id"
+      placeholder="EX: LEGION5_3050TI_1234"
+    />
+    @if(form.get('product_id').invalid && form.get('product_id').touched){
+    <div class="error">
+      @if(form.get('product_id').errors?.['required']){
+      <div>Mã sản phẩm không được để trống</div>
+      } @if(form.get('product_id').errors?.['pattern']){
+      <div>Mã sản phẩm phải là số</div>
+      } @if(form.get('product_id').errors?.['min']){
+      <div>Mã sản phẩm bé nhất là 1</div>
+      }
+    </div>
+    }
+    <button type="submit" [disabled]="form.invalid">Tìm</button>
+  </form>
+
+  <!-- Display Product Name and Stock Info -->
+  @if(inventoryProduct){
+
+  <div>
+    <h3>Tồn kho của {{ inventoryProduct.productName }}</h3>
+
+    <!-- Stock Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Tên Kho</th>
+          <th>Số Lượng</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of inventoryProduct.quantityList; track $index) {
+        <tr>
+          <td>{{ item.inventoryName }}</td>
+          <td>{{ item.quantity }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @else {
+  <div>
+    <h2>{{ defaultMessage }}</h2>
+  </div>
+  }
+</div>
