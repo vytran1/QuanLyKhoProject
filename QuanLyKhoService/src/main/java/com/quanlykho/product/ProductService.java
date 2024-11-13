@@ -107,4 +107,18 @@ public class ProductService {
 	public void updatePriceOfProduct(Integer productId, float averagePrice) {
 		
 	}
+	
+	public Page<Product> listByPage2(int pageNum,int pageSize,String sortField,String sortDir){
+		Sort sort = Sort.by(sortField);
+		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+		Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
+		return productRepo.findAll(pageable);
+	}
+	
+	public Page<Product> search(int pageNum,int pageSize,String sortField,String sortDir,String keyWord){
+		Sort sort = Sort.by(sortField);
+		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+		Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
+		return productRepo.search(keyWord, pageable);
+	}
 }

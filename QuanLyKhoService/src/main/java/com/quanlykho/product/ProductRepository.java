@@ -35,4 +35,10 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
 	@Query("UPDATE Product p SET p.price = ?2 WHERE p.id = ?1")
 	@Modifying
 	public void updatePriceOfProduct(Integer productId,float averagePrice);
+	
+	
+	@Query("SELECT p FROM Product p "
+			+ "WHERE CONCAT(p.id,' ',p.name,' ',p.alias,' ',p.shortDescription,' ',p.category.name,' ',p.brand.name) "
+			+ "LIKE %?1%")
+	public Page<Product> search(String keyWord,Pageable pageable);
 }

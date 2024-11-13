@@ -35,8 +35,7 @@ public class InventoryController {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-//	@GetMapping("")
-	@Deprecated
+	@GetMapping("/listAll")
 	public ResponseEntity<?> getAllInventory(){
 		List<Inventory> inventories = inventoryService.getAll();
 		if(inventories.size() > 0) {
@@ -74,6 +73,9 @@ public class InventoryController {
 			return ResponseEntity.noContent().build();
 		}
 	}
+	
+	
+	
 	
 	@GetMapping("/search")
 	public ResponseEntity<?> search(

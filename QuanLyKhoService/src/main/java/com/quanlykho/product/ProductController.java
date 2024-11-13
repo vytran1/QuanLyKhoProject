@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.quanlykho.brand.BrandDTO;
+import com.quanlykho.category.CategoryDTO;
 import com.quanlykho.common.Brand;
 import com.quanlykho.common.Category;
 import com.quanlykho.common.Product;
@@ -112,5 +114,71 @@ public class ProductController {
 			e.printStackTrace();
 			return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<?> listByPage2(@RequestParam("pageNum") int pageNum
+			,@RequestParam("pageSize") int pageSize 
+			,@RequestParam("sortField") String sortField
+			,@RequestParam("sortDir") String sortDir
+			){
+		Page<Product> pages = productService.listByPage2(pageNum, pageSize, sortField, sortDir);
+		if(!pages.isEmpty()) {
+			List<Product> products = pages.getContent();
+			List<ProductDTO> productDTOs = products.stream().map(this::convertEntityToDTO).toList();
+			ProductListResult listResult = new ProductListResult();
+			listResult.setProductDTOs(productDTOs);
+			listResult.setPageNum(pageNum);
+			listResult.setPageSize(pageSize);
+			listResult.setSortField(sortField);
+			listResult.setSortDir(sortDir);
+			listResult.setTotalItems(pages.getTotalElements());
+			listResult.setTotalPage(pages.getTotalPages());
+			return ResponseEntity.ok(listResult);
+		}else {
+			return ResponseEntity.noContent().build();
+		}
+	}
+	
+	@GetMapping("/search")
+	public ResponseEntity<?> search(
+			@RequestParam("pageNum") int pageNum
+			,@RequestParam("pageSize") int pageSize 
+			,@RequestParam("sortField") String sortField
+			,@RequestParam("sortDir") String sortDir
+			,@RequestParam("keyWord") String keyWord
+			){
+		Page<Product> pages = productService.search(pageNum, pageSize, sortField, sortDir, keyWord);
+		if(pages.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}else {
+			List<Product> products = pages.getContent();
+			List<ProductDTO> productDTOs = products.stream().map(this::convertEntityToDTO).toList();
+			ProductListResult listResult = new ProductListResult();
+			listResult.setProductDTOs(productDTOs);
+			listResult.setPageNum(pageNum);
+			listResult.setPageSize(pageSize);
+			listResult.setSortField(sortField);
+			listResult.setSortDir(sortDir);
+			listResult.setTotalItems(pages.getTotalElements());
+			listResult.setTotalPage(pages.getTotalPages());
+			listResult.setKeyword(keyWord);
+			return ResponseEntity.ok(listResult); 
+		}
+	}
+	
+	public ProductDTO convertEntityToDTO(Product product) {
+		ProductDTO productDTO = new ProductDTO();
+		productDTO.setId(product.getId());
+		productDTO.setName(product.getName());
+		productDTO.setAlias(product.getAlias());
+		productDTO.setDescription(product.getShortDescription());
+		
+		CategoryDTO categoryDTO = new CategoryDTO(product.getCategory().getId(),product.getCategory().getName());
+		BrandDTO brandDTO = new BrandDTO(product.getBrand().getId(),product.getBrand().getName());
+		
+		productDTO.setCategory(categoryDTO);
+		productDTO.setBrand(brandDTO);
+		return productDTO;
 	}
 }

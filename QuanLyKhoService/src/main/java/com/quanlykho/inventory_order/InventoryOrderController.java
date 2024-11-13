@@ -45,7 +45,8 @@ public class InventoryOrderController {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	@Deprecated
+	//@Deprecated
+	@GetMapping("/all")
 	public ResponseEntity<?> getAll(){
 		List<InventoryOrder> orders = inventoryOrderService.getAll();
 		if(orders.size() > 0) {
@@ -84,6 +85,7 @@ public class InventoryOrderController {
 			return ResponseEntity.noContent().build();
 		}
 	}
+	
 	
 	
 	@GetMapping("/search")
@@ -165,7 +167,11 @@ public class InventoryOrderController {
 	}
 	
 	
-	
+	@GetMapping("/isExist/{orderId}")
+	public ResponseEntity<?> checkExistInventoryOrderId(@PathVariable("orderId") String orderId){
+		boolean isExist = inventoryOrderService.checkUniqueForOrder(orderId);
+		return ResponseEntity.ok(isExist);
+	}
 	
 	//Tạo đơn hàng
 	@PostMapping("")
