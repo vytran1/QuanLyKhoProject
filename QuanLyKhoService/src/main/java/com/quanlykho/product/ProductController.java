@@ -32,16 +32,6 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
-	@GetMapping("findAll")
-	public ResponseEntity<?> listAllProduct(HttpServletRequest request){
-		List<Product> products = productService.listAllProducts();
-		if(products.size() == 0) {
-			return ResponseEntity.noContent().build();
-		}else {
-			return ResponseEntity.ok(products);
-		}
-	}
-	
 	@GetMapping("findByPage")
 	public ResponseEntity<?> listByPage(
 			@RequestParam("pageNum") int pageNum,
@@ -140,6 +130,30 @@ public class ProductController {
 		}
 	}
 	
+	@GetMapping("/findAll")
+	public ResponseEntity<?> getAllProductsByPage2(@RequestParam("pageNum") int pageNum
+			,@RequestParam("pageSize") int pageSize 
+			,@RequestParam("sortField") String sortField
+			,@RequestParam("sortDir") String sortDir
+			){
+		Page<Product> pages = productService.listByPage2(pageNum, pageSize, sortField, sortDir);
+		if(!pages.isEmpty()) {
+			List<Product> products = pages.getContent();
+			List<ProductDTOManagement> productDTOs = products.stream().map(this::convertEntityToDTO_ProductManagement).toList();
+			ProductListManagementResult listResult = new ProductListManagementResult();
+			listResult.setProductDTOs(productDTOs);
+			listResult.setPageNum(pageNum);
+			listResult.setPageSize(pageSize);
+			listResult.setSortField(sortField);
+			listResult.setSortDir(sortDir);
+			listResult.setTotalItems(pages.getTotalElements());
+			listResult.setTotalPage(pages.getTotalPages());
+			return ResponseEntity.ok(listResult);
+		}else {
+			return ResponseEntity.noContent().build();
+		}
+	}
+	
 	@GetMapping("/search")
 	public ResponseEntity<?> search(
 			@RequestParam("pageNum") int pageNum
@@ -153,8 +167,8 @@ public class ProductController {
 			return ResponseEntity.noContent().build();
 		}else {
 			List<Product> products = pages.getContent();
-			List<ProductDTO> productDTOs = products.stream().map(this::convertEntityToDTO).toList();
-			ProductListResult listResult = new ProductListResult();
+			List<ProductDTOManagement> productDTOs = products.stream().map(this::convertEntityToDTO_ProductManagement).toList();
+			ProductListManagementResult listResult = new ProductListManagementResult();
 			listResult.setProductDTOs(productDTOs);
 			listResult.setPageNum(pageNum);
 			listResult.setPageSize(pageSize);
@@ -167,14 +181,29 @@ public class ProductController {
 		}
 	}
 	
-	public ProductDTO convertEntityToDTO(Product product) {
-		ProductDTO productDTO = new ProductDTO();
+	public ProductDTOManagement convertEntityToDTO_ProductManagement(Product product) {
+		ProductDTOManagement productDTO = new ProductDTOManagement();
 		productDTO.setId(product.getId());
 		productDTO.setName(product.getName());
 		productDTO.setAlias(product.getAlias());
 		productDTO.setUnit(product.getUnit());
 		productDTO.setPrice(product.getPrice());
 		productDTO.setEnabled(product.isEnabled());
+		productDTO.setDescription(product.getShortDescription());
+		
+		CategoryDTO categoryDTO = new CategoryDTO(product.getCategory().getId(),product.getCategory().getName());
+		BrandDTO brandDTO = new BrandDTO(product.getBrand().getId(),product.getBrand().getName());
+		
+		productDTO.setCategory(categoryDTO);
+		productDTO.setBrand(brandDTO);
+		return productDTO;
+	}
+	
+	public ProductDTO convertEntityToDTO(Product product) {
+		ProductDTO productDTO = new ProductDTO();
+		productDTO.setId(product.getId());
+		productDTO.setName(product.getName());
+		productDTO.setAlias(product.getAlias());
 		productDTO.setDescription(product.getShortDescription());
 		
 		CategoryDTO categoryDTO = new CategoryDTO(product.getCategory().getId(),product.getCategory().getName());

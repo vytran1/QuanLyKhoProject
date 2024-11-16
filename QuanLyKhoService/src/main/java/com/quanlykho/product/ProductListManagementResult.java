@@ -1,10 +1,9 @@
 package com.quanlykho.product;
 
 import java.util.List;
-import com.quanlykho.product.ProductDTO;
 
-public class ProductListResult {
-	private List<ProductDTO> productDTOs;
+public class ProductListManagementResult {
+    private List<ProductDTOManagement> productDTOs;
     private int pageNum;
 	private int pageSize;
 	private String sortField;
@@ -13,11 +12,11 @@ public class ProductListResult {
 	private String reverseDir;
 	private Long totalItems;
 	private Integer totalPage;
-	public ProductListResult() {
+	public ProductListManagementResult() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ProductListResult(List<ProductDTO> productDTOs, int pageNum, int pageSize, String sortField, String sortDir,
+	public ProductListManagementResult(List<ProductDTOManagement> productDTOs, int pageNum, int pageSize, String sortField, String sortDir,
 			String keyword, String reverseDir, Long totalItems, Integer totalPage) {
 		super();
 		this.productDTOs = productDTOs;
@@ -30,10 +29,10 @@ public class ProductListResult {
 		this.totalItems = totalItems;
 		this.totalPage = totalPage;
 	}
-	public List<ProductDTO> getProductDTOs() {
+	public List<ProductDTOManagement> getProductDTOs() {
 		return productDTOs;
 	}
-	public void setProductDTOs(List<ProductDTO> productDTOs) {
+	public void setProductDTOs(List<ProductDTOManagement> productDTOs) {
 		this.productDTOs = productDTOs;
 	}
 	public int getPageNum() {
@@ -84,5 +83,6 @@ public class ProductListResult {
 	public void setTotalPage(Integer totalPage) {
 		this.totalPage = totalPage;
 	}
+	
 	
 }
