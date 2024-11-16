@@ -140,6 +140,12 @@ export class InventoriesManagementService {
     );
   }
 
+  public listAll(): Observable<HttpResponse<any>> {
+    return this.httpClient.get(`${this.host}/api/inventories/listAll`, {
+      observe: 'response',
+    });
+  }
+
   public setPageNum(pageNum: any) {
     this.pageNumSubject.next(pageNum);
   }

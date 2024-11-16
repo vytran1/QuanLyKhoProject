@@ -12,6 +12,13 @@ import { InventoriesManagementComponent } from './inventories-management/invento
 import { InventoryCreateFormComponent } from './inventories-management/inventory-create-form/inventory-create-form.component';
 import { InventoriesEditFormComponent } from './inventories-management/inventories-edit-form/inventories-edit-form.component';
 import { FindStockComponent } from './find-stock/find-stock.component';
+import { InventoryOrderComponent } from './component/inventory-order/inventory-order.component';
+import { InventoryOrderCreateFormComponent } from './component/inventory-order/inventory-order-create-form/inventory-order-create-form.component';
+import { InventoryOrderDetailFormComponent } from './component/inventory-order/inventory-order-detail-form/inventory-order-detail-form.component';
+import { InventoryOrderEditFormComponent } from './component/inventory-order/inventory-order-edit-form/inventory-order-edit-form.component';
+import { ImportingFormComponent } from './component/importing-form/importing-form.component';
+import { ImportingFormCreateFormComponent } from './component/importing-form/importing-form-create-form/importing-form-create-form.component';
+import { ImportingFormDetailComponent } from './component/importing-form/importing-form-detail/importing-form-detail.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -44,6 +51,28 @@ export const routes: Routes = [
       { path: 'create_inventory', component: InventoryCreateFormComponent },
       { path: 'edit_inventory/:id', component: InventoriesEditFormComponent },
       { path: 'find_stock', component: FindStockComponent },
+      { path: 'inventory_order', component: InventoryOrderComponent },
+      { path: 'create_order', component: InventoryOrderCreateFormComponent },
+      {
+        path: 'inventory_order_detail/:id',
+        component: InventoryOrderDetailFormComponent,
+      },
+      {
+        path: 'edit_order/:id',
+        component: InventoryOrderEditFormComponent,
+      },
+      {
+        path: 'importing_form',
+        component: ImportingFormComponent,
+      },
+      {
+        path: 'create_importing_form/:orderId',
+        component: ImportingFormCreateFormComponent,
+      },
+      {
+        path: 'importing_form_detail/:id',
+        component: ImportingFormDetailComponent,
+      },
     ],
   },
   { path: 'forgot_password', component: ForgotPasswordComponent },

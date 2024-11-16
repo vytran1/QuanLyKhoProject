@@ -1,0 +1,117 @@
+<div class="inventory-order-table-container">
+  <div class="search-and-date-container">
+    <div class="search-container">
+      <app-search (searchEvent)="onKeyWord($event)"></app-search>
+      <button class="btn btn-primary" routerLink="/inventory/create_order">
+        Create Order
+      </button>
+    </div>
+    <div class="search-date-container">
+      <app-search-date (emitEvent)="onSearchDate($event)"></app-search-date>
+    </div>
+  </div>
+  <table class="inventory-order-table">
+    <thead>
+      <tr>
+        <th>
+          <a
+            href="#"
+            (click)="onChangeSort('orderId'); $event.preventDefault()"
+          >
+            Mã Đơn Hàng@if(sortField === 'orderId'){
+            <i
+              class="fas"
+              [ngClass]="{
+                'fa-arrow-up': sortDir === 'asc',
+                'fa-arrow-down': sortDir === 'desc'
+              }"
+            >
+            </i>
+            }
+          </a>
+        </th>
+        <th>
+          <a
+            href="#"
+            (click)="onChangeSort('createdTime'); $event.preventDefault()"
+          >
+            Ngày Lập@if(sortField === 'createdTime'){
+            <i
+              class="fas"
+              [ngClass]="{
+                'fa-arrow-up': sortDir === 'asc',
+                'fa-arrow-down': sortDir === 'desc'
+              }"
+            >
+            </i>
+            }
+          </a>
+        </th>
+        <th>Nhà Cung Cấp</th>
+        <th>Tên Khách Hàng</th>
+        <th>Nhân Viên Lập</th>
+        <th>Mã Kho</th>
+        <th>Thao Tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of inventoryOrders">
+        <td>{{ order.orderId }}</td>
+        <td>{{ order.createdTime | date : "dd/MM/yyyy" }}</td>
+        <td>{{ order.supplier }}</td>
+        <td>{{ order.customerName }}</td>
+        <td>{{ order.createUser }}</td>
+        <td>{{ order.inventoryId }}</td>
+        <td>
+          <button
+            class="btn btn-primary"
+            [routerLink]="['/inventory/inventory_order_detail', order.orderId]"
+          >
+            Details
+          </button>
+          <button
+            class="action-button edit"
+            [disabled]="currentLoginUser !== order.createUser"
+            [routerLink]="['/inventory/edit_order', order.orderId]"
+          >
+            Edit
+          </button>
+          <button
+            class="action-button delete"
+            (click)="openModalWarning(order)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination-container">
+    <app-improved-pagination
+      [pageNum]="pageNum"
+      [totalItems]="totalItems"
+      [totalPage]="totalPage"
+      (pageChange)="onPageNumChange($event)"
+    ></app-improved-pagination>
+  </div>
+  @if(showModalWarning){
+  <app-delete-inventory-user-warning-modal
+    [message]="message"
+    [isVisible]="showModalWarning"
+    (confirmed)="confirmDelete()"
+    (canceled)="cancelDelete()"
+  >
+  </app-delete-inventory-user-warning-modal>
+  } @if(showModalMessage){
+  <app-message-modal
+    [message]="messageRespone"
+    [type]="type"
+    (close)="closeModalResponse()"
+  >
+  </app-message-modal>
+  }
+  <div class="page-size-container">
+    <app-change-page-size (pageSizeChange)="onPageSizeChange($event)">
+    </app-change-page-size>
+  </div>
+</div>

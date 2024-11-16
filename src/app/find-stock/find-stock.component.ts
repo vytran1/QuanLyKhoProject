@@ -35,7 +35,9 @@ export class FindStockComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
 
   onSearch() {
     if (this.form.valid) {

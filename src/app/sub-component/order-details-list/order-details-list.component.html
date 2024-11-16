@@ -1,0 +1,45 @@
+<div class="modal-overlay" (click)="closeModal()"></div>
+<div class="modal-content">
+  <div class="modal-header">
+    <h1>Chọn Chi Tiết Đơn Hàng Để Làm Chi Tiết Phiếu Nhập</h1>
+    <button class="close-button" (click)="closeModal()">&times;</button>
+  </div>
+
+  @if(orderDetails.length > 0){
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>Mã Đơn Hàng</th>
+          <th>Mã Sản Phẩm</th>
+          <th>Số Lượng</th>
+          <th>Đơn Giá</th>
+          <th>Thao Tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of orderDetails; track $index) {
+        <tr>
+          <td>{{ item.orderId }}</td>
+          <td>{{ item.productId }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.unitPrice | currency }}</td>
+          <td>
+            <button
+              class="stylish-button"
+              type="button"
+              (click)="selectItem(item)"
+            >
+              Chọn
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @if(orderDetails.length === 0){
+
+  <div class="no-details">Không có chi tiết đơn hàng nào để hiển thị</div>
+  }
+</div>
