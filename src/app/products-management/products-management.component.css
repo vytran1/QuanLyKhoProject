@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Căn giữa theo chiều dọc */
+  align-items: center;
+  height: 100vh; /* Chiều cao toàn bộ viewport */
+}
+
+.table-responsive {
+  width: 100%; /* Độ rộng của bảng, điều chỉnh theo nhu cầu */
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Khoảng cách giữa các nút */
+}
+
+.btn {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Khoảng cách giữa bảng và pagination */
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* Khoảng cách giữa các nút pagination */
+}
+
+.pagination-container button {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.pagination-container .active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.pagination-info {
+  margin-left: 20px; /* Khoảng cách giữa các nút pagination và thông tin */
+}
+/* Add specific styles for the page size change component */
+app-change-page-size {
+  margin-left: auto; /* Push it to the right */
+}
+.btn-lg-custom {
+  padding: 12px 24px;
+  font-size: 18px;
+  border-radius: 8px;
+}
