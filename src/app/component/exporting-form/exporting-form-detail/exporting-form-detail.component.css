@@ -1,0 +1,81 @@
+/* Tổng thể container */
+.exporting-form-container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+}
+
+/* Tiêu đề */
+.form-header h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Phần thông tin chi tiết */
+.form-details {
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.form-row label {
+  flex: 0 0 180px; /* Cố định độ rộng của label */
+  text-align: left; /* Căn chữ label về bên trái */
+  margin-right: 20px; /* Tạo khoảng cách giữa label và input */
+  font-weight: bold;
+}
+
+.form-row input {
+  width: 80%; /* Giảm chiều rộng của input còn 80% */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #e9ecef;
+}
+
+/* Bảng thông tin */
+.table-container h3 {
+  margin-bottom: 10px;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.table-container th,
+.table-container td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.table-container th {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+/* Tổng tiền */
+.total-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.total-label {
+  margin-right: 10px;
+}
+
+.total-value {
+  color: #007bff;
+}

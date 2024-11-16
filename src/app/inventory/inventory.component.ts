@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AccountInformationService } from '../service/account-information.service';
 import { Subscription } from 'rxjs';
 import { Account } from '../model/account/account.model';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { AuthenticationService } from '../service/authentication.service';
 
 @Component({
   selector: 'app-inventory',
@@ -18,7 +19,9 @@ export class InventoryComponent implements OnInit, OnDestroy {
   profileImage: SafeUrl | null = null;
   constructor(
     private accountService: AccountInformationService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private authenticationService: AuthenticationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -80,5 +83,10 @@ export class InventoryComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe);
+  }
+
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
   }
 }

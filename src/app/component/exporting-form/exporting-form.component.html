@@ -1,1 +1,96 @@
-<p>exporting-form works!</p>
+<div class="inventory-order-table-container">
+  <div class="search-and-date-container">
+    <div class="search-container">
+      <app-search (searchEvent)="onKeyWord($event)"></app-search>
+      <button
+        class="btn btn-primary"
+        routerLink="/inventory/create_exporting_form"
+      >
+        Create Exporting Form
+      </button>
+    </div>
+    <!-- <div class="search-date-container">
+      <app-search-date (emitEvent)="onSearchDate($event)"></app-search-date>
+    </div> -->
+  </div>
+  <table class="inventory-order-table">
+    <thead>
+      <tr>
+        <th>
+          <a
+            href="#"
+            (click)="onChangeSort('orderId'); $event.preventDefault()"
+          >
+            Mã Phiếu Xuất@if(sortField === 'exportingFormId'){
+            <i
+              class="fas"
+              [ngClass]="{
+                'fa-arrow-up': sortDir === 'asc',
+                'fa-arrow-down': sortDir === 'desc'
+              }"
+            >
+            </i>
+            }
+          </a>
+        </th>
+        <th>
+          <a
+            href="#"
+            (click)="onChangeSort('createdTime'); $event.preventDefault()"
+          >
+            Ngày Lập@if(sortField === 'createdTime'){
+            <i
+              class="fas"
+              [ngClass]="{
+                'fa-arrow-up': sortDir === 'asc',
+                'fa-arrow-down': sortDir === 'desc'
+              }"
+            >
+            </i>
+            }
+          </a>
+        </th>
+        <th>Tên Khách Hàng</th>
+        <th>Số Điện Thoại Khách Hàng</th>
+        <th>Nhân Viên Lập</th>
+        <th>Mã Kho</th>
+        <th>Thao Tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if(exportingForms){ @for (item of exportingForms; track $index) {
+      <tr>
+        <td>{{ item.exportingFormId }}</td>
+        <td>{{ item.createdTime | date : "dd/MM/yyyy" }}</td>
+        <td>{{ item.customerName }}</td>
+        <td>{{ item.customerPhoneNumber }}</td>
+        <td>{{ item.inventoryUser }}</td>
+        <td>{{ item.inventory }}</td>
+        <td>
+          <button
+            class="btn btn-primary"
+            [routerLink]="[
+              '/inventory/exporting_form_detail',
+              item.exportingFormId
+            ]"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      } }
+    </tbody>
+  </table>
+  <div class="pagination-container">
+    <app-improved-pagination
+      [pageNum]="pageNum"
+      [totalItems]="totalItems"
+      [totalPage]="totalPage"
+      (pageChange)="onPageNumChange($event)"
+    ></app-improved-pagination>
+  </div>
+  <div class="page-size-container">
+    <app-change-page-size (pageSizeChange)="onPageSizeChange($event)">
+    </app-change-page-size>
+  </div>
+</div>

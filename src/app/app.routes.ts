@@ -19,6 +19,9 @@ import { InventoryOrderEditFormComponent } from './component/inventory-order/inv
 import { ImportingFormComponent } from './component/importing-form/importing-form.component';
 import { ImportingFormCreateFormComponent } from './component/importing-form/importing-form-create-form/importing-form-create-form.component';
 import { ImportingFormDetailComponent } from './component/importing-form/importing-form-detail/importing-form-detail.component';
+import { ExportingFormComponent } from './component/exporting-form/exporting-form.component';
+import { ExportingFormDetailComponent } from './component/exporting-form/exporting-form-detail/exporting-form-detail.component';
+import { ExportingFormCreateFormComponent } from './component/exporting-form/exporting-form-create-form/exporting-form-create-form.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -72,6 +75,18 @@ export const routes: Routes = [
       {
         path: 'importing_form_detail/:id',
         component: ImportingFormDetailComponent,
+      },
+      {
+        path: 'exporting_form',
+        component: ExportingFormComponent,
+      },
+      {
+        path: 'exporting_form_detail/:id',
+        component: ExportingFormDetailComponent,
+      },
+      {
+        path: 'create_exporting_form',
+        component: ExportingFormCreateFormComponent,
       },
     ],
   },

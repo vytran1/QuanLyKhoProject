@@ -1,0 +1,48 @@
+<div class="modal-overlay" (click)="closeModal()"></div>
+<div class="modal-content">
+  @if(inventoryProduct){
+  <div class="modal-header">
+    <h1>
+      Chọn Vật Tư Có Trong Kho {{ inventoryProduct.inventory }} Làm Chi Tiết
+      Phiếu Xuất
+    </h1>
+    <button class="close-button" (click)="closeModal()">&times;</button>
+  </div>
+
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>Mã Sản Phẩm</th>
+          <th>Số Lượng</th>
+          <th>Thao Tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of inventoryProduct.results; track $index) {
+        <tr>
+          <td>{{ item.productId }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>
+            <button
+              class="stylish-button"
+              type="button"
+              (click)="selectItem(item)"
+              [disabled]="item.quantity === 0"
+            >
+              Chọn
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @if(!inventoryProduct){
+
+  <div class="no-details">
+    <h1>Hãy Chọn Một Mã Kho</h1>
+    <button (click)="closeModal()">&times;</button>
+  </div>
+  }
+</div>

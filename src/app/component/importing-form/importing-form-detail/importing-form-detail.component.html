@@ -6,24 +6,24 @@
     <div class="form-row">
       <div class="form-group">
         <label>Mã Phiếu Nhập:</label>
-        <input type="text" [value]="importingForm?.importingFormId" readonly />
+        <input type="text" [value]="importingForm.importingFormId" readonly />
       </div>
       <div class="form-group">
         <label>Ngày Lập:</label>
-        <input type="text" [value]="importingForm?.createdTime" readonly />
+        <input type="text" [value]="importingForm.createdTime" readonly />
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group">
         <label>Mã số nhân viên:</label>
-        <input type="text" [value]="importingForm?.inventoryUserId" readonly />
+        <input type="text" [value]="importingForm.inventoryUserId" readonly />
       </div>
       <div class="form-group">
         <label>Họ tên người lập:</label>
         <input
           type="text"
-          [value]="importingForm?.inventoryUserFullname"
+          [value]="importingForm.inventoryUserFullname"
           readonly
         />
       </div>
@@ -32,22 +32,22 @@
     <div class="form-row">
       <div class="form-group">
         <label>Mã Đơn Đặt Hàng:</label>
-        <input type="text" [value]="importingForm?.orderId" readonly />
+        <input type="text" [value]="importingForm.orderId" readonly />
       </div>
       <div class="form-group">
         <label>Họ tên khách hàng:</label>
-        <input type="text" [value]="importingForm?.customerName" readonly />
+        <input type="text" [value]="importingForm.customerName" readonly />
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group">
         <label>Nhập vào kho:</label>
-        <input type="text" [value]="importingForm?.inventoryId" readonly />
+        <input type="text" [value]="importingForm.inventoryId" readonly />
       </div>
       <div class="form-group">
         <label>Địa chỉ:</label>
-        <input type="text" [value]="importingForm?.inventoryAddress" readonly />
+        <input type="text" [value]="importingForm.inventoryAddress" readonly />
       </div>
     </div>
   </div>
@@ -77,7 +77,7 @@
 
   <div class="total-section">
     <span>Tổng tiền:</span>
-    <strong>{{ importingForm?.totalAmount | currency : "VND" }}</strong>
+    <strong>{{ importingForm.totalAmount | currency : "VND" }}</strong>
   </div>
 
   <button class="close-button" (click)="onClose()">Close</button>

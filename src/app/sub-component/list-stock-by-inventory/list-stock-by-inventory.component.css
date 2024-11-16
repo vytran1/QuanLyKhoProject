@@ -1,0 +1,135 @@
+/* Modal overlay to cover the background */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it appears above other content */
+}
+
+/* Updated modal content for larger size */
+.modal-content {
+  width: 95%; /* Increase width for a larger modal */
+  max-width: 1000px; /* Set a larger maximum width */
+  max-height: 90vh; /* Optional: Limit height to 90% of viewport */
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow-y: auto; /* Enables scrolling if content is too tall */
+  z-index: 1010; /* Higher than overlay to ensure clickability */
+}
+
+/* Modal header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* Close button */
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #888;
+}
+
+/* Ensures table takes full width inside the modal */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background-color: #f4f4f4;
+}
+/* Stylish button */
+.stylish-button {
+  background-color: #4caf50; /* Green background */
+  color: white; /* White text */
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect */
+.stylish-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Active effect for button click */
+.stylish-button:active {
+  background-color: #3e8e41; /* Even darker green when clicked */
+  transform: translateY(1px); /* Slight press effect */
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+/* CSS cho nút bị vô hiệu hóa */
+.stylish-button:disabled {
+  background-color: #ccc; /* Màu nền xám nhạt */
+  color: #888; /* Màu chữ xám */
+  cursor: not-allowed; /* Biểu tượng chuột không cho phép */
+  box-shadow: none; /* Tắt hiệu ứng đổ bóng */
+  transform: none; /* Tắt hiệu ứng chuyển đổi */
+}
+.no-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  padding: 20px;
+}
+
+.no-details h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.no-details button {
+  background-color: #ff6f61; /* Màu nền nút */
+  color: white; /* Màu chữ nút */
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.no-details button:hover {
+  background-color: #ff3d2e; /* Màu nền khi hover */
+}
+
+.no-details button:active {
+  background-color: #e63929; /* Màu nền khi bấm */
+  transform: translateY(1px); /* Hiệu ứng nhấn nút */
+}

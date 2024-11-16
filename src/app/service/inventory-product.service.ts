@@ -16,4 +16,13 @@ export class InventoryProductService {
       { observe: 'response' }
     );
   }
+
+  public findStockByInventoryId(
+    inventoryId: string
+  ): Observable<HttpResponse<any>> {
+    return this.httpClient.get(
+      `${this.host}/api/inventory_product/stock_inventory/${inventoryId}`,
+      { observe: 'response' }
+    );
+  }
 }
