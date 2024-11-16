@@ -8,7 +8,7 @@ import {
   switchMap,
 } from 'rxjs';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
-import { Product } from '../model/products/products.model';
+import { Product } from '../model/product/productsManagement.model';
 
 @Injectable({
   providedIn: 'root',
@@ -45,7 +45,7 @@ export class ProductsManagementService {
           if (keyWord) {
             return this.searchProducts(pageNum, pageSize, sortField, sortDir, keyWord);
           } else {
-            return this.getProductsByPage(
+            return this.getAllProductsByPage(
               pageNum,
               pageSize,
               sortField,
@@ -70,7 +70,7 @@ export class ProductsManagementService {
       });
   }
 
-  public getProductsByPage(
+  public getAllProductsByPage(
     pageNum: number,
     pageSize: number,
     sortField: string,
@@ -83,20 +83,10 @@ export class ProductsManagementService {
     params = params.append('sortField', sortField);
     params = params.append('sortDir', sortDir);
    
-    return this.httpClient.get(`${this.host}/api/v1/products/all`, {
+    return this.httpClient.get(`${this.host}/api/v1/products/findAll`, {
       observe: 'response',
       params: params,
     });
-  }
-
-  public listAllProducts(pageNum: number, pageSize: number, sortField: string, sortDir: string): Observable<any> {
-    const params = new HttpParams()
-      .set('pageNum', pageNum.toString())
-      .set('pageSize', pageSize.toString())
-      .set('sortField', sortField)
-      .set('sortDir', sortDir);
-
-    return this.httpClient.get<any>(`api/v1/products/all`, { params });
   }
 
   public searchProducts(
@@ -174,6 +164,6 @@ export class ProductsManagementService {
   }
 
   public getFirstPage() {
-    return this.getProductsByPage(1, 2, 'name', 'asc');
+    return this.getAllProductsByPage(1, 2, 'name', 'asc');
   }
 }

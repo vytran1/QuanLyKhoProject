@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
-import { Product } from '../../model/products/products.model';
+import { Product } from '../../model/product/productsManagement.model';
 import { BehaviorSubject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 

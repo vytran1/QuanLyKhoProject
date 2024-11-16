@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Product } from '../model/products/products.model';
+import { Product } from '../model/product/productsManagement.model';
 import { ProductsManagementService } from '../service/products-management.service';
 import { Subscription } from 'rxjs';
 import { ImprovedPaginationComponent } from '../improved-pagination/improved-pagination.component';
@@ -83,7 +83,7 @@ export class ProductsManagementComponent implements OnInit, OnDestroy {
   loadData() {
     this.subscriptions.push(
       this.productMnService
-        .getProductsByPage(1, 2, 'productName', 'asc')
+        .getAllProductsByPage(1, 2, 'productName', 'asc')
         .subscribe({
           next: (response) => {
             console.log('Products Load');
