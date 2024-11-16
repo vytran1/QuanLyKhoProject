@@ -175,5 +175,17 @@ public class Product {
 	    System.out.println("Timestamps have been updated");
 	}
 
+
+
+	public float getPrice() {
+		return price;
+	}
+
+
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
 	
 }
