@@ -148,6 +148,10 @@ public class InventoryOrderService {
 		return inventoryOrder.get();
 	}
 	
+	public List<InventoryOrderDetail> getOrderDetailsByOrderId(String orderId){
+		return this.inventoryOrderDetailRepository.getOrderDetailsByOrderId(orderId);
+	}
+	
 	public List<InventoryOrder> getAllOrderWithoutImporingForms(){
 		return inventoryOrderRepository.getInventoryOrderWithoutImportingOrder();
 	}

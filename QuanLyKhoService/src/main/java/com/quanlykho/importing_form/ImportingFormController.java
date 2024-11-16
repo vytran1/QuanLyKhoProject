@@ -168,6 +168,17 @@ public class ImportingFormController {
 	}
 	
 	
+	@GetMapping("/exist/{id}")
+	public ResponseEntity<?> checkImportingFormIdIsExist(@PathVariable("id") String id){
+		boolean isExist = importingFormService.checkImportingFormIdIsExist(id);
+		if(isExist) {
+			return ResponseEntity.ok(isExist);
+		}else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Importing Form Not Found");
+		}
+	}
+	
+	
 	
 	
 	public ImportingFormDTO convertEntityToDTO(ImportingForm importingForm) {

@@ -124,4 +124,8 @@ public class ImportingFormService {
 		return importingFormRepository.search(keyWord, pageable);
 	}
 	
+	public boolean checkImportingFormIdIsExist(String importingFormId) {
+		return importingFormRepository.existsById(importingFormId);
+	}
+	
 }

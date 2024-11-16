@@ -173,6 +173,15 @@ public class InventoryOrderController {
 		return ResponseEntity.ok(isExist);
 	}
 	
+	
+	@GetMapping("/orderDetail/{orderId}")
+	public ResponseEntity<?> getOrderDetailsByOrderId(@PathVariable("orderId") String orderId){
+		List<InventoryOrderDetail> orderDetails = inventoryOrderService.getOrderDetailsByOrderId(orderId);
+		List<InventoryOrderDetailDTO> orderDTOs = orderDetails.stream().map(this::convertDetaiLEntityToDetailDTO).toList();
+		return ResponseEntity.ok(orderDTOs);
+	}
+	
+	
 	//Tạo đơn hàng
 	@PostMapping("")
 	public ResponseEntity<?> createOrder(@RequestBody InventoryOrderDTO requestBody){
@@ -334,6 +343,15 @@ public class InventoryOrderController {
 			imDtoForDetailFunction.getDetails().add(inventoryOrderDetailDTO);
 			imDtoForDetailFunction.setTotal(imDtoForDetailFunction.getTotal() + total);
 		});
+	}
+	
+	public InventoryOrderDetailDTO convertDetaiLEntityToDetailDTO(InventoryOrderDetail entity) {
+		InventoryOrderDetailDTO dto = new InventoryOrderDetailDTO();
+		dto.setOrderId(entity.getInventoryOrder().getOrderId());
+		dto.setProductId(entity.getProduct().getId());
+		dto.setQuantity(entity.getQuantity());
+		dto.setUnitPrice(entity.getUnitPrice());
+		return dto;
 	}
 	
 }
