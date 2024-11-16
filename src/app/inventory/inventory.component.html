@@ -15,6 +15,9 @@
       <a routerLink="/inventory/inventories" routerLinkActive="active"
         >Quản Lý Kho Hàng</a
       >
+      <a routerLink="/inventory/products" routerLinkActive="active"
+        >Quản Lý Sản Phẩm</a
+      >
       <a routerLink="/inventory/find_stock" routerLinkActive="active"
         >Tìm tồn kho</a
       >
@@ -25,9 +28,10 @@
         Quản Lý Phiếu Nhập
       </a>
 
-      <a routerLink="/inventory/products" routerLinkActive="active"
-        >Quản Lý Sản Phẩm</a
-      >
+      <a routerLink="/inventory/exporting_form" routerLinkActive="active">
+        Quản Lý Phiếu Xuất
+      </a>
+      <a (click)="logout()"> Đăng Xuất </a>
     </nav>
   </div>
 

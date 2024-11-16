@@ -97,7 +97,7 @@ export const routes: Routes = [
       },
     ],
   },
-  
+
   { path: 'forgot_password', component: ForgotPasswordComponent },
   { path: 'reset_password', component: ResetPasswordComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
