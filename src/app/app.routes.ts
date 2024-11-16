@@ -12,6 +12,7 @@ import { InventoriesManagementComponent } from './inventories-management/invento
 import { InventoryCreateFormComponent } from './inventories-management/inventory-create-form/inventory-create-form.component';
 import { InventoriesEditFormComponent } from './inventories-management/inventories-edit-form/inventories-edit-form.component';
 import { FindStockComponent } from './find-stock/find-stock.component';
+import { ProductsManagementComponent } from './products-management/products-management.component';
 import { InventoryOrderComponent } from './component/inventory-order/inventory-order.component';
 import { InventoryOrderCreateFormComponent } from './component/inventory-order/inventory-order-create-form/inventory-order-create-form.component';
 import { InventoryOrderDetailFormComponent } from './component/inventory-order/inventory-order-detail-form/inventory-order-detail-form.component';
@@ -54,6 +55,12 @@ export const routes: Routes = [
       { path: 'create_inventory', component: InventoryCreateFormComponent },
       { path: 'edit_inventory/:id', component: InventoriesEditFormComponent },
       { path: 'find_stock', component: FindStockComponent },
+      {
+        path: 'products',
+        component: ProductsManagementComponent,
+      },
+      { path: 'create_product', component: InventoryCreateFormComponent },
+      { path: 'edit_product/:id', component: InventoriesEditFormComponent },
       { path: 'inventory_order', component: InventoryOrderComponent },
       { path: 'create_order', component: InventoryOrderCreateFormComponent },
       {
@@ -90,6 +97,7 @@ export const routes: Routes = [
       },
     ],
   },
+  
   { path: 'forgot_password', component: ForgotPasswordComponent },
   { path: 'reset_password', component: ResetPasswordComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },

@@ -1,0 +1,126 @@
+<div class="container mt-5">
+  <div class="search-table-container">
+    <div class="search-container">
+      <app-search (searchEvent)="onSearch($event)"></app-search>
+      <button
+        class="btn btn-primary btn-lg-custom"
+        routerLink="/product/create_product"
+      >
+        Add Product
+      </button>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover text-center">
+        <thead class="thead-dark">
+          <tr>
+            <th>
+              <a
+                href="#"
+                (click)="changeSort('id'); $event.preventDefault()"
+              >
+                Product Id @if(sortField === 'id'){
+                <i
+                  class="fas"
+                  [ngClass]="{
+                    'fa-arrow-up': sortDir === 'asc',
+                    'fa-arrow-down': sortDir === 'desc'
+                  }"
+                ></i>
+                }
+              </a>
+            </th>
+            <th>
+              <a
+                href="#"
+                (click)="changeSort('name'); $event.preventDefault()"
+              >
+                Product Name @if(sortField === 'name'){
+                <i
+                  class="fas"
+                  [ngClass]="{
+                    'fa-arrow-up': sortDir === 'asc',
+                    'fa-arrow-down': sortDir === 'desc'
+                  }"
+                ></i>
+                }
+              </a>
+            </th>
+            <th>Product Code: </th>
+            <th>Unit:</th>
+            <th>Enabled:</th>
+            <th>Actions:</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of products; track $index) {
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.alias}}</td>
+          
+            <td>{{ item.unit }}</td>
+            <td>{{ item.enabled }}</td>
+            <td>
+              <div class="action-buttons">
+                <button
+                  class="btn btn-success"
+                  (click)="showModalDetails(item)"
+                >
+                  Details
+                </button>
+                <button
+                  class="btn btn-primary btn-sm"
+                  [routerLink]="['/product/edit_product', item.id]"
+                >
+                  Edit
+                </button>
+                <button
+                  class="btn btn-danger btn-sm"
+                  (click)="openModalWarningDelete(item)"
+                >
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <app-improved-pagination
+    [pageNum]="pageNum"
+    [totalPage]="totalPage"
+    [totalItems]="totalItems"
+    (pageChange)="onPageChange($event)"
+  >
+  </app-improved-pagination>
+  <app-change-page-size
+    (pageSizeChange)="onPageSizeChange($event)"
+  ></app-change-page-size>
+
+  @if(showModal){
+
+  <app-products-modal-details
+    [showModal]="showModal"
+    [product]="selectedProduct"
+    (closeModalEvent)="closeModal()"
+  >
+  </app-products-modal-details>
+  } @if(showModalWarning){
+  <app-delete-inventory-user-warning-modal
+    [isVisible]="showModalWarning"
+    [message]="messageDelete"
+    (canceled)="cancelDeleteOperation()"
+    (confirmed)="confirmDeleteOperation()"
+  >
+  </app-delete-inventory-user-warning-modal>
+  } @if(showModalMessage){
+  <app-message-modal
+    [message]="message"
+    [type]="type"
+    (close)="closeModalMessage()"
+  >
+  </app-message-modal>
+  }
+</div>

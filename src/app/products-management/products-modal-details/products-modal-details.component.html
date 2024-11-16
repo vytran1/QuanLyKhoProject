@@ -1,0 +1,48 @@
+@if(showModal) {
+<div class="modal" (click)="closeModal()" [ngClass]="{ show: showModal }">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h4 class="modal-title">Product Details</h4>
+      <button class="close-btn" (click)="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <form action="" class="product-form">
+        <div class="form-group">
+          <label for="id">Product Id:</label>
+          <input type="text" id="id" [value]="product?.id" readonly />
+        </div>
+        <div class="form-group">
+          <label for="name">Product Name:</label>
+          <input type="text" id="name" [value]="product?.name" readonly />
+        </div>
+        <div class="form-group">
+          <label for="alias">Product Code:</label>
+          <input type="text" id="alias" [value]="product?.alias" readonly />
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <input type="text" id="description" [value]="product?.description" readonly />
+        </div>
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input type="number" id="price" [value]="product?.price" readonly />
+        </div>
+        <div class="form-group">
+          <label for="enabled">Status (Enabled):</label>
+          <input type="text" id="enabled" [value]="product?.enabled" readonly />
+        </div>
+        <div class="form-group">
+          <label for="unit">Unit:</label>
+          <input type="text" id="unit" [value]="product?.unit" readonly />
+        </div>
+       
+        
+        
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+}
