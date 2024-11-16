@@ -2,6 +2,7 @@ package com.quanlykho.exporting_form;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.modelmapper.ModelMapper;
@@ -149,6 +150,13 @@ public class ExportingFormController {
 			e.printStackTrace();
 			return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
+   }
+   
+   
+   @GetMapping("/exist/{exportingFormId}")
+   public ResponseEntity<?> checkIsExist(@PathVariable("exportingFormId") String exportingFormId){
+	   boolean isExist = this.exportingFormService.checkExist(exportingFormId);
+	   return ResponseEntity.ok(Map.of("isExist",isExist));
    }
    
    public ExportingFormDTO convertEntityToDTO(ExportingForm exportingForm) {

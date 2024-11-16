@@ -1,5 +1,7 @@
 package com.quanlykho.inventory_product;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.quanlykho.common.Inventory;
 import com.quanlykho.common.InventoryProduct;
+import com.quanlykho.common.exception.InventoryNotFoundException;
 import com.quanlykho.common.exception.ProductNotFoundException;
 import com.quanlykho.inventory.InventoryService;
 
@@ -64,6 +67,24 @@ public class InventoryProductController {
 		}
 	}
 	
+	@GetMapping("/stock_inventory/{inventoryId}")
+	public ResponseEntity<?> getStockQuantiryByInventory(@PathVariable("inventoryId") String inventoryId){
+		try {
+			List<InventoryProduct> listResults = inventoryProductService.findStockByInventoryId(inventoryId);
+			if(listResults.size() > 0) {
+				InventoryProductForExportingForm resultDTO = this.convertEntityToDTO2(listResults);
+				return ResponseEntity.ok(resultDTO);
+			}else {
+				return ResponseEntity.noContent().build();
+			}
+		} catch (InventoryNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	
 	
 	public InventoryProductResult convertEntityToDTO(List<InventoryProduct> entities) {
 	    InventoryProductResult inventoryProductResult = new InventoryProductResult();
@@ -78,6 +99,19 @@ public class InventoryProductController {
 
 	    inventoryProductResult.setResults(quantities);
 	    return inventoryProductResult;
+	}
+	
+	public InventoryProductForExportingForm convertEntityToDTO2(List<InventoryProduct> results) {
+		InventoryProductForExportingForm resultDTO = new InventoryProductForExportingForm();
+		String inventoryName = results.get(0).getInventory().getInventoryName();
+		resultDTO.setInventory(inventoryName);
+		
+		for(InventoryProduct iv : results) {
+			Integer productId = iv.getProduct().getId();
+			Integer quantity = iv.getQuantity();
+			resultDTO.getResults().add(new ProductQuantity(productId, quantity));
+		}
+		return resultDTO;
 	}
 	
 }

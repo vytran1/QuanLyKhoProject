@@ -20,4 +20,7 @@ public interface InventoryProductRepository extends JpaRepository<InventoryProdu
 	
 	@Query("SELECT iv FROM InventoryProduct iv WHERE iv.product.id = ?1")
 	public List<InventoryProduct> findStockByProductId(Integer productId);
+	
+	@Query("SELECT iv FROM InventoryProduct iv WHERE iv.inventory.id = ?1")
+	public List<InventoryProduct> findStockByInventoryId(String inventoryId);
 }

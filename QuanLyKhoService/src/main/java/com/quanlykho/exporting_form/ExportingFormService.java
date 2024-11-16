@@ -97,4 +97,9 @@ public class ExportingFormService {
 	   Pageable pageable = PageRequest.of(pageNum -1, pageSize, sort);
 	   return exportingFormRepository.search(keyWord, pageable);
    }
+   
+   public boolean checkExist(String exportingFormId) {
+	   return this.exportingFormRepository.existsById(exportingFormId);
+   }
+   
 }
