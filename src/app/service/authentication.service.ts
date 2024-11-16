@@ -88,6 +88,8 @@ export class AuthenticationService {
       if (this.jwtHelper.decodeToken(this.jwtToken).sub != null || '') {
         if (!this.jwtHelper.isTokenExpired(this.jwtToken)) {
           this.loggedInUsername = this.jwtHelper.decodeToken(this.jwtToken).sub;
+          console.log('User loggin with name is:' + this.loggedInUsername);
+
           return true;
         }
       }
@@ -98,6 +100,22 @@ export class AuthenticationService {
 
   public setRole(): any {
     this.role = this.jwtHelper.decodeToken(this.jwtToken).role;
+    console.log(this.jwtHelper.decodeToken(this.jwtToken).sub);
+
     return this.role != null ? this.role : null;
+  }
+
+  public getUsernameFromToken(): string | null {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      const subject = decodedToken.sub; // Assuming sub contains the value "Nguyễn Trần Vỹ,N21DCVT128,vy.tn171003@gmail.com"
+      if (subject) {
+        const username = subject.split(',')[0]; // Take the first part before the comma
+        // console.log('Username extracted:', username);
+        return username;
+      }
+    }
+    return null; // Return null if no token or subject found
   }
 }

@@ -1,0 +1,80 @@
+<div class="table-container">
+  <div class="search-container">
+    <app-search (searchEvent)="onKeyWord($event)"></app-search>
+    <button (click)="openOrderWithoutIDFList()" class="btn btn-primary">
+      Create Importing Form
+    </button>
+  </div>
+  <table class="importing-form-table">
+    <thead>
+      <tr>
+        <th>Mã Phiếu Nhập</th>
+        <th>
+          <a
+            href="#"
+            (click)="onSortFieldChange('createdTime'); $event.preventDefault()"
+          >
+            Ngày Lập@if(sortField === 'createdTime'){
+            <i
+              class="fas"
+              [ngClass]="{
+                'fa-arrow-up': sortDir === 'asc',
+                'fa-arrow-down': sortDir === 'desc'
+              }"
+            >
+            </i>
+            }
+          </a>
+        </th>
+        <th>Mã Đơn Đặt Hàng</th>
+        <th>Nhân Viên Lập</th>
+        <th>Tên Kho</th>
+        <th>Tùy Chỉnh</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of importingForms; track $index) {
+      <tr>
+        <td>{{ item.importingFormId }}</td>
+        <td>{{ item.createdTime }}</td>
+        <td>{{ item.inventoryOrder }}</td>
+        <td>{{ item.inventoryUser }}</td>
+        <td>{{ item.inventory }}</td>
+        <td>
+          <button
+            class="btn-detail"
+            [routerLink]="[
+              '/inventory/importing_form_detail',
+              item.importingFormId
+            ]"
+          >
+            Detail
+          </button>
+          <!-- <button class="btn-edit">Edit</button>
+          <button class="btn-delete">Delete</button> -->
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+<div class="pagination-container">
+  <app-improved-pagination
+    class="pagination"
+    [pageNum]="pageNum"
+    [totalItems]="totalItems"
+    [totalPage]="totalPage"
+    (pageChange)="onPageNumChange($event)"
+  ></app-improved-pagination>
+</div>
+<app-change-page-size
+  class="page-size"
+  (pageSizeChange)="onPageSizeChange($event)"
+></app-change-page-size>
+
+@if(showOrderWithoutIDFList){
+<app-order-without-importingform-list
+  (eventEmitter)="closeOrderWithoutIDFList()"
+>
+</app-order-without-importingform-list>
+}

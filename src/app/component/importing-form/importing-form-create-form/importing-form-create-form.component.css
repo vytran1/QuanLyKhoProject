@@ -1,0 +1,181 @@
+/* Main container styling */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+}
+
+/* Form styling */
+form {
+  width: 100%; /* Expand form width to 100% */
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* Section headers */
+h1 {
+  font-weight: bold;
+  color: #333;
+  text-align: center; /* Keep main title centered */
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 8px;
+  margin-top: 20px;
+  width: 100%; /* Allow h2 to expand to the form width */
+  text-align: left; /* Align h2 to the left */
+}
+
+/* Labels styling */
+form label {
+  display: block;
+  font-weight: bold;
+  margin-top: 15px;
+  color: #333;
+}
+
+/* Inputs and selects */
+form input[type="text"],
+form select {
+  width: 100%; /* Ensure inputs and selects take full width */
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+.error-message {
+  color: #d9534f;
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: -10px;
+  margin-bottom: 15px;
+}
+.error-message div {
+  margin-bottom: 5px;
+}
+/* Style for disabled input fields and select elements */
+form input[disabled],
+form select[disabled] {
+  background-color: #e9ecef; /* Light gray background */
+  color: #6c757d; /* Dimmed text color */
+  border: 1px solid #ced4da; /* Slightly darker border */
+  cursor: not-allowed; /* Not-allowed cursor */
+  opacity: 0.7; /* Reduced opacity for a disabled look */
+}
+
+/* Style for disabled button */
+button:disabled {
+  background-color: #d6d8db; /* Gray background */
+  color: #a8a9ad; /* Dimmed text color */
+  border: 1px solid #bfc2c5; /* Slightly darker border */
+  cursor: not-allowed; /* Not-allowed cursor */
+  opacity: 0.7; /* Reduced opacity for a disabled look */
+}
+
+/* Additional styles for error message when field is disabled */
+.error-message:disabled {
+  background-color: #f9e2e2; /* Light red background */
+  color: #d9534f; /* Red text color */
+  border: 1px solid #e0b4b4; /* Light red border */
+  opacity: 0.7; /* Reduced opacity */
+}
+/* Wrapper to center the modal */
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+  z-index: 1000; /* Ensure it appears above other content */
+}
+/* Custom styles for the table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ddd;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Custom styles for input fields within the table */
+table input {
+  width: calc(100% - 24px); /* Adjust width to fit padding */
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #4caf50; /* Green */
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+/* Custom styles for readonly input fields */
+/* Custom styles for input fields within the table */
+table input {
+  width: calc(100% - 24px); /* Adjust width to fit padding */
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+} /* Ensure readonly inputs within table also have proper styles */
+table input[readonly] {
+  background-color: #f5f5f5;
+  color: #555;
+  cursor: not-allowed;
+  border: 1px solid #ccc;
+}

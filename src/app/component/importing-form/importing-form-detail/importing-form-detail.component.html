@@ -1,0 +1,86 @@
+@if(importingForm){
+<div class="importing-form-container">
+  <h2 class="importing-form-title">Thông Tin Phiếu Nhập</h2>
+
+  <div class="form-details">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Mã Phiếu Nhập:</label>
+        <input type="text" [value]="importingForm?.importingFormId" readonly />
+      </div>
+      <div class="form-group">
+        <label>Ngày Lập:</label>
+        <input type="text" [value]="importingForm?.createdTime" readonly />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Mã số nhân viên:</label>
+        <input type="text" [value]="importingForm?.inventoryUserId" readonly />
+      </div>
+      <div class="form-group">
+        <label>Họ tên người lập:</label>
+        <input
+          type="text"
+          [value]="importingForm?.inventoryUserFullname"
+          readonly
+        />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Mã Đơn Đặt Hàng:</label>
+        <input type="text" [value]="importingForm?.orderId" readonly />
+      </div>
+      <div class="form-group">
+        <label>Họ tên khách hàng:</label>
+        <input type="text" [value]="importingForm?.customerName" readonly />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nhập vào kho:</label>
+        <input type="text" [value]="importingForm?.inventoryId" readonly />
+      </div>
+      <div class="form-group">
+        <label>Địa chỉ:</label>
+        <input type="text" [value]="importingForm?.inventoryAddress" readonly />
+      </div>
+    </div>
+  </div>
+
+  <h3 class="importing-form-subtitle">Thông tin Chi tiết Phiếu nhập</h3>
+
+  <table class="details-table">
+    <thead>
+      <tr>
+        <th>Mã Phiếu Nhập</th>
+        <th>Mã Vật Tư</th>
+        <th>Số Lượng</th>
+        <th>Đơn giá</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of importingForm.details; track $index) {
+      <tr>
+        <td>{{ item.importingFormId }}</td>
+        <td>{{ item.productId }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.unitPrice }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="total-section">
+    <span>Tổng tiền:</span>
+    <strong>{{ importingForm?.totalAmount | currency : "VND" }}</strong>
+  </div>
+
+  <button class="close-button" (click)="onClose()">Close</button>
+</div>
+
+}

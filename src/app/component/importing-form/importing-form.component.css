@@ -1,0 +1,107 @@
+.table-container {
+  margin: 0 auto;
+  padding: 20px;
+  width: 95%; /* Độ rộng toàn trang */
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 350px; /* Khoảng cách từ trên xuống */
+}
+
+.importing-form-table {
+  width: 100%; /* Chiếm hết chiều rộng của container */
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.importing-form-table th,
+.importing-form-table td {
+  padding: 12px;
+  text-align: left;
+}
+
+.importing-form-table th {
+  background-color: #343a40;
+  color: #fff;
+  font-weight: bold;
+}
+
+.importing-form-table td {
+  background-color: #fff;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.importing-form-table tr:hover td {
+  background-color: #f1f3f5;
+  cursor: pointer;
+}
+
+.importing-form-table tr:nth-child(even) td {
+  background-color: #f8f9fa;
+}
+
+.importing-form-table th:first-child,
+.importing-form-table td:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.importing-form-table th:last-child,
+.importing-form-table td:last-child {
+  border-radius: 0 8px 8px 0;
+}
+
+.importing-form-table th,
+.importing-form-table td {
+  transition: background-color 0.3s ease;
+}
+
+.importing-form-table td:last-child {
+  text-align: center;
+}
+
+.table-container h2 {
+  font-size: 24px;
+  color: #343a40;
+  margin-bottom: 16px;
+}
+.btn-detail,
+.btn-edit,
+.btn-delete {
+  padding: 6px 12px;
+  margin: 0 5px; /* Tạo khoảng cách giữa các nút */
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn-detail {
+  background-color: #007bff;
+}
+.btn-detail:hover {
+  background-color: #0056b3;
+}
+.btn-edit {
+  background-color: #28a745; /* Xanh lá */
+}
+.btn-edit:hover {
+  background-color: #218838; /* Màu xanh lá đậm hơn khi hover */
+}
+.btn-delete {
+  background-color: #dc3545;
+}
+.btn-delete:hover {
+  background-color: #c82333;
+}
+.pagination {
+  margin-top: 40px; /* Tạo khoảng cách lớn hơn từ bảng */
+  display: flex;
+  justify-content: center; /* Căn giữa */
+  align-items: center;
+}
+.page-size {
+  position: absolute; /* Chuyển sang vị trí tuyệt đối */
+  right: 20px; /* Đẩy sang phải */
+  bottom: 20px; /* Đẩy xuống dưới */
+}
