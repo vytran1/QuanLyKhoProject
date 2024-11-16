@@ -7,16 +7,22 @@ public class ProductDTO {
     private Integer id;
     private String alias;
     private String name;
+    private String unit;
+    private Boolean enabled;
+    private Float price;
     private String description;
     private CategoryDTO category;
     private BrandDTO brand;
     
     
-	public ProductDTO(Integer id, String alias, String name, String description, CategoryDTO category, BrandDTO brand) {
+	public ProductDTO(Integer id, String alias, String name, String unit, Float price, Boolean enabled, String description, CategoryDTO category, BrandDTO brand) {
 		super();
 		this.id = id;
 		this.alias = alias;
 		this.name = name;
+		this.unit = unit;
+		this.enabled = enabled;
+		this.price = price;
 		this.description = description;
 		this.category = category;
 		this.brand = brand;
@@ -86,6 +92,36 @@ public class ProductDTO {
 
 	public void setBrand(BrandDTO brand) {
 		this.brand = brand;
+	}
+
+
+	public String getUnit() {
+		return unit;
+	}
+
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
+
+	public Boolean isEnabled() {
+		return enabled;
+	}
+
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+
+	public Float getPrice() {
+		return price;
+	}
+
+
+	public void setPrice(Float price) {
+		this.price = price;
 	}
     
     
