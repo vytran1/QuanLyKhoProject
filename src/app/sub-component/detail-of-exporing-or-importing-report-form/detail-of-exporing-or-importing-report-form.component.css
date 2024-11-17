@@ -1,0 +1,96 @@
+/* Tổng thể container */
+form {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Phần thông tin chi tiết */
+.form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-row label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-row input,
+.form-row select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+
+.form-row input:focus,
+.form-row select:focus {
+  border-color: #007bff;
+}
+
+/* Nút */
+.button-row {
+  display: flex;
+  justify-content: center; /* Căn giữa các nút */
+  gap: 20px; /* Tạo khoảng trống giữa các nút */
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+button[type="button"] {
+  background-color: #6c757d;
+}
+
+button[type="button"]:hover {
+  background-color: #5a6268;
+}
+.error-message {
+  color: #d9534f;
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: -10px;
+  margin-bottom: 15px;
+}
+.error-message div {
+  margin-bottom: 5px;
+}
+button:disabled {
+  background-color: #d6d8db; /* Gray background */
+  color: #a8a9ad; /* Dimmed text color */
+  border: 1px solid #bfc2c5; /* Slightly darker border */
+  cursor: not-allowed; /* Not-allowed cursor */
+  opacity: 0.7; /* Reduced opacity for a disabled look */
+}

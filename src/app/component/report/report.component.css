@@ -1,0 +1,63 @@
+.report-container {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+  background: #f9f9f9;
+  border-bottom: 2px solid #ddd; /* Thêm đường kẻ dưới đáy */
+}
+
+.report-title {
+  font-size: 2rem;
+  color: #007bff;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.report-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px; /* Khoảng cách giữa các button */
+  justify-items: center; /* Căn giữa các nút */
+}
+
+.report-button {
+  display: flex;
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  width: 280px;
+  height: 60px; /* Đặt chiều cao cố định để nút đồng đều */
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+  background-color: #ffffff;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.report-button:hover {
+  background-color: #007bff;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.report-button:active {
+  transform: translateY(1px);
+}
+
+.icon {
+  display: inline-flex; /* Đảm bảo icon là phần tử khối nội tuyến */
+  align-items: center; /* Căn giữa icon theo chiều dọc */
+  justify-content: center; /* Căn giữa icon theo chiều ngang */
+  margin-right: 10px;
+  color: #007bff;
+  font-size: 1.5rem;
+  flex-shrink: 0; /* Ngăn icon co lại */
+  line-height: 1; /* Căn chỉnh icon tốt hơn */
+}
+.form-container {
+  margin-top: 40px; /* Thêm khoảng cách giữa form-container và report-container */
+}

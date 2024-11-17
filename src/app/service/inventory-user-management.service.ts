@@ -164,6 +164,13 @@ export class InventoryUserManagementService {
       .pipe(map((response) => response.body as boolean));
   }
 
+  public getListUserForActivityReport(): Observable<HttpResponse<any>> {
+    return this.httpClient.get(
+      `${this.host}/api/v1/inventory_users/listForActivityReport`,
+      { observe: 'response' }
+    );
+  }
+
   setPageNum(pageNum: number) {
     this.pageNumSubject.next(pageNum);
   }

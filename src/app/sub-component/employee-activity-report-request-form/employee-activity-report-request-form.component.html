@@ -1,0 +1,55 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2>Employee Activity Report Request</h2>
+
+  <div class="form-row">
+    <label for="userId">User ID:</label>
+    <select id="userId" formControlName="userId">
+      <option value="">Chọn Một Mã Nhân Viên</option>
+      @if(inventoriesUsers.length > 0){ @for (item of inventoriesUsers; track
+      $index) {
+      <option value="{{ item.userId }}">{{ item.name }}</option>
+      } }
+    </select>
+    @if(this.form.get('userId').invalid && this.form.get('userId').touched){
+    <div class="error-message">
+      @if(this.form.get('userId').errors?.['supplierRequired']){
+      <div>Hãy chọn một mã nhân viên</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="form-row">
+    <label for="startDate">Ngày Bắt Đầu:</label>
+    <input id="startDate" formControlName="startDate" type="datetime-local" />
+    @if(this.form.get('startDate').invalid &&
+    this.form.get('startDate').touched){
+    <div class="error-message">
+      @if(this.form.get('startDate').errors?.['required']){
+      <div>Ngày bắt đầu không được để trống</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="form-row">
+    <label for="endDate">Ngày Kết Thúc:</label>
+    <input id="endDate" formControlName="endDate" type="datetime-local" />
+    @if(this.form.get('endDate').invalid && this.form.get('endDate').touched){
+    <div class="error-message">
+      @if(this.form.get('endDate').errors?.['required']){
+      <div>Ngày kết thúc không được để trống</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="button-row">
+    <button type="submit" [disabled]="form.invalid">Submit</button>
+    <button type="button" (click)="closeForm()">Close</button>
+  </div>
+
+  @if(this.form.errors?.['invalidDateRange'] && this.form.touched){
+  <div class="error-message">EndDate must be after the startdate</div>
+  }
+</form>

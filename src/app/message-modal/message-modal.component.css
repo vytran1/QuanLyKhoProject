@@ -4,27 +4,31 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7); /* Tăng độ tối của nền */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: fadeIn 0.3s ease; /* Thêm hiệu ứng chuyển động */
 }
 
 .modal-content {
   background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 300px;
+  padding: 30px; /* Tăng padding */
+  border-radius: 15px; /* Tăng độ bo tròn */
+  width: 500px; /* Tăng chiều rộng */
+  max-width: 90%; /* Đảm bảo modal không vượt quá 90% chiều rộng màn hình */
   text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Thêm đổ bóng */
+  animation: slideIn 0.3s ease; /* Thêm hiệu ứng chuyển động */
 }
 
 .modal-success {
-  color: green;
+  color: #28a745; /* Màu xanh lá cây đậm hơn */
 }
 
 .modal-error {
-  color: red;
+  color: #dc3545; /* Màu đỏ đậm hơn */
 }
 
 button {
@@ -35,8 +39,30 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng chuyển động */
 }
+
 button:hover {
   background-color: #0056b3;
+  transform: translateY(-2px); /* Thêm hiệu ứng di chuyển */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

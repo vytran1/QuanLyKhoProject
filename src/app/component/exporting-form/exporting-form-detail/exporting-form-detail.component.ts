@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ExportingFormDetails } from '../../../model/exporting_form/exporting-form-detail-function.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ExportingFormService } from '../../../service/exporting-form.service';
 import { CommonModule } from '@angular/common';
 
@@ -18,7 +18,8 @@ export class ExportingFormDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private exportingFormService: ExportingFormService
+    private exportingFormService: ExportingFormService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -44,5 +45,9 @@ export class ExportingFormDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  onClose() {
+    this.router.navigate(['/inventory/exporting_form']);
   }
 }

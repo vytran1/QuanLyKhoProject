@@ -23,6 +23,7 @@ import { ImportingFormDetailComponent } from './component/importing-form/importi
 import { ExportingFormComponent } from './component/exporting-form/exporting-form.component';
 import { ExportingFormDetailComponent } from './component/exporting-form/exporting-form-detail/exporting-form-detail.component';
 import { ExportingFormCreateFormComponent } from './component/exporting-form/exporting-form-create-form/exporting-form-create-form.component';
+import { ReportComponent } from './component/report/report.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -94,6 +95,10 @@ export const routes: Routes = [
       {
         path: 'create_exporting_form',
         component: ExportingFormCreateFormComponent,
+      },
+      {
+        path: 'report',
+        component: ReportComponent,
       },
     ],
   },

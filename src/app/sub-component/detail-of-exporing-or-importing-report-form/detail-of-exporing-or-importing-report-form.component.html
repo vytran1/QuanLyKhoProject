@@ -1,0 +1,53 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h2>Summary Import And Export Request</h2>
+
+  <div class="form-row">
+    <label for="type">Loại Phiếu:</label>
+    <select id="type" formControlName="type">
+      <option value="">Chọn Một Loại Phiếu</option>
+      <option value="NHAP">Phiếu Nhập</option>
+      <option value="XUAT">Phiếu Xuất</option>
+    </select>
+    @if(this.form.get('type').invalid && this.form.get('type').touched){
+    <div class="error-message">
+      @if(this.form.get('type').errors?.['supplierRequired']){
+      <div>Hãy chọn một loại phiếu để tạo báo cáo</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="form-row">
+    <label for="startDate">Ngày Bắt Đầu:</label>
+    <input id="startDate" formControlName="startDate" type="datetime-local" />
+    @if(this.form.get('startDate').invalid &&
+    this.form.get('startDate').touched){
+    <div class="error-message">
+      @if(this.form.get('startDate').errors?.['required']){
+      <div>Ngày bắt đầu không được để trống</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="form-row">
+    <label for="endDate">Ngày Kết Thúc:</label>
+    <input id="endDate" formControlName="endDate" type="datetime-local" />
+    @if(this.form.get('endDate').invalid && this.form.get('endDate').touched){
+    <div class="error-message">
+      @if(this.form.get('endDate').errors?.['required']){
+      <div>Ngày kết thúc không được để trống</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="button-row">
+    <button type="submit" [disabled]="form.invalid">Submit</button>
+    <button type="button" (click)="closeForm()">Close</button>
+  </div>
+
+  @if(this.form.errors?.['invalidDateRange'] && this.form.touched){
+  <div class="error-message">EndDate must be after the startdate</div>
+  }
+</form>

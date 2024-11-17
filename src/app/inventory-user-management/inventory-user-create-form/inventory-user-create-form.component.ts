@@ -103,7 +103,7 @@ export class InventoryUserCreateFormComponent implements OnInit {
             }
           },
           error: (error) => {
-            this.message = error.message;
+            this.message = error.error;
             this.type = error;
             this.showModal = true;
           },
@@ -117,6 +117,7 @@ export class InventoryUserCreateFormComponent implements OnInit {
   closeModal() {
     this.showModal = false;
     if (this.type === 'success') {
+      this.inventoryUserService.setPageNum(1);
       this.router.navigate(['/inventory/inventory_users']);
     }
   }

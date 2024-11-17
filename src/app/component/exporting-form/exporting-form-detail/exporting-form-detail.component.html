@@ -1,66 +1,106 @@
-<div class="exporting-form-container">
-  <div class="form-header">
-    <h2>Thông Tin Phiếu Xuất</h2>
-  </div>
+@if(exportingFormDetail){
+<div class="importing-form-container">
+  <h2 class="importing-form-title">Thông Tin Phiếu Xuất</h2>
+
   <div class="form-details">
     <div class="form-row">
-      <label for="maPhieuXuat">Mã phiếu xuất:</label>
-      <input id="maPhieuXuat" type="text" value="PX001-ABC-XYZ" readonly />
-
-      <label for="ngayLap">Ngày lập:</label>
-      <input id="ngayLap" type="text" value="10/10/2024" readonly />
+      <div class="form-group">
+        <label>Mã Phiếu Xuất:</label>
+        <input
+          type="text"
+          [value]="exportingFormDetail.exportingFormId"
+          readonly
+        />
+      </div>
+      <div class="form-group">
+        <label>Ngày Lập:</label>
+        <input type="text" [value]="exportingFormDetail.createdTime" readonly />
+      </div>
     </div>
+
     <div class="form-row">
-      <label for="maNhanVien">Mã nhân viên lập đơn:</label>
-      <input id="maNhanVien" type="text" value="N21DCVT128" readonly />
-
-      <label for="tenNhanVien">Họ tên nhân viên lập đơn:</label>
-      <input id="tenNhanVien" type="text" value="Trần Nguyên Vỹ" readonly />
+      <div class="form-group">
+        <label>Mã số nhân viên:</label>
+        <input
+          type="text"
+          [value]="exportingFormDetail.inventoryUserId"
+          readonly
+        />
+      </div>
+      <div class="form-group">
+        <label>Họ tên người lập:</label>
+        <input
+          type="text"
+          [value]="exportingFormDetail.inventoryUserName"
+          readonly
+        />
+      </div>
     </div>
+
     <div class="form-row">
-      <label for="soDienThoai">Số điện thoại khách hàng:</label>
-      <input id="soDienThoai" type="text" value="0123456789" readonly />
+      <div class="form-group">
+        <label>Số điện thoại khách hàng:</label>
+        <input
+          type="text"
+          [value]="exportingFormDetail.customerPhoneNumber"
+          readonly
+        />
+      </div>
+      <div class="form-group">
+        <label>Họ tên khách hàng:</label>
+        <input
+          type="text"
+          [value]="exportingFormDetail.customerName"
+          readonly
+        />
+      </div>
+    </div>
 
-      <label for="tenKho">Tên kho:</label>
-      <input
-        id="tenKho"
-        type="text"
-        value="Thành phố Hồ Chí Minh Quận 1"
-        readonly
-      />
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nhập vào kho:</label>
+        <input type="text" [value]="exportingFormDetail.inventoryId" readonly />
+      </div>
+      <div class="form-group">
+        <label>Địa chỉ:</label>
+        <input
+          type="text"
+          [value]="exportingFormDetail.inventoryAddress"
+          readonly
+        />
+      </div>
     </div>
   </div>
 
-  <div class="table-container">
-    <h3>Thông tin chi tiết phiếu xuất:</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Mã Phiếu Xuất</th>
-          <th>Mã Vật Tư</th>
-          <th>Số Lượng</th>
-          <th>Đơn Giá</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>EDF220416112024</td>
-          <td>17</td>
-          <td>1</td>
-          <td>10,000</td>
-        </tr>
-        <tr>
-          <td>EDF220416112024</td>
-          <td>24</td>
-          <td>5</td>
-          <td>10,000</td>
-        </tr>
-      </tbody>
-    </table>
+  <h3 class="importing-form-subtitle">Thông tin Chi tiết Phiếu Xuất</h3>
+
+  <table class="details-table">
+    <thead>
+      <tr>
+        <th>Mã Phiếu Xuất</th>
+        <th>Mã Vật Tư</th>
+        <th>Số Lượng</th>
+        <th>Đơn giá</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of exportingFormDetail.exportingDetails; track $index) {
+      <tr>
+        <td>{{ item.exportingFormId }}</td>
+        <td>{{ item.productId }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.unitPrice }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="total-section">
+    <span>Tổng tiền:</span>
+    <strong>{{ exportingFormDetail.total | currency : "VND" }}</strong>
   </div>
 
-  <div class="total-container">
-    <span class="total-label">Tổng tiền:</span>
-    <span class="total-value">60,000</span>
-  </div>
+  <button class="close-button" (click)="onClose()">Close</button>
 </div>
+
+}

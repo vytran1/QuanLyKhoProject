@@ -1,0 +1,66 @@
+<div class="report-container">
+  <h1 class="report-title">Xem Báo Cáo</h1>
+  <div class="report-list">
+    <button class="report-button" (click)="reportListEmployees()">
+      <span class="icon">➕</span> Danh Sách Nhân Viên
+    </button>
+    <button class="report-button" (click)="reportListProducts()">
+      <span class="icon">➕</span> Danh Sách Vật Tư
+    </button>
+    <button class="report-button" (click)="reportListInventories()">
+      <span class="icon">➕</span> Danh Sách Kho
+    </button>
+    <button class="report-button" (click)="openModalEmployeeActivityRequest()">
+      <span class="icon">➕</span> Hoạt Động Nhân Viên
+    </button>
+    <button
+      class="report-button"
+      (click)="openModalSummaryImportAndExportReportForm()"
+    >
+      <span class="icon">➕</span> Tổng Hợp Nhập Xuất
+    </button>
+    <button
+      class="report-button"
+      (click)="openModalDetailExportingOrImportingReportForm()"
+    >
+      <span class="icon">➕</span> Chi Tiết Nhập Xuất
+    </button>
+    <button
+      class="report-button"
+      (click)="reportListOrderWithoutImportingForm()"
+    >
+      <span class="icon">➕</span> Danh Sách Đơn Hàng Chưa Có Phiếu Nhập
+    </button>
+  </div>
+</div>
+
+<div class="form-container">
+  @if(showModalEmployeeActivity){
+  <app-employee-activity-report-request-form
+    (closeEmit)="closeModalEmployeeActivityRequest()"
+    (reportResultEmit)="showReportActivityResult($event)"
+  >
+  </app-employee-activity-report-request-form>
+  } @if (showModalSummaryReport) {
+  <app-summary-imp-and-exp-report-form
+    (closeEmit)="closeModalSummaryImportAndExportReportForm()"
+    (reportResultEmit)="showReportSummaryResult($event)"
+  >
+  </app-summary-imp-and-exp-report-form>
+  } @if(showModalExportingOrImporting){
+  <app-detail-of-exporing-or-importing-report-form
+    (closeEmit)="closeModalDetailExportingOrImportingReportForm()"
+    (reportResultEmit)="showReportDetailsResult($event)"
+  >
+  </app-detail-of-exporing-or-importing-report-form>
+  }
+</div>
+
+@if(showModalResponse){
+<app-message-modal
+  [message]="message"
+  [type]="type"
+  (close)="closeModalMessage()"
+>
+</app-message-modal>
+}
