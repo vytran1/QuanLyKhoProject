@@ -21,7 +21,7 @@ public class InventoryUser {
    
 	@Id
 	@Column(name = "user_id")
-	@Length(max = 30,min = 10)
+	@Length(max = 30,min = 5)
 	@NotNull(message = "UserId must not be null")
 	private String userId;
 	
@@ -79,6 +79,20 @@ public class InventoryUser {
 	public InventoryUser(@Length(max = 30, min = 10) @NotNull(message = "UserId must not be null") String userId) {
 		super();
 		this.userId = userId;
+	}
+	
+	
+	
+
+
+
+	public InventoryUser(@Length(max = 30, min = 5) @NotNull(message = "UserId must not be null") String userId,
+			@Length(min = 2, max = 20) @NotNull(message = "First Name must not be null") String firstName,
+			@Length(min = 2, max = 20) @NotNull(message = "Last Name must not be null") String lastName) {
+		super();
+		this.userId = userId;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 
 

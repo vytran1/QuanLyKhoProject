@@ -215,5 +215,7 @@ public class InventoryUserService {
 		inventoryUserRepository.saveAll(inventoryUsers);
 	}
 	
-	
+	public List<InventoryUser> getListUserForEmployeeActivityReport(){
+		return this.inventoryUserRepository.findAllBasicInfo();
+	}
 }

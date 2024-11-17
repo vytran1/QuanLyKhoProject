@@ -278,4 +278,23 @@ public class InventoryUserController {
 		return ResponseEntity.ok(inventoryUserService.checkIdentityNumberlIsDupplicate(null, identityNumber));
 	}
 	
+	@GetMapping("/listForActivityReport")
+	public ResponseEntity<?> getAllEmployeeForActivityReport(){
+		List<InventoryUser> results = inventoryUserService.getListUserForEmployeeActivityReport();
+		if(results.size() > 0) {
+			List<InventoryUserDTOForReport> dtoResults = results.stream().map(this::convertEntityToDTO).toList();
+			return ResponseEntity.ok(dtoResults);
+		}else {
+			return ResponseEntity.noContent().build();
+		}
+	}
+     
+	public InventoryUserDTOForReport convertEntityToDTO(InventoryUser user) {
+		InventoryUserDTOForReport dto = new InventoryUserDTOForReport();
+		String name = user.getUserId() + "-" + user.getFullName();
+		String userId = user.getUserId();
+		dto.setName(name);
+		dto.setUserId(userId);
+		return dto;
+	}  
 }

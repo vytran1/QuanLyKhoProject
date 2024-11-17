@@ -21,6 +21,8 @@ public interface InventoryUserRepository extends JpaRepository<InventoryUser,Str
 	@Query("SELECT u FROM InventoryUser u")
 	public Page<InventoryUser> findAll(Pageable pageable);
 	
+	@Query("SELECT new com.quanlykho.common.InventoryUser(u.userId, u.firstName, u.lastName) FROM InventoryUser u")
+    List<InventoryUser> findAllBasicInfo();
 	
 	public InventoryUser findByResetPasswordToken(String resetpasswordToken);
 	
