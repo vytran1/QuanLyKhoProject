@@ -84,17 +84,7 @@ public class Brand {
 	}
 	@Override
 	public String toString() {
-		return "Brand [id=" + id + ", name=" + name + ", categories=" + categories + "]";
+		return "Brand [id=" + id + ", name=" + name + "]";
 	}
-	
-	@Transient
-	public String getLogoPath() {
-		if(this.id == null) {
-			return "/images/006 image-thumbnail.png";
-		}
-		
-		return "/brand-logos/" + this.id + "/" + this.logo;
-	}
-	
 	
 }

@@ -58,11 +58,18 @@ public class ProductController {
 	}
 	
 	@PostMapping("createProduct")
-	public ResponseEntity<?> createProduct(@RequestBody Product product){
+	public ResponseEntity<?> createProduct(@RequestBody ProductDTOManagement productDTO){
 		try {
-			product.setBrand(new Brand(1));
-			product.setCategory(new Category(2));
-		
+			Product product = new Product();
+			product.setName(product.getName());
+			product.setAlias(productDTO.getAlias());
+			product.setShortDescription(productDTO.getDescription());;
+			product.setUnit(productDTO.getUnit());
+			product.setPrice(productDTO.getPrice());
+			product.setBrand(new Brand(Integer.valueOf(productDTO.getBrand().getId())));
+			product.setCategory(new Category(Integer.valueOf(productDTO.getCategory().getId())));
+			product.setEnabled(productDTO.isEnabled());
+			
 			productService.saveProduct(product);
 			return ResponseEntity.ok().build();
 		} catch(Exception e) {
@@ -84,9 +91,17 @@ public class ProductController {
 	}
 	
 	@PostMapping("updateProduct")
-	public ResponseEntity<?> updateProduct(@RequestBody Product product){
+	public ResponseEntity<?> updateProduct(@RequestBody ProductDTOManagement productDTO){
 		try {	
-			productService.saveProduct(product);
+			Product productFromDB = productService.get(productDTO.getId());
+			productFromDB.setName(productDTO.getName());
+			productFromDB.setAlias(productDTO.getAlias());
+			productFromDB.setShortDescription(productDTO.getDescription());
+			productFromDB.setUnit(productDTO.getUnit());
+			productFromDB.setPrice(productDTO.getPrice());
+			productFromDB.setEnabled(productDTO.isEnabled());
+			
+			productService.saveProduct(productFromDB);
 			return ResponseEntity.ok().build();
 		} catch(Exception e) {
 			e.printStackTrace();
