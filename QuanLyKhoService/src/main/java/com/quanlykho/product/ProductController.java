@@ -80,10 +80,12 @@ public class ProductController {
 	}
 	
 	@GetMapping("findByProductID/{productId}")
-	public ResponseEntity<?> getProductById(@PathVariable("productId") int productId){
+	public ResponseEntity<?> getProductById(@PathVariable("productId") Integer productId){
 		try {
 			Product product = productService.get(productId);
-			return ResponseEntity.ok(product);
+			ProductDTOManagement productDTO = convertEntityToDTO_ProductManagement(product);
+			
+			return ResponseEntity.ok(productDTO);
 		} catch (ProductNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -206,12 +208,11 @@ public class ProductController {
 		productDTO.setPrice(product.getPrice());
 		productDTO.setEnabled(product.isEnabled());
 		productDTO.setDescription(product.getShortDescription());
-		
-//		CategoryDTO categoryDTO = new CategoryDTO(product.getCategory().getId(),product.getCategory().getName());
-//		BrandDTO brandDTO = new BrandDTO(product.getBrand().getId(),product.getBrand().getName());
-		
-		productDTO.setCategoryId(product.getCategory().getId());
 		productDTO.setBrandId(product.getBrand().getId());
+		productDTO.setBrandName(product.getBrand().getName());
+		productDTO.setCategoryId(product.getCategory().getId());
+		productDTO.setCategoryName(product.getCategory().getName());
+		
 		return productDTO;
 	}
 	

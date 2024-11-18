@@ -3,7 +3,7 @@ package com.quanlykho.product;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -68,7 +68,8 @@ public class ProductService {
 	//Method get product by id
 	public Product get(Integer id) throws ProductNotFoundException {
 		try {
-			return productRepo.findById(id).get();
+			Optional<Product> result = productRepo.findById(id);
+			return result.get();
 		}catch (NoSuchElementException ex) {
 			throw new ProductNotFoundException("Could not find any product with ID " + id);
 		}
