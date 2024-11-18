@@ -227,10 +227,15 @@ public class InventoryUserController {
 	
 	@GetMapping("/excel")
 	public ResponseEntity<?> reportUserThroughExcel(HttpServletResponse response) throws IOException{
-		List<InventoryUser> listUsers = inventoryUserService.listAll();
-		InventoryUserExcelExport excelReport = new InventoryUserExcelExport();
-		excelReport.export(listUsers, response);
-		return ResponseEntity.ok().build();
+		try {
+			List<InventoryUser> listUsers = inventoryUserService.listAll();
+			InventoryUserExcelExport excelReport = new InventoryUserExcelExport();
+			excelReport.export(listUsers, response);
+			return ResponseEntity.ok().build();
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.internalServerError().build();
+		}
 	}
 	
 	@GetMapping("/profileImage/{userId}")

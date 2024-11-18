@@ -55,7 +55,7 @@ public class InventoryUserExcelExport extends AbstractExporter {
  	}
     
      public void export(List<InventoryUser> listUser,HttpServletResponse response) throws IOException {
- 		super.setResponseHeader(response, "application/octet-stream", ".xlsx","inventoryusers_");
+ 		super.setResponseHeader(response, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", ".xlsx","inventoryusers_");
  		//name of sheet
  		writeHeaderline();
  		writeDataLines(listUser);
