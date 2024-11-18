@@ -1,17 +1,22 @@
-<div class="container mt-5">
-  <div class="search-table-container">
+
+
+<div class="product-table-container">
+  <div class="text-center header">
+    <h2>Quản Lý Sản Phẩm</h2>
+  </div>
+  <div class="search-product-container">
     <div class="search-container">
       <app-search (searchEvent)="onSearch($event)"></app-search>
       <button
         class="btn btn-primary btn-lg-custom"
-        routerLink="/product/create_product"
+        routerLink="/inventory/create_product"
       >
         Add Product
       </button>
     </div>
     <div class="table-responsive">
-      <table class="table table-bordered table-hover text-center">
-        <thead class="thead-dark">
+      <table class="product-table table-bordered table-hover text-center">
+        <thead class="">
           <tr>
             <th>
               <a
@@ -57,30 +62,28 @@
             <td>{{ item.id }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.alias}}</td>
-          
             <td>{{ item.unit }}</td>
             <td>{{ item.enabled }}</td>
             <td>
-              <div class="action-buttons">
-                <button
-                  class="btn btn-success"
-                  (click)="showModalDetails(item)"
-                >
-                  Details
-                </button>
-                <button
-                  class="btn btn-primary btn-sm"
-                  [routerLink]="['/product/edit_product', item.id]"
-                >
-                  Edit
-                </button>
-                <button
-                  class="btn btn-danger btn-sm"
-                  (click)="openModalWarningDelete(item)"
-                >
-                  Delete
-                </button>
-              </div>
+              <button
+                class="action-button detail"
+                (click)="showModalDetails(item)"
+              >
+                Details
+              </button>
+              <button
+                class="action-button edit"
+                [routerLink]="['/product/edit_product', item.id]"
+              >
+                Edit
+              </button>
+              <button
+                class="action-button delete"
+                (click)="openModalWarningDelete(item)"
+              >
+                Delete
+              </button>
+             
             </td>
           </tr>
           }
@@ -88,17 +91,15 @@
       </table>
     </div>
   </div>
-  <app-improved-pagination
-    [pageNum]="pageNum"
-    [totalPage]="totalPage"
-    [totalItems]="totalItems"
-    (pageChange)="onPageChange($event)"
-  >
-  </app-improved-pagination>
-  <app-change-page-size
-    (pageSizeChange)="onPageSizeChange($event)"
-  ></app-change-page-size>
-
+  <div class="pagination-container">
+    <app-improved-pagination
+      [pageNum]="pageNum"
+      [totalPage]="totalPage"
+      [totalItems]="totalItems"
+      (pageChange)="onPageChange($event)"
+    >
+    </app-improved-pagination>
+  </div>
   @if(showModal){
 
   <app-products-modal-details
@@ -123,4 +124,10 @@
   >
   </app-message-modal>
   }
+    
+<div class="page-size-container">
+  <app-change-page-size
+    (pageSizeChange)="onPageSizeChange($event)"
+  ></app-change-page-size>
+</div>
 </div>

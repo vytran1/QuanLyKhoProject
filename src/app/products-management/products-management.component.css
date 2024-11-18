@@ -1,58 +1,137 @@
-.container {
+.product-table-container {
   display: flex;
   flex-direction: column;
   justify-content: center; /* Căn giữa theo chiều dọc */
   align-items: center;
-  height: 100vh; /* Chiều cao toàn bộ viewport */
+  min-height: 80vh; /* Chiều cao toàn bộ viewport */
+  width: 100%;
+  padding-bottom: 20px;
+  position: relative;
 }
 
-.table-responsive {
-  width: 100%; /* Độ rộng của bảng, điều chỉnh theo nhu cầu */
+.search-product-container {
+  display: block;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
-.action-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 10px; /* Khoảng cách giữa các nút */
+.search-container{
+  flex: 1;
 }
 
-.btn {
-  padding: 5px 10px;
-  font-size: 14px;
-}
-
-.pagination-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px; /* Khoảng cách giữa bảng và pagination */
-}
-
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px; /* Khoảng cách giữa các nút pagination */
-}
-
-.pagination-container button {
-  padding: 5px 10px;
-  font-size: 14px;
-}
-
-.pagination-container .active {
-  font-weight: bold;
-  text-decoration: underline;
-}
-
-.pagination-info {
-  margin-left: 20px; /* Khoảng cách giữa các nút pagination và thông tin */
-}
-/* Add specific styles for the page size change component */
-app-change-page-size {
-  margin-left: auto; /* Push it to the right */
-}
-.btn-lg-custom {
-  padding: 12px 24px;
-  font-size: 18px;
+.product-table{
+  width: 100%; /* Stretch the table to full width */
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  overflow: hidden;
+}
+
+.product-table th,
+.product-table td {
+  padding: 12px 15px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.product-table th{
+  background-color: #007bff;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.product-table tbody tr{
+  transition: background-color 0.3s ease;
+}
+
+.product-table tbody tr:hover{
+  background-color: #f1f1f1;
+}
+
+.action-button {
+  margin: 0 4px;
+  font-size: 14px;
+  width: 80px;
+  height: 50px;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 10px 20px;
+  background-color: #007bff;
+}
+
+.detail{
+  background-color: #007bff;
+}
+
+.detail:hover{
+  background-color: #004080;
+}
+
+.edit{
+  background-color: #28a745;
+}
+
+.edit:hover{
+  background-color: #218838;
+}
+
+.delete {
+  background-color: #dc3545;
+}
+
+.delete:hover {
+  background-color: #c82333;
+}
+
+
+/* Pagination container styling */
+.pagination-container {
+  margin-top: 40px; /* Add more space above the pagination */
+  padding-top: 20px; /* Add padding to the top */
+  width: 100%; /* Ensure it takes the full width */
+  display: flex;
+  justify-content: center; /* Center the pagination */
+}
+
+/* Page size container styling */
+.page-size-container {
+  position: absolute; /* Absolute positioning */
+  bottom: 20px; /* Adjust the distance from the bottom */
+  right: 20px; /* Adjust the distance from the right */
+}
+
+/* Custom CSS for the <a> in thead */
+.product-table th a {
+  color: #fff; /* Change text color to white */
+  background-color: #0056b3; /* Change background color to a darker blue */
+  padding: 5px 10px; /* Add some padding */
+  border-radius: 5px; /* Add rounded corners */
+  text-decoration: none; /* Remove underline */
+}
+
+.product-table th a:hover {
+  background-color: #004080; /* Change background color on hover */
+}
+
+/* Search container styling */
+.search-container {
+  flex: 1;
+}
+
+.action-button.edit[disabled] {
+  background-color: #6c757d; /* Gray background for disabled state */
+  cursor: not-allowed; /* Show "not-allowed" cursor */
+  opacity: 0.65; /* Slightly transparent */
+}
+
+.text-center.header h2 {
+  font-size: 40px; /* Tăng kích thước chữ */
+  font-weight: bold;
+  color:#007bff;
 }

@@ -24,6 +24,8 @@ import { ExportingFormComponent } from './component/exporting-form/exporting-for
 import { ExportingFormDetailComponent } from './component/exporting-form/exporting-form-detail/exporting-form-detail.component';
 import { ExportingFormCreateFormComponent } from './component/exporting-form/exporting-form-create-form/exporting-form-create-form.component';
 import { ReportComponent } from './component/report/report.component';
+import { ProductCreateFormComponent } from './products-management/products-create-form/product-create-form.component';
+import { ProductsEditFormComponent } from './products-management/products-edit-form/products-edit-form.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -60,8 +62,8 @@ export const routes: Routes = [
         path: 'products',
         component: ProductsManagementComponent,
       },
-      { path: 'create_product', component: InventoryCreateFormComponent },
-      { path: 'edit_product/:id', component: InventoriesEditFormComponent },
+      { path: 'create_product', component: ProductCreateFormComponent },
+      { path: 'edit_product/:id', component: ProductsEditFormComponent },
       { path: 'inventory_order', component: InventoryOrderComponent },
       { path: 'create_order', component: InventoryOrderCreateFormComponent },
       {
