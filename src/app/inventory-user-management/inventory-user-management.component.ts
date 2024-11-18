@@ -11,12 +11,14 @@ import { InventoryUserDetailModalComponent } from './inventory-user-detail-modal
 import { DeleteInventoryUserWarningModalComponent } from './delete-inventory-user-warning-modal/delete-inventory-user-warning-modal.component';
 import { MessageModalComponent } from '../message-modal/message-modal.component';
 import { Router, RouterModule } from '@angular/router';
+import { ImprovedPaginationComponent } from '../improved-pagination/improved-pagination.component';
+import { UploadExcelFileComponent } from '../sub-component/upload-excel-file/upload-excel-file.component';
 
 @Component({
   selector: 'app-inventory-user-management',
   standalone: true,
   imports: [
-    PaginationComponent,
+    ImprovedPaginationComponent,
     SearchComponent,
     ChangePageSizeComponent,
     CommonModule,
@@ -24,6 +26,7 @@ import { Router, RouterModule } from '@angular/router';
     DeleteInventoryUserWarningModalComponent,
     MessageModalComponent,
     RouterModule,
+    UploadExcelFileComponent,
   ],
   templateUrl: './inventory-user-management.component.html',
   styleUrl: './inventory-user-management.component.css',
@@ -49,6 +52,8 @@ export class InventoryUserManagementComponent implements OnInit, OnDestroy {
   showModalMessage: boolean = false;
   message = '';
   type: 'success' | 'error' = 'success';
+  //UploadModal
+  showModalUpload = false;
 
   constructor(
     private inventoryUserService: InventoryUserManagementService,
@@ -83,7 +88,7 @@ export class InventoryUserManagementComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((subcription) => subcription.unsubscribe());
   }
 
-  setPageNum(pageNum: number): void {
+  setPageNum(pageNum: any): void {
     this.inventoryUserService.setPageNum(pageNum);
   }
   setPageSize(pageSize: number): void {
@@ -237,5 +242,64 @@ export class InventoryUserManagementComponent implements OnInit, OnDestroy {
 
   closeModelMessage() {
     this.showModalMessage = false;
+  }
+
+  exportToExcel() {
+    this.subscriptions.push(
+      this.inventoryUserService.exportToExcel().subscribe({
+        next: (response) => {
+          const blob = new Blob([response.body!], {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'users.xlsx'; // Đặt tên file tải về
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url); // Hủy URL tạm thời sau khi tải xong
+
+          // Hiển thị thông báo thành công
+          this.message =
+            'Xuất Danh Sách Bằng File Excel Thành Công. Hãy kiểm tra thư mục Downloads của bạn.';
+          this.type = 'success';
+          this.showModalMessage = true;
+        },
+        error: (error) => {
+          console.log(error);
+          this.message = 'Xuất Danh Sách Bằng File Excel Thất Bại!';
+          this.type = 'error';
+          this.showModalMessage = true;
+        },
+      })
+    );
+  }
+  showModalUploadExcel() {
+    this.showModalUpload = true;
+  }
+
+  closeModalUpLoadExcel() {
+    this.showModalUpload = false;
+  }
+
+  createMultipleUserThroughExcelFile(file: File) {
+    console.log('Submit From Parent Component');
+    console.log(file);
+    this.subscriptions.push(
+      this.inventoryUserService.createMultipleUserByExcelFile(file).subscribe({
+        next: (response) => {
+          (this.message = 'Tạo nhiều user thông qua file excel thành công'),
+            (this.type = 'success');
+          this.showModalMessage = true;
+          this.inventoryUserService.setPageNum(1);
+        },
+        error: (error) => {
+          console.log(error);
+          (this.message = 'Tạo nhiều user thông qua file excel thất bại'),
+            (this.type = 'error'),
+            (this.showModalMessage = true);
+        },
+      })
+    );
   }
 }

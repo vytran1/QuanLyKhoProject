@@ -1,0 +1,14 @@
+<div class="modal-overlay">
+  <div class="modal-content">
+    <form (submit)="onSubmit($event)">
+      <h2>Upload Excel File</h2>
+      <div class="form-row">
+        <input type="file" (change)="onFileChange($event)" />
+      </div>
+      <div class="button-row">
+        <button type="submit">Submit</button>
+        <button type="button" (click)="closeForm()">Close</button>
+      </div>
+    </form>
+  </div>
+</div>

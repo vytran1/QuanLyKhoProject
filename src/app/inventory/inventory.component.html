@@ -31,7 +31,7 @@
         Quản Lý Phiếu Xuất
       </a>
       <a routerLink="/inventory/report" routerLinkActive="active"> Báo Cáo </a>
-      <a (click)="logout()"> Đăng Xuất </a>
+      <a (click)="showModalWarning()"> Đăng Xuất </a>
     </nav>
   </div>
 
@@ -39,4 +39,12 @@
   <div class="content">
     <router-outlet></router-outlet>
   </div>
+  @if(showModalConfirm){
+  <app-delete-inventory-user-warning-modal
+    [message]="message"
+    [isVisible]="showModalConfirm"
+    (canceled)="cancelLogout()"
+    (confirmed)="confirmLogout()"
+  ></app-delete-inventory-user-warning-modal>
+  }
 </div>

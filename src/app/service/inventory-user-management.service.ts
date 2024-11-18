@@ -171,6 +171,25 @@ export class InventoryUserManagementService {
     );
   }
 
+  public exportToExcel(): Observable<HttpResponse<Blob>> {
+    return this.httpClient.get(`${this.host}/api/v1/inventory_users/excel`, {
+      observe: 'response',
+      responseType: 'blob',
+    });
+  }
+
+  public createMultipleUserByExcelFile(
+    file: File
+  ): Observable<HttpResponse<any>> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.httpClient.post(
+      `${this.host}/api/v1/inventory_users/createByExcel`,
+      formData,
+      { observe: 'response' }
+    );
+  }
+
   setPageNum(pageNum: number) {
     this.pageNumSubject.next(pageNum);
   }

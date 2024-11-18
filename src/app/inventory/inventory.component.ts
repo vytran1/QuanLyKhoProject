@@ -5,11 +5,12 @@ import { Subscription } from 'rxjs';
 import { Account } from '../model/account/account.model';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AuthenticationService } from '../service/authentication.service';
+import { DeleteInventoryUserWarningModalComponent } from '../inventory-user-management/delete-inventory-user-warning-modal/delete-inventory-user-warning-modal.component';
 
 @Component({
   selector: 'app-inventory',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, DeleteInventoryUserWarningModalComponent],
   templateUrl: './inventory.component.html',
   styleUrl: './inventory.component.css',
 })
@@ -17,6 +18,10 @@ export class InventoryComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   accountInfo: Account = {};
   profileImage: SafeUrl | null = null;
+  //ShowModalConfirm
+  showModalConfirm = false;
+  message = 'Bạn thực sự muốn đăng xuất?';
+
   constructor(
     private accountService: AccountInformationService,
     private sanitizer: DomSanitizer,
@@ -88,5 +93,15 @@ export class InventoryComponent implements OnInit, OnDestroy {
   logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
+  }
+
+  confirmLogout() {
+    this.logout();
+  }
+  showModalWarning() {
+    this.showModalConfirm = true;
+  }
+  cancelLogout() {
+    this.showModalConfirm = false;
   }
 }
