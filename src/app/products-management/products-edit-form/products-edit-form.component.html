@@ -1,0 +1,249 @@
+<div
+  class="container product-form-container d-flex justify-content-center align-items-center"
+>
+  <form
+    class="bg-light p-5 rounded shadow-lg larger-form needs-validation"
+    novalidate
+    [formGroup]="form"
+    (ngSubmit)="updateProduct()"
+  >
+    <h2 class="text-center mb-4">Edit Product</h2>
+
+    <div class="row mb-4 align-items-center">
+      <label for="id" class="col-sm-4 col-form-label"
+        >Product Id</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          id="id"
+          name="id"
+          class="form-control"
+          formControlName="id"
+          [readonly]="true"
+          [ngClass]="{ readonly: true }"
+        />
+      </div>
+    </div>
+
+    <div class="row mb-4 align-items-center">
+      <label for="name" class="col-sm-4 col-form-label"
+        >Product Name</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          required
+          formControlName="name"
+        />
+        @if(form.get('name').invalid &&
+        form.get('name').touched){
+        <div class="error">
+          @if(form.get('name').errors?.['required']){
+          <div>Product Name is required</div>
+          } @if(form.get('name').errors?.['minlength']){
+          <div>Product Name must contains at least 4 characters</div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="row mb-4 align-items-center">
+      <label for="alias" class="col-sm-4 col-form-label"
+        >Product Alias</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          id="alias"
+          name="alias"
+          class="form-control"
+          required
+          formControlName="alias"
+        />
+        @if(form.get('alias').invalid &&
+        form.get('alias').touched){
+        <div class="error">
+          @if(form.get('alias').errors?.['required']){
+          <div>Product Alias is required</div>
+          } @if(form.get('alias').errors?.['minlength']){
+          <div>Product Alias must contains at least 4 characters</div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="row mb-4 align-items-center">
+      <label for="description" class="col-sm-4 col-form-label"
+        >Product Description</label
+      >
+      <div class="col-sm-8">
+        <textarea 
+          id="description"  
+          name="description"
+          class="form-control"
+          required
+          formControlName="description"
+          rows="5"
+        ></textarea>
+        @if(form.get('description').invalid &&
+        form.get('description').touched){
+        <div class="error">
+          @if(form.get('description').errors?.['required']){
+          <div>Product Short Description is required</div>
+          } @if(form.get('description').errors?.['minlength']){
+          <div>Product Short Description must contains at least 20 characters</div>
+          }@if(form.get('description').errors?.['maxlength']){
+          <div>Product Short Description must contains at most 1024 characters</div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="row mb-4 align-items-center">
+      <label for="unit" class="col-sm-4 col-form-label"
+        >Product Unit</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          id="unit"
+          name="unit"
+          class="form-control"
+          required
+          formControlName="unit"
+        />
+        @if(form.get('unit').invalid &&
+        form.get('unit').touched){
+        <div class="error">
+          @if(form.get('unit').errors?.['required']){
+          <div>Product Price is required</div>
+          } @if(form.get('unit').errors?.['minlength']){
+          <div>Product Price must contains at least 3 characters</div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="row mb-4 align-items-center">
+      <label for="price" class="col-sm-4 col-form-label"
+        >Product Price</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          id="price"
+          name="price"
+          class="form-control"
+          required
+          formControlName="price"
+        />
+        @if(form.get('price').invalid &&
+        form.get('price').touched){
+        <div class="error">
+          @if(form.get('price').errors?.['required']){
+          <div>Product Price is required</div>
+          } @if(form.get('price').errors?.['min']){
+          <div>Product Price must be a positive number</div>
+          } @if(form.get('price').errors?.['pattern']){
+          <div>Product Price must be a valid number</div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="row mb-4 align-items-center">
+      <label for="brandId" class="col-sm-4 col-form-label">Brand</label>
+      <div class="col-sm-8">
+        <select
+          name="brandId"
+          id="brandId"
+          class="form-select"
+          required
+          formControlName="brandId"
+          [ngClass]="{ disable: true }"
+        >
+          <option value="{{ product?.brandId }}">
+            {{ product?.brandName }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row mb-4 align-items-center">
+      <label for="categoryId" class="col-sm-4 col-form-label">Category</label>
+      <div class="col-sm-8">
+        <select
+          name="categoryId"
+          id="categoryId"
+          class="form-select"
+          required
+          formControlName="categoryId"
+          [ngClass]="{ disable: true }"
+        >
+          <option value="{{ product?.categoryId }}">
+            {{ product?.categoryName }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row mb-4 align-items-center">
+      <label for="enabled" class="col-sm-4 col-form-label"
+        >Enabled</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="checkbox"
+          id="enabled"
+          name="enabled"
+          class="form-check-input"
+          required
+          formControlName="enabled"
+        />
+        @if(form.get('enabled').invalid &&
+        form.get('enabled').touched){
+        <div class="error">
+          @if(form.get('enabled').errors?.['required']){
+          <div>The Enable checkbox must be checked.</div>
+          } 
+        </div>
+        }
+      </div>
+    </div>
+
+    <!-- Centered buttons -->
+    <div class="text-center">
+      <button
+        type="submit"
+        [disabled]="form.invalid"
+        class="btn btn-primary mx-2"
+      >
+        Submit
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary mx-2"
+        routerLink="/inventory/products"
+      >
+        Close
+      </button>
+    </div>
+  </form>
+  @if(showModal){
+  <app-message-modal
+    [message]="message"
+    [type]="type"
+    (close)="closeModalMessage()"
+  >
+  </app-message-modal>
+  }
+</div>
