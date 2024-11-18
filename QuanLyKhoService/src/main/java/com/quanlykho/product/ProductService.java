@@ -25,11 +25,6 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepo;
 	
-	//Load all products
-	public List<Product> listAllProducts() {
-		return (List<Product>) productRepo.findAll();
-	}
-	
 	//List by page product
 	public Page<Product> listByPage(Integer pageNum, Integer pageSize, String sortDir, 
 			String sortField, String keyword,Integer categoryId){	
@@ -79,7 +74,7 @@ public class ProductService {
 		}
 	}
 	
-	//Method check product duplicate
+	//Method này tạm chưa dùng đến
 	public boolean checkUnique(Integer id, String name) {
 		boolean isCreatingNew = (id == null || id == 0);
 		Product productByName = productRepo.findByName(name);
@@ -104,11 +99,7 @@ public class ProductService {
 		productRepo.deleteById(id);
 	}
 	
-	public void updatePriceOfProduct(Integer productId, float averagePrice) {
-		
-	}
-	
-	public Page<Product> listByPage2(int pageNum,int pageSize,String sortField,String sortDir){
+	public Page<Product> getAllProductByPage(int pageNum,int pageSize,String sortField,String sortDir){
 		Sort sort = Sort.by(sortField);
 		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
 		Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);

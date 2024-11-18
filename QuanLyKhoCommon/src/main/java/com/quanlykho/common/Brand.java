@@ -50,6 +50,9 @@ public class Brand {
 		this.id = id;
 		this.name = name;
 	}
+	public Brand(Brand newBrand) {
+		this.id = newBrand.id;
+	}
 	//Getter & Setter
 	public Integer getId() {
 		return id;

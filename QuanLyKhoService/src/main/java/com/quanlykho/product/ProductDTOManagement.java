@@ -11,23 +11,11 @@ public class ProductDTOManagement {
     private Boolean enabled;
     private Float price;
     private String description;
-    private CategoryDTO category;
-    private BrandDTO brand;
+    private Integer categoryId;
+    private String categoryName;
+    private Integer brandId;
+    private String brandName;
     
-    
-	public ProductDTOManagement(Integer id, String alias, String name, String unit, Float price, Boolean enabled, String description, CategoryDTO category, BrandDTO brand) {
-		super();
-		this.id = id;
-		this.alias = alias;
-		this.name = name;
-		this.unit = unit;
-		this.enabled = enabled;
-		this.price = price;
-		this.description = description;
-		this.category = category;
-		this.brand = brand;
-	}
-
 
 	public ProductDTOManagement() {
 		super();
@@ -75,26 +63,6 @@ public class ProductDTOManagement {
 	}
 
 
-	public CategoryDTO getCategory() {
-		return category;
-	}
-
-
-	public void setCategory(CategoryDTO category) {
-		this.category = category;
-	}
-
-
-	public BrandDTO getBrand() {
-		return brand;
-	}
-
-
-	public void setBrand(BrandDTO brand) {
-		this.brand = brand;
-	}
-
-
 	public String getUnit() {
 		return unit;
 	}
@@ -122,6 +90,46 @@ public class ProductDTOManagement {
 
 	public void setPrice(Float price) {
 		this.price = price;
+	}
+
+
+	public Integer getCategoryId() {
+		return categoryId;
+	}
+
+
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
+
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+
+	public Integer getBrandId() {
+		return brandId;
+	}
+
+
+	public void setBrandId(Integer brandId) {
+		this.brandId = brandId;
+	}
+
+
+	public String getBrandName() {
+		return brandName;
+	}
+
+
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
 	}
     
     

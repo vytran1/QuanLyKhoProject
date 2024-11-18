@@ -36,7 +36,6 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
 	@Modifying
 	public void updatePriceOfProduct(Integer productId,float averagePrice);
 	
-	
 	@Query("SELECT p FROM Product p "
 			+ "WHERE CONCAT(p.id,' ',p.name,' ',p.alias,' ',p.shortDescription,' ',p.category.name,' ',p.brand.name) "
 			+ "LIKE %?1%")

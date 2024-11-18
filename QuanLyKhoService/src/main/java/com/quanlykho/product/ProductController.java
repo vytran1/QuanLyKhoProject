@@ -32,6 +32,7 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	//Method này tạm chưa dùng đến
 	@GetMapping("findByPage")
 	public ResponseEntity<?> listByPage(
 			@RequestParam("pageNum") int pageNum,
@@ -61,13 +62,13 @@ public class ProductController {
 	public ResponseEntity<?> createProduct(@RequestBody ProductDTOManagement productDTO){
 		try {
 			Product product = new Product();
-			product.setName(product.getName());
+			product.setName(productDTO.getName());
 			product.setAlias(productDTO.getAlias());
 			product.setShortDescription(productDTO.getDescription());;
 			product.setUnit(productDTO.getUnit());
 			product.setPrice(productDTO.getPrice());
-			product.setBrand(new Brand(Integer.valueOf(productDTO.getBrand().getId())));
-			product.setCategory(new Category(Integer.valueOf(productDTO.getCategory().getId())));
+			product.setBrand(new Brand(Integer.valueOf(productDTO.getBrandId())));
+			product.setCategory(new Category(Integer.valueOf(productDTO.getCategoryId())));
 			product.setEnabled(productDTO.isEnabled());
 			
 			productService.saveProduct(product);
@@ -110,7 +111,7 @@ public class ProductController {
 	}
 	
 	@DeleteMapping("deleteProduct/{productId}")
-	public ResponseEntity<?> deleteUserById(@PathVariable("productId") int productId){
+	public ResponseEntity<?> deleteProductById(@PathVariable("productId") int productId){
 		try {
 			productService.deleteProductById(productId);
 			return ResponseEntity.ok().build();
@@ -127,7 +128,7 @@ public class ProductController {
 			,@RequestParam("sortField") String sortField
 			,@RequestParam("sortDir") String sortDir
 			){
-		Page<Product> pages = productService.listByPage2(pageNum, pageSize, sortField, sortDir);
+		Page<Product> pages = productService.getAllProductByPage(pageNum, pageSize, sortField, sortDir);
 		if(!pages.isEmpty()) {
 			List<Product> products = pages.getContent();
 			List<ProductDTO> productDTOs = products.stream().map(this::convertEntityToDTO).toList();
@@ -146,12 +147,12 @@ public class ProductController {
 	}
 	
 	@GetMapping("/findAll")
-	public ResponseEntity<?> getAllProductsByPage2(@RequestParam("pageNum") int pageNum
+	public ResponseEntity<?> getAllProduct(@RequestParam("pageNum") int pageNum
 			,@RequestParam("pageSize") int pageSize 
 			,@RequestParam("sortField") String sortField
 			,@RequestParam("sortDir") String sortDir
 			){
-		Page<Product> pages = productService.listByPage2(pageNum, pageSize, sortField, sortDir);
+		Page<Product> pages = productService.getAllProductByPage(pageNum, pageSize, sortField, sortDir);
 		if(!pages.isEmpty()) {
 			List<Product> products = pages.getContent();
 			List<ProductDTOManagement> productDTOs = products.stream().map(this::convertEntityToDTO_ProductManagement).toList();
@@ -206,11 +207,11 @@ public class ProductController {
 		productDTO.setEnabled(product.isEnabled());
 		productDTO.setDescription(product.getShortDescription());
 		
-		CategoryDTO categoryDTO = new CategoryDTO(product.getCategory().getId(),product.getCategory().getName());
-		BrandDTO brandDTO = new BrandDTO(product.getBrand().getId(),product.getBrand().getName());
+//		CategoryDTO categoryDTO = new CategoryDTO(product.getCategory().getId(),product.getCategory().getName());
+//		BrandDTO brandDTO = new BrandDTO(product.getBrand().getId(),product.getBrand().getName());
 		
-		productDTO.setCategory(categoryDTO);
-		productDTO.setBrand(brandDTO);
+		productDTO.setCategoryId(product.getCategory().getId());
+		productDTO.setBrandId(product.getBrand().getId());
 		return productDTO;
 	}
 	

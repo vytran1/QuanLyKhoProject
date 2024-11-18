@@ -26,7 +26,7 @@ public class CategoryController {
 	private ModelMapper modelMapper;
 	
 	@GetMapping("/{brandId}")
-	public ResponseEntity<?> getAllStateByCountry(@PathVariable("brandId") Integer brandId){
+	public ResponseEntity<?> getAllCategoriesByBrand(@PathVariable("brandId") Integer brandId){
 		List<Category> categories = brandRepository.findCategoriesByBrandId(brandId);
 		if(categories.size() > 0) {
 			List<CategoryDTO> categoriesDTO = new ArrayList<>();

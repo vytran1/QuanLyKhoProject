@@ -24,7 +24,7 @@ public class BrandController {
 	private ModelMapper modelMapper;
 	
 	@GetMapping("")
-	public ResponseEntity<?> getAllCountry(){
+	public ResponseEntity<?> getAllBrands(){
 		List<Brand> brands = brandRepository.findAll();
 		if(brands.size() > 0) {
 			List<BrandDTO> brandsDTO = new ArrayList<>();
