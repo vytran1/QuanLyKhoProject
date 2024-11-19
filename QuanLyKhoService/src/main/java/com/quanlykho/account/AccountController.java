@@ -188,33 +188,38 @@ public class AccountController {
 	}
 	
 	@GetMapping("/profileImage")
-	public ResponseEntity<?> getProfileImage(){
-		//Example: D:/inventory_images/N21DCVT128/05112024N21DCVT128.jpeg from database
-		String userId = Utility.getMaNhanVien();
-		try {
-			InventoryUser inventoryUser = inventoryUserService.getByUserId(userId);
-			Path path = Paths.get(inventoryUser.getPhotos());
-			if (!Files.exists(path)) {
-		            return new ResponseEntity<>("Image not found", HttpStatus.NOT_FOUND);
-		    }
-			Resource resource = new UrlResource(path.toUri());
-			String contentType = Files.probeContentType(path);
-			if (contentType == null) { 
-				contentType = "application/octet-stream"; 
-			}
-			return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).body(resource);
-		} catch (UserNotExistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return new ResponseEntity(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return new ResponseEntity(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	public ResponseEntity<?> getProfileImage() {
+	    String userId = Utility.getMaNhanVien();
+	    try {
+	        InventoryUser inventoryUser = inventoryUserService.getByUserId(userId);
+	        String photoPath = inventoryUser.getPhotos();
+
+	        // Kiểm tra nếu đường dẫn không tồn tại hoặc trống, sử dụng ảnh ẩn danh
+	        if (photoPath == null || photoPath.isEmpty() || !Files.exists(Paths.get(photoPath))) {
+	            photoPath = "D:/inventory_images/anomyus.jpg";
+	        }
+
+	        Path path = Paths.get(photoPath);
+	        Resource resource = new UrlResource(path.toUri());
+	        String contentType = Files.probeContentType(path);
+
+	        if (contentType == null) {
+	            contentType = "application/octet-stream";
+	        }
+
+	        return ResponseEntity.ok()
+	                .contentType(MediaType.parseMediaType(contentType))
+	                .body(resource);
+	    } catch (UserNotExistException e) {
+	        e.printStackTrace();
+	        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	    } catch (MalformedURLException e) {
+	        e.printStackTrace();
+	        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
 	}
+
 }

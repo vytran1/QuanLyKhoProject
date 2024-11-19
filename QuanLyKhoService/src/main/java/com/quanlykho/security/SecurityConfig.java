@@ -59,7 +59,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.cors().configurationSource(corsConfigurationSource()).and().authorizeHttpRequests(auth -> auth
 				.requestMatchers("/api/auth/**","/api/forgot_password","/api/reset_password").permitAll()
-				.requestMatchers(HttpMethod.GET,"/api/v1/inventory_users/findByPage").hasAuthority("EMPLOYEE")
+				.requestMatchers(HttpMethod.GET,"/api/v1/inventory_users/findByPage").hasAuthority("COMPANY")
 				.anyRequest().authenticated())
 		        .csrf(csrf -> csrf.disable())
 				.exceptionHandling(exh -> exh.authenticationEntryPoint((request, response, exception) -> {

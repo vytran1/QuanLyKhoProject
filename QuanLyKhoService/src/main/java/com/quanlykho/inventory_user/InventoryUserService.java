@@ -208,6 +208,7 @@ public class InventoryUserService {
 		}
 	}
 	
+	@Transactional
 	public void createMultipleUsers(List<InventoryUser> inventoryUsers) {
 		inventoryUsers.forEach(user -> {
 			encodePassword(user);
