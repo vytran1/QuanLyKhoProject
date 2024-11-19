@@ -49,8 +49,8 @@ export class ExportingFormService {
       )
       .subscribe({
         next: (response) => {
-          console.log('Importing Form');
-          console.log(response);
+          //console.log('Importing Form');
+          //console.log(response);
           this.exportingFormSubject.next(response.body.dtos);
           this.totalItemsSubject.next(response.body.totalItems);
           this.totalPageSubject.next(response.body.totalPage);

@@ -11,6 +11,7 @@ import { AuthRequest } from '../model/auth/auth-request.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ForgotPasswordRequest } from '../model/auth/forgot-password-request.model';
 import { ResetPasswordRequest } from '../model/auth/reset-password-request.model';
+import { Role } from '../../environments/role.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -75,6 +76,9 @@ export class AuthenticationService {
 
   public loadToken() {
     this.jwtToken = localStorage.getItem('token');
+    if (this.jwtToken) {
+      this.setRole();
+    }
     //console.log('Get token: ' + this.jwtToken);
   }
 
@@ -88,7 +92,7 @@ export class AuthenticationService {
       if (this.jwtHelper.decodeToken(this.jwtToken).sub != null || '') {
         if (!this.jwtHelper.isTokenExpired(this.jwtToken)) {
           this.loggedInUsername = this.jwtHelper.decodeToken(this.jwtToken).sub;
-          console.log('User loggin with name is:' + this.loggedInUsername);
+          //console.log('User loggin with name is:' + this.loggedInUsername);
 
           return true;
         }
@@ -99,10 +103,15 @@ export class AuthenticationService {
   }
 
   public setRole(): any {
-    this.role = this.jwtHelper.decodeToken(this.jwtToken).role;
-    console.log(this.jwtHelper.decodeToken(this.jwtToken).sub);
+    const decodedToken = this.jwtHelper.decodeToken(this.jwtToken);
+    //console.log(decodedToken);
 
-    return this.role != null ? this.role : null;
+    this.role = decodedToken.role;
+    //console.log('Role Setup: ', this.role);
+
+    //console.log(this.jwtHelper.decodeToken(this.jwtToken).sub);
+
+    return this.role !== null ? this.role : null;
   }
 
   public getUsernameFromToken(): string | null {
@@ -117,5 +126,15 @@ export class AuthenticationService {
       }
     }
     return null; // Return null if no token or subject found
+  }
+
+  isCompany() {
+    //console.log('Compare Role Company: ', this.role);
+    return this.role === Role.COMPANY;
+  }
+
+  isEmployee() {
+    //console.log(this.role);
+    return this.role === Role.EMPLOYEE;
   }
 }

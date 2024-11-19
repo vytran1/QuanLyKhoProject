@@ -13,6 +13,7 @@ import { MessageModalComponent } from '../message-modal/message-modal.component'
 import { Router, RouterModule } from '@angular/router';
 import { ImprovedPaginationComponent } from '../improved-pagination/improved-pagination.component';
 import { UploadExcelFileComponent } from '../sub-component/upload-excel-file/upload-excel-file.component';
+import { AuthenticationService } from '../service/authentication.service';
 
 @Component({
   selector: 'app-inventory-user-management',
@@ -54,11 +55,14 @@ export class InventoryUserManagementComponent implements OnInit, OnDestroy {
   type: 'success' | 'error' = 'success';
   //UploadModal
   showModalUpload = false;
+  //CurrentLogin
+  currentLogin = this.authenticatioNService.getUsernameFromToken();
 
   constructor(
     private inventoryUserService: InventoryUserManagementService,
     private santinizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    private authenticatioNService: AuthenticationService
   ) {}
 
   ngOnInit(): void {

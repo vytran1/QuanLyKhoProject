@@ -26,12 +26,16 @@ import { ExportingFormCreateFormComponent } from './component/exporting-form/exp
 import { ReportComponent } from './component/report/report.component';
 import { ProductCreateFormComponent } from './products-management/products-create-form/product-create-form.component';
 import { ProductsEditFormComponent } from './products-management/products-edit-form/products-edit-form.component';
+import { UnauthorizedComponent } from './sub-component/unauthorized/unauthorized.component';
+import { Role } from '../environments/role.enum';
+import { AuthenticationGuard } from './guard/authentication.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
     path: 'inventory',
     component: InventoryComponent,
+    canActivate: [AuthenticationGuard],
     children: [
       {
         path: 'dashboard',
@@ -42,65 +46,120 @@ export const routes: Routes = [
         path: 'inventory_users',
         component: InventoryUserManagementComponent,
         children: [],
+        canActivate: [AuthenticationGuard],
+        data: { requiredRole: Role.COMPANY },
       },
       {
         path: 'create_users',
         component: InventoryUserCreateFormComponent,
+        canActivate: [AuthenticationGuard],
+        data: { requiredRole: Role.COMPANY },
       },
       {
         path: 'edit_user/:id',
         component: InventoryUserEditFormComponent,
+        canActivate: [AuthenticationGuard],
+        data: { requiredRole: Role.COMPANY },
       },
       {
         path: 'inventories',
         component: InventoriesManagementComponent,
+        canActivate: [AuthenticationGuard],
+        data: { requiredRole: Role.COMPANY },
       },
-      { path: 'create_inventory', component: InventoryCreateFormComponent },
-      { path: 'edit_inventory/:id', component: InventoriesEditFormComponent },
+      {
+        path: 'create_inventory',
+        component: InventoryCreateFormComponent,
+        canActivate: [AuthenticationGuard],
+        data: { requiredRole: Role.COMPANY },
+      },
+      {
+        path: 'edit_inventory/:id',
+        component: InventoriesEditFormComponent,
+        canActivate: [AuthenticationGuard],
+        data: { requiredRole: Role.COMPANY },
+      },
       { path: 'find_stock', component: FindStockComponent },
+
       {
         path: 'products',
         component: ProductsManagementComponent,
+        canActivate: [AuthenticationGuard],
       },
-      { path: 'create_product', component: ProductCreateFormComponent },
-      { path: 'edit_product/:id', component: ProductsEditFormComponent },
-      { path: 'inventory_order', component: InventoryOrderComponent },
-      { path: 'create_order', component: InventoryOrderCreateFormComponent },
+
+      {
+        path: 'create_product',
+        component: ProductCreateFormComponent,
+        canActivate: [AuthenticationGuard],
+      },
+
+      {
+        path: 'edit_product/:id',
+        component: ProductsEditFormComponent,
+        canActivate: [AuthenticationGuard],
+      },
+
+      {
+        path: 'inventory_order',
+        component: InventoryOrderComponent,
+        canActivate: [AuthenticationGuard],
+      },
+
+      {
+        path: 'create_order',
+        component: InventoryOrderCreateFormComponent,
+        canActivate: [AuthenticationGuard],
+      },
+
       {
         path: 'inventory_order_detail/:id',
         component: InventoryOrderDetailFormComponent,
+        canActivate: [AuthenticationGuard],
       },
       {
         path: 'edit_order/:id',
         component: InventoryOrderEditFormComponent,
+        canActivate: [AuthenticationGuard],
       },
       {
         path: 'importing_form',
         component: ImportingFormComponent,
+        canActivate: [AuthenticationGuard],
       },
       {
         path: 'create_importing_form/:orderId',
         component: ImportingFormCreateFormComponent,
+        canActivate: [AuthenticationGuard],
       },
       {
         path: 'importing_form_detail/:id',
         component: ImportingFormDetailComponent,
+        canActivate: [AuthenticationGuard],
       },
       {
         path: 'exporting_form',
         component: ExportingFormComponent,
+        canActivate: [AuthenticationGuard],
       },
       {
         path: 'exporting_form_detail/:id',
         component: ExportingFormDetailComponent,
+        canActivate: [AuthenticationGuard],
       },
       {
         path: 'create_exporting_form',
         component: ExportingFormCreateFormComponent,
+        canActivate: [AuthenticationGuard],
       },
       {
         path: 'report',
         component: ReportComponent,
+        canActivate: [AuthenticationGuard],
+        data: { requiredRole: Role.COMPANY },
+      },
+      {
+        path: 'unauthorized',
+        component: UnauthorizedComponent,
       },
     ],
   },
@@ -108,4 +167,5 @@ export const routes: Routes = [
   { path: 'forgot_password', component: ForgotPasswordComponent },
   { path: 'reset_password', component: ResetPasswordComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login', pathMatch: 'full' },
 ];
