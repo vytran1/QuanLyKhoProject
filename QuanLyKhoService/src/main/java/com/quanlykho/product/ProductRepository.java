@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 
 import com.quanlykho.common.Product;
 
@@ -40,4 +42,8 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
 			+ "WHERE CONCAT(p.id,' ',p.name,' ',p.alias,' ',p.shortDescription,' ',p.category.name,' ',p.brand.name) "
 			+ "LIKE %?1%")
 	public Page<Product> search(String keyWord,Pageable pageable);
+	
+	
+	@Procedure(name = "check_can_delete_product")
+	public String checkCanDeleteProduct(@Param("productId") Integer productId);
 }

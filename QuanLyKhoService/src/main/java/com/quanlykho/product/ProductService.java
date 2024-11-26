@@ -1,7 +1,6 @@
 package com.quanlykho.product;
 
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -93,11 +92,20 @@ public class ProductService {
 	
 	//Method deleteProduct
 	public void deleteProductById(Integer id) throws ProductNotFoundException {
-		Long countById = productRepo.countById(id);
-		if(countById == null || countById == 0) {
-			throw new ProductNotFoundException("Could not found any product with ID " + id);
+		Optional<Product> product = productRepo.findById(id);
+		if(!product.isPresent()) {
+			throw new ProductNotFoundException("Product with id " + id + " not found in database.");
 		}
-		productRepo.deleteById(id);
+
+		// Gọi stored procedure để lấy thông báo chi tiết
+	    String message = productRepo.checkCanDeleteProduct(id);
+
+	    // Nếu có tham chiếu ở các bảng, thông báo lỗi chi tiết
+	    if (!message.equals("Can delete product.")) {
+	        throw new IllegalArgumentException("Cannot delete product with ID " + id + ": " + message);
+	    }
+
+	    productRepo.deleteById(id);
 	}
 	
 	public Page<Product> getAllProductByPage(int pageNum,int pageSize,String sortField,String sortDir){

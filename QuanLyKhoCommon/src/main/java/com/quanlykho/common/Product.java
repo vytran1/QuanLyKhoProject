@@ -1,6 +1,6 @@
 package com.quanlykho.common;
 
-import java.time.LocalDate;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,11 +13,23 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedStoredProcedureQuery;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.ParameterMode;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
+import jakarta.persistence.StoredProcedureParameter;
 import jakarta.persistence.Table;
 
+
+@NamedStoredProcedureQuery(
+	    name = "check_can_delete_product",
+	    procedureName = "check_can_delete_product",
+	    parameters = {
+	        @StoredProcedureParameter(mode = ParameterMode.IN, name = "productId", type = Integer.class),
+	        @StoredProcedureParameter(mode = ParameterMode.OUT, name = "message", type = String.class)
+	    }
+	)
 @Entity
 @Table(name = "products")
 public class Product {
