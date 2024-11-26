@@ -10,6 +10,11 @@
       <div>Mã Đơn Hàng không được để trống</div>
       } @if(form.get('orderId').errors?.['minlength']){
       <div>Mã Đơn Hàng phải có ít nhất 10 ký tự</div>
+      } @if(form.get('orderId').errors?.['pattern']){
+      <div>
+        Mã đơn hàng chỉ được chứa chữ cái, số, dấu gạch ngang (-), và dấu gạch
+        dưới (_).
+      </div>
       } @if(form.get('orderId').errors?.['orderIdExist']){
       <div>Mã Đơn Hàng đã tồn tại</div>
       }

@@ -69,7 +69,13 @@ export class ImportingFormCreateFormComponent implements OnInit, OnDestroy {
       importingFormId: [
         '',
         {
-          validators: [Validators.required, Validators.minLength(10)],
+          validators: [
+            Validators.required,
+            Validators.minLength(10),
+            Validators.pattern(
+              '^[a-zA-Z0-9-_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯăặẹẽềệỉịọỏộơớờờỡưứừửữỳỵỷỹ ]+$'
+            ),
+          ],
           asyncValidators: [
             importingFormIdExistValidator(this.importingFormService),
           ],

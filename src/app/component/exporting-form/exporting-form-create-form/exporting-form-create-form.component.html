@@ -16,6 +16,11 @@
       <div>Mã Phiếu Xuất là bắt buộc</div>
       } @if(form.get('exportingFormId').errors?.['minlength']){
       <div>Mã Phiếu Xuất bắt buộc phải chứa ít nhất 10 ký tự</div>
+      } @if(form.get('exportingFormId').errors?.['pattern']){
+      <div>
+        Mã Phiếu Xuất chỉ được chứa chữ cái, số, dấu gạch ngang (-), và dấu gạch
+        dưới (_).
+      </div>
       } @if(form.get('exportingFormId').errors?.['exportingFormIdExists']){
       <div>Mã Phiếu Xuất đã tồn tại</div>
       }

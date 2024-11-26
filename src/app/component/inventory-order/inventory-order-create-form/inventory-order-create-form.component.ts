@@ -53,7 +53,13 @@ export class InventoryOrderCreateFormComponent implements OnInit, OnDestroy {
       orderId: [
         '',
         {
-          validators: [Validators.required, Validators.minLength(10)],
+          validators: [
+            Validators.required,
+            Validators.minLength(10),
+            Validators.pattern(
+              '^[a-zA-Z0-9-_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯăặẹẽềệỉịọỏộơớờờỡưứừửữỳỵỷỹ ]+$'
+            ),
+          ],
           asyncValidators: [orderIdExistValidator(this.inventoryOrderService)],
           updateOn: 'blur',
         },

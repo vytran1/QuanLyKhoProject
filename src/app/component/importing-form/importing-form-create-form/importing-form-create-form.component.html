@@ -16,6 +16,11 @@
       <div>Mã Phiếu Nhập là bắt buộc</div>
       } @if(this.form.get('importingFormId').errors?.['minlength']){
       <div>Mã Phiếu Nhập phải chứa ít nhất 10 ký tự</div>
+      } @if(this.form.get('importingFormId').errors?.['pattern']){
+      <div>
+        Mã Phiếu Nhập chỉ được chứa chữ cái, số, dấu gạch ngang (-), và dấu gạch
+        dưới (_).
+      </div>
       } @if(this.form.get('importingFormId').errors?.['importingFormIdExists']){
       <div>Mã Phiếu Nhập đã tồn tại</div>
       }
