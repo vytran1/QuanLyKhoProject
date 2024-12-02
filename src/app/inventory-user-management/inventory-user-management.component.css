@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Ensure it takes at least the full height of the viewport */
+  min-height: 80vh; /* Ensure it takes at least the full height of the viewport */
   width: 100%; /* Stretch the container to full width */
   padding-bottom: 20px; /* Add padding to the bottom */
   position: relative; /* Relative positioning for absolute positioning of the page size container */
@@ -118,19 +118,41 @@
   justify-content: flex-end;
 }
 .action-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
+  margin: 0 4px;
+  font-size: 14px;
+  width: 70px;
+  height: 40px;
+  color: #ffffff;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 10px;
+  background-color: #007bff;
 }
 
-.action-button.edit {
-  background-color: #28a745; /* Green background for edit button */
+.detail{
+  background-color: #007bff;
 }
 
-.action-button.delete {
+.detail:hover{
+  background-color: #004080;
+}
+
+.edit{
+  background-color: #28a745;
+}
+
+.edit:hover{
+  background-color: #218838;
+}
+
+.delete {
   background-color: #dc3545;
+}
+
+.delete:hover {
+  background-color: #c82333;
 }
 
 .action-button.edit[disabled] {
@@ -146,4 +168,11 @@
   margin: 0 auto; /* Căn giữa ảnh trong ô */
   display: block; /* Hiển thị ảnh dưới dạng khối */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Thêm bóng để ảnh nổi bật */
+}
+
+.text-center.header h2 {
+  font-size: 40px; /* Tăng kích thước chữ */
+  font-weight: bold;
+  color:#007bff;
+  margin-bottom: 20px;
 }

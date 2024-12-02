@@ -38,5 +38,12 @@
 
 /* Custom styling for tab content */
 .tab-content {
-  margin-top: 20px;
+  margin-top: 10px;
+}
+
+.text-center {
+  font-size: 40px; /* Tăng kích thước chữ */
+  font-weight: bold;
+  color:#007bff;
+  margin-bottom: 20px;
 }

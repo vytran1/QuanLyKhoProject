@@ -83,7 +83,7 @@ export class ProductsManagementComponent implements OnInit, OnDestroy {
   loadData() {
     this.subscriptions.push(
       this.productMnService
-        .getAllProductsByPage(1, 2, 'productName', 'asc')
+        .getAllProductsByPage(1, 2, 'name', 'asc')
         .subscribe({
           next: (response) => {
             console.log('Products Load');

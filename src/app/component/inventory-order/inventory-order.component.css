@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Ensure it takes at least the full height of the viewport */
+  min-height: 80vh; /* Ensure it takes at least the full height of the viewport */
   width: 100%; /* Stretch the container to full width */
   padding-bottom: 20px; /* Add padding to the bottom */
   position: relative; /* Relative positioning for absolute positioning of the page size container */
@@ -42,6 +42,20 @@
   font-weight: bold;
 }
 
+/* Custom CSS for the <a> in thead */
+.inventory-order-table th a {
+  color: #fff; /* Change text color to white */
+  background-color: #0056b3; /* Change background color to a darker blue */
+  padding: 5px 10px; /* Add some padding */
+  border-radius: 5px; /* Add rounded corners */
+  text-decoration: none; /* Remove underline */
+}
+
+.inventory-order-table th a:hover {
+  background-color: #004080; /* Change background color on hover */
+}
+
+
 .inventory-order-table tbody tr {
   transition: background-color 0.3s ease;
 }
@@ -51,21 +65,32 @@
 }
 
 .action-button {
-  padding: 6px 12px;
   margin: 0 4px;
   font-size: 14px;
+  width: 70px;
+  height: 40px;
   color: #ffffff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  padding: 10px;
+  background-color: #007bff;
 }
 
-.edit {
+.detail{
+  background-color: #007bff;
+}
+
+.detail:hover{
+  background-color: #004080;
+}
+
+.edit{
   background-color: #28a745;
 }
 
-.edit:hover {
+.edit:hover{
   background-color: #218838;
 }
 
@@ -75,6 +100,19 @@
 
 .delete:hover {
   background-color: #c82333;
+}
+
+.action-button.edit[disabled] {
+  background-color: #6c757d; /* Gray background for disabled state */
+  cursor: not-allowed; /* Show "not-allowed" cursor */
+  opacity: 0.65; /* Slightly transparent */
+}
+
+/* Search date container styling */
+.search-date-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 /* Pagination container styling */
@@ -93,48 +131,9 @@
   right: 20px; /* Adjust the distance from the right */
 }
 
-/* Custom CSS for the <a> in thead */
-.inventory-order-table th a {
-  color: #fff; /* Change text color to white */
-  background-color: #0056b3; /* Change background color to a darker blue */
-  padding: 5px 10px; /* Add some padding */
-  border-radius: 5px; /* Add rounded corners */
-  text-decoration: none; /* Remove underline */
-}
-
-.inventory-order-table th a:hover {
-  background-color: #004080; /* Change background color on hover */
-}
-
-/* Search container styling */
-.search-container {
-  flex: 1;
-}
-
-/* Search date container styling */
-.search-date-container {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-}
-.action-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.action-button.edit {
-  background-color: #28a745; /* Green background for edit button */
-}
-
-.action-button.delete {
-  background-color: #dc3545;
-}
-
-.action-button.edit[disabled] {
-  background-color: #6c757d; /* Gray background for disabled state */
-  cursor: not-allowed; /* Show "not-allowed" cursor */
-  opacity: 0.65; /* Slightly transparent */
+.text-center.header h2 {
+  font-size: 40px; /* Tăng kích thước chữ */
+  font-weight: bold;
+  color:#007bff;
+  margin-bottom: 20px;
 }

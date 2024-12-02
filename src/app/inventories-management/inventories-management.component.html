@@ -1,4 +1,7 @@
-<div class="container mt-5">
+<div class="inventory-table-container">
+  <div class="text-center header">
+    <h2>Quản Lý Kho Hàng</h2>
+  </div>
   <div class="search-table-container">
     <div class="search-container">
       <app-search (searchEvent)="onSearch($event)"></app-search>
@@ -10,15 +13,15 @@
       </button>
     </div>
     <div class="table-responsive">
-      <table class="table table-bordered table-hover text-center">
-        <thead class="thead-dark">
+      <table class="inventory-table table-bordered table-hover text-center">
+        <thead >
           <tr>
             <th>
               <a
                 href="#"
                 (click)="changeSort('inventoryId'); $event.preventDefault()"
               >
-                InventoryId @if(sortField === 'inventoryId'){
+                Inventory Id @if(sortField === 'inventoryId'){
                 <i
                   class="fas"
                   [ngClass]="{
@@ -34,7 +37,7 @@
                 href="#"
                 (click)="changeSort('inventoryName'); $event.preventDefault()"
               >
-                InventoryName @if(sortField === 'inventoryName'){
+                Inventory Name @if(sortField === 'inventoryName'){
                 <i
                   class="fas"
                   [ngClass]="{
@@ -79,26 +82,25 @@
             <td>{{ item.stateName }}</td>
             <td>{{ item.districtName }}</td>
             <td>
-              <div class="action-buttons">
-                <button
-                  class="btn btn-success"
-                  (click)="showModalDetails(item)"
-                >
-                  Details
-                </button>
-                <button
-                  class="btn btn-primary btn-sm"
-                  [routerLink]="['/inventory/edit_inventory', item.inventoryId]"
-                >
-                  Edit
-                </button>
-                <button
-                  class="btn btn-danger btn-sm"
-                  (click)="openModalWarningDelete(item)"
-                >
-                  Delete
-                </button>
-              </div>
+              <button
+                class="action-button detail"
+                (click)="showModalDetails(item)"
+              >
+                Details
+              </button>
+              <button
+                class="action-button edit"
+                [routerLink]="['/inventory/edit_inventory', item.inventoryId]"
+              >
+                Edit
+              </button>
+              <button
+                class="action-button delete"
+                (click)="openModalWarningDelete(item)"
+              >
+                Delete
+              </button>
+             
             </td>
           </tr>
           }
@@ -106,17 +108,15 @@
       </table>
     </div>
   </div>
-  <app-improved-pagination
-    [pageNum]="pageNum"
-    [totalPage]="totalPage"
-    [totalItems]="totalItems"
-    (pageChange)="onPageChange($event)"
-  >
-  </app-improved-pagination>
-  <app-change-page-size
-    (pageSizeChange)="onPageSizeChange($event)"
-  ></app-change-page-size>
-
+  <div class="pagination-container">
+    <app-improved-pagination
+      [pageNum]="pageNum"
+      [totalPage]="totalPage"
+      [totalItems]="totalItems"
+      (pageChange)="onPageChange($event)"
+    >
+    </app-improved-pagination>
+  </div>
   @if(showModal){
 
   <app-inventories-modal-details
@@ -141,4 +141,10 @@
   >
   </app-message-modal>
   }
+
+  <div class="page-size-container">
+    <app-change-page-size
+      (pageSizeChange)="onPageSizeChange($event)"
+    ></app-change-page-size>
+  </div>
 </div>
