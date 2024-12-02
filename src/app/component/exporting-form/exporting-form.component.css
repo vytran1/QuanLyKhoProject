@@ -4,7 +4,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Ensure it takes at least the full height of the viewport */
+  min-height: 80vh; /* Ensure it takes at least the full height of the viewport */
   width: 100%; /* Stretch the container to full width */
   padding-bottom: 20px; /* Add padding to the bottom */
   position: relative; /* Relative positioning for absolute positioning of the page size container */
@@ -137,4 +137,10 @@
   background-color: #6c757d; /* Gray background for disabled state */
   cursor: not-allowed; /* Show "not-allowed" cursor */
   opacity: 0.65; /* Slightly transparent */
+}
+
+.text-center.header h2 {
+  font-size: 40px; /* Tăng kích thước chữ */
+  font-weight: bold;
+  color:#007bff;
 }
