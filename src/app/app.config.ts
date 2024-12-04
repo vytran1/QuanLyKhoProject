@@ -15,6 +15,7 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { authInterceptor } from './interceptor/auth.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +23,9 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     importProvidersFrom(BrowserAnimationsModule),
     importProvidersFrom(ToastrModule.forRoot()),
+    importProvidersFrom(
+      NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
+    ),
     provideRouter(routes),
   ],
 };
