@@ -1,6 +1,8 @@
 package com.quanlykho.security.auth;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +46,9 @@ public class ForgotPasswordController {
 			LOGGER.info("Reset Password Token has generated: " + token);
 			String linkFrontend = "http://localhost:4200/reset_password?token=" + token;
 			sendEmail(linkFrontend, email);
-			return new ResponseEntity("We have send a resetLink to your email",HttpStatus.OK);
+			Map<String, String> response = new HashMap<>();
+	        response.put("message", "We have sent a resetLink to your email");
+	        return ResponseEntity.ok(response);
 		}catch(UserNotFoundException e) {
 			return ResponseEntity.notFound().build();
 		}catch (UnsupportedEncodingException  |  MessagingException e) {

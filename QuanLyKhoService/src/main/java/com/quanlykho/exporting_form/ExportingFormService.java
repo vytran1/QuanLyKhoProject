@@ -24,7 +24,7 @@ import com.quanlykho.inventory_product.InventoryProductRepository;
 
 
 @Service
-@Transactional(rollbackFor = {ExportingFormAlreadyExistException.class,ProductNotInInventoryException.class,InSufficientStockException.class})
+@Transactional(rollbackFor = {ExportingFormAlreadyExistException.class,ProductNotInInventoryException.class,InSufficientStockException.class,Throwable.class})
 public class ExportingFormService {
 	
    @Autowired	

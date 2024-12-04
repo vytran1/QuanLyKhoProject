@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.quanlykho.common.Inventory;
 import com.quanlykho.common.InventoryProduct;
@@ -23,10 +24,10 @@ import com.quanlykho.importing_form_detail.ImportingFormDetailRepository;
 import com.quanlykho.inventory_product.InventoryProductRepository;
 import com.quanlykho.product.ProductRepository;
 
-import jakarta.transaction.Transactional;
+
 
 @Service
-@Transactional
+@Transactional(rollbackFor = Throwable.class)
 public class ImportingFormService {
    
 	@Autowired
