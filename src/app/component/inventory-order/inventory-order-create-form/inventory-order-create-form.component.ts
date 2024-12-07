@@ -18,6 +18,10 @@ import { ProductListModalComponent } from '../../../sub-component/product-list-m
 import { OrderDTO } from '../../../model/order/order-dto.model';
 import { Router } from '@angular/router';
 import { MessageModalComponent } from '../../../message-modal/message-modal.component';
+import {
+  OrderFormValidationMessage,
+  ValidationMessages,
+} from '../../../../environments/validation_message_for_orderform';
 
 @Component({
   selector: 'app-inventory-order-create-form',
@@ -40,6 +44,8 @@ export class InventoryOrderCreateFormComponent implements OnInit, OnDestroy {
   message = '';
   type: 'success' | 'error' = 'success';
   showResponseModal = false;
+
+  errorMessages: ValidationMessages = OrderFormValidationMessage;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -65,7 +71,14 @@ export class InventoryOrderCreateFormComponent implements OnInit, OnDestroy {
         },
       ],
       supplier: ['', [Validators.required, supplierValidator]],
-      customerName: ['', [Validators.required, Validators.minLength(10)]],
+      customerName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.pattern(/^[a-zA-ZÀ-ỹ\s]+$/u),
+        ],
+      ],
       customerPhoneNumber: [
         '',
         [Validators.required, Validators.pattern('^[0-9]{10}$')],
@@ -189,5 +202,22 @@ export class InventoryOrderCreateFormComponent implements OnInit, OnDestroy {
       this.showResponseModal = false;
       this.form.reset();
     }
+  }
+
+  getErrorMessage(
+    controlName: string,
+    errorName: string,
+    index?: number
+  ): string {
+    if (index !== undefined) {
+      //console.log('Get Message Error For Detail', index);
+      const orderDetails = this.errorMessages[
+        'orderDetails'
+      ] as ValidationMessages;
+      const controlErrors = orderDetails[controlName] as ValidationMessages;
+      return (controlErrors[errorName] as string) || '';
+    }
+    const controlErrors = this.errorMessages[controlName] as ValidationMessages;
+    return (controlErrors[errorName] as string) || '';
   }
 }

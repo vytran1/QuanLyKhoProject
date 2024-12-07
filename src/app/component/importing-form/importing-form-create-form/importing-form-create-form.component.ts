@@ -23,6 +23,10 @@ import { OrderDTO } from '../../../model/order/order-dto.model';
 import { OrderDetailDTO } from '../../../model/order/order-detail-dto.model';
 import { ImportingFormDTO } from '../../../model/importing-form/importing-form-dto.model';
 import { MessageModalComponent } from '../../../message-modal/message-modal.component';
+import {
+  ImportingFormValidationMessage,
+  ValidationMessages,
+} from '../../../../environments/validation_message_for_importingform';
 
 @Component({
   selector: 'app-importing-form-create-form',
@@ -46,6 +50,9 @@ export class ImportingFormCreateFormComponent implements OnInit, OnDestroy {
   showModalResponse = false;
   message: string = '';
   type: 'success' | 'error' = 'success';
+
+  errorMessages: ValidationMessages = ImportingFormValidationMessage;
+
   constructor(
     private formBuilder: FormBuilder,
     private importingFormService: ImportingFormService,
@@ -180,5 +187,24 @@ export class ImportingFormCreateFormComponent implements OnInit, OnDestroy {
     }
     (this.message = ''), (this.type = 'success');
     this.showModalResponse = false;
+  }
+
+  getErrorMessage(
+    controlName: string,
+    errorName: string,
+    index?: number
+  ): string {
+    if (index !== undefined) {
+      //console.log('Get Message Error For Detail', index);
+      const importingFormDetails = this.errorMessages[
+        'importingDetails'
+      ] as ValidationMessages;
+      const controlErrors = importingFormDetails[
+        controlName
+      ] as ValidationMessages;
+      return (controlErrors[errorName] as string) || '';
+    }
+    const controlErrors = this.errorMessages[controlName] as ValidationMessages;
+    return (controlErrors[errorName] as string) || '';
   }
 }

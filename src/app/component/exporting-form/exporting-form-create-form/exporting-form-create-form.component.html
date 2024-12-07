@@ -13,16 +13,17 @@
     form.get('exportingFormId').touched){
     <div class="error-message">
       @if(form.get('exportingFormId').errors?.['required']){
-      <div>Mã Phiếu Xuất là bắt buộc</div>
+      <div>{{ getErrorMessage("exportingFormId", "required") }}</div>
       } @if(form.get('exportingFormId').errors?.['minlength']){
-      <div>Mã Phiếu Xuất bắt buộc phải chứa ít nhất 10 ký tự</div>
+      <div>{{ getErrorMessage("exportingFormId", "minlength") }}</div>
       } @if(form.get('exportingFormId').errors?.['pattern']){
       <div>
-        Mã Phiếu Xuất chỉ được chứa chữ cái, số, dấu gạch ngang (-), và dấu gạch
-        dưới (_).
+        {{ getErrorMessage("exportingFormId", "pattern") }}
       </div>
       } @if(form.get('exportingFormId').errors?.['exportingFormIdExists']){
-      <div>Mã Phiếu Xuất đã tồn tại</div>
+      <div>
+        {{ getErrorMessage("exportingFormId", "exportingFormIdExists") }}
+      </div>
       }
     </div>
     }
@@ -37,7 +38,7 @@
     @if(form.get('inventory').invalid && form.get('inventory').touched){
     <div class="error-message">
       @if(form.get('inventory').errors?.['supplierRequired']){
-      <div>Mã Kho là bắt buộc</div>
+      <div>{{ getErrorMessage("inventory", "supplierRequired") }}</div>
       }
     </div>
     }
@@ -52,11 +53,11 @@
     @if(form.get('customerName').invalid && form.get('customerName').touched){
     <div class="error-message">
       @if(form.get('customerName').errors?.['required']){
-      <div>Họ Tên Khách Hàng là bắt buộc</div>
+      <div>{{ getErrorMessage("customerName", "required") }}</div>
       } @if(form.get('customerName').errors?.['pattern']){
-      <div>Họ Tên Khách Hàng chỉ được chứa chữ cái</div>
+      <div>{{ getErrorMessage("customerName", "pattern") }}</div>
       } @if(form.get('customerName').errors?.['minlength']){
-      <div>Họ Tên Khách Hàng Phải Chứa ít nhất 10 ký tự</div>
+      <div>{{ getErrorMessage("customerName", "minlength") }}</div>
       }
     </div>
     }
@@ -72,10 +73,10 @@
     form.get('customerPhoneNumber').touched){
     <div class="error-message">
       @if(form.get('customerPhoneNumber').errors?.['required']){
-      <div>Số điện thoại Khách Hàng là bắt buộc</div>
+      <div>{{ getErrorMessage("customerPhoneNumber", "required") }}</div>
       } @if(form.get('customerPhoneNumber').errors?.['pattern']){
       <div>
-        Số điện thoại Khách Hàng chỉ được chứa ký tự số và phải có đúng 10 số
+        {{ getErrorMessage("customerPhoneNumber", "pattern") }}
       </div>
       }
     </div>
@@ -115,15 +116,14 @@
             detail.get('quantity')?.touched){
             <div class="error-message">
               @if(detail.get('quantity')?.errors?.['required']){
-              <div>Số lượng là bắt buộc</div>
+              <div>{{ getErrorMessage("quantity", "required", i) }}</div>
               } @if(detail.get('quantity')?.errors?.['pattern']){
-              <div>Số lượng bắt buộc phải là số</div>
+              <div>{{ getErrorMessage("quantity", "pattern", i) }}</div>
               } @if(detail.get('quantity')?.errors?.['min']){
-              <div>Số lượng nhỏ nhất là 1</div>
+              <div>{{ getErrorMessage("quantity", "min", i) }}</div>
               } @if(detail.get('quantity')?.errors?.['max']){
               <div>
-                Số lượng bạn xuất vượt quá so với số lượng có trong kho. Vui
-                lòng kiểm tra lại tồn kho
+                {{ getErrorMessage("quantity", "max", i) }}
               </div>
               }
             </div>
@@ -140,11 +140,11 @@
             detail.get('unitPrice')?.touched){
             <div class="error-message">
               @if(detail.get('unitPrice')?.errors?.['required']){
-              <div>Đơn giá là bắt buộc</div>
+              <div>{{ getErrorMessage("unitPrice", "required", i) }}</div>
               } @if(detail.get('unitPrice')?.errors?.['pattern']){
-              <div>Đơn giá bắt buộc phải là số</div>
+              <div>{{ getErrorMessage("unitPrice", "pattern", i) }}</div>
               } @if(detail.get('unitPrice')?.errors?.['min']){
-              <div>Đơn giá nhỏ nhất là 1</div>
+              <div>{{ getErrorMessage("unitPrice", "min", i) }}</div>
               }
             </div>
             }
@@ -160,7 +160,9 @@
     </table>
     @if(exportingDetails.invalid &&
     exportingDetails.errors?.['minFormArrayLength']){
-    <div class="error-message">Chi tiết phiếu xuất phải có ít nhất một cái</div>
+    <div class="error-message">
+      {{ getErrorMessage("exportingDetails", "minFormArrayLength") }}
+    </div>
     }
     <button type="submit" [disabled]="form.invalid">Submit</button>
   </form>

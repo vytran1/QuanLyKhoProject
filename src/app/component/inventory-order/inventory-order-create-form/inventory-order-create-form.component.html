@@ -7,16 +7,15 @@
     @if(form.get('orderId').invalid && form.get('orderId').touched){
     <div class="error-message">
       @if(form.get('orderId').errors?.['required']){
-      <div>Mã Đơn Hàng không được để trống</div>
+      <div>{{ getErrorMessage("orderId", "required") }}</div>
       } @if(form.get('orderId').errors?.['minlength']){
-      <div>Mã Đơn Hàng phải có ít nhất 10 ký tự</div>
+      <div>{{ getErrorMessage("orderId", "minlength") }}</div>
       } @if(form.get('orderId').errors?.['pattern']){
       <div>
-        Mã đơn hàng chỉ được chứa chữ cái, số, dấu gạch ngang (-), và dấu gạch
-        dưới (_).
+        {{ getErrorMessage("orderId", "pattern") }}
       </div>
       } @if(form.get('orderId').errors?.['orderIdExist']){
-      <div>Mã Đơn Hàng đã tồn tại</div>
+      <div>{{ getErrorMessage("orderId", "orderIdExist") }}</div>
       }
     </div>
     }
@@ -31,9 +30,9 @@
     @if(form.get('supplier').invalid && form.get('supplier').touched){
     <div class="error-message">
       @if(form.get('supplier').errors?.['required']){
-      <div>Nhà cung cấp không được để trống</div>
+      <div>{{ getErrorMessage("supplier", "required") }}</div>
       } @if(form.get('supplier').errors?.['supplierRequired']){
-      <div>Hãy chọn một nhà cung cấp</div>
+      <div>{{ getErrorMessage("supplier", "supplierRequired") }}</div>
       }
     </div>
     }
@@ -48,9 +47,11 @@
     @if(form.get('customerName').invalid && form.get('customerName').touched){
     <div class="error-message">
       @if(form.get('customerName').errors?.['required']){
-      <div>Tên khách hàng không được để trống</div>
+      <div>{{ getErrorMessage("customerName", "required") }}</div>
       } @if(form.get('customerName').errors?.['minlength']){
-      <div>Tên khách hàng phải chứa ít nhất 10 ký tự</div>
+      <div>{{ getErrorMessage("customerName", "minlength") }}</div>
+      } @if(form.get('customerName').errors?.['pattern']){
+      <div>{{ getErrorMessage("customerName", "pattern") }}</div>
       }
     </div>
     }
@@ -66,10 +67,10 @@
     form.get('customerPhoneNumber').touched){
     <div class="error-message">
       @if(form.get('customerPhoneNumber').errors?.['required']){
-      <div>Số điện thoại khách hàng không được để trống</div>
+      <div>{{ getErrorMessage("customerPhoneNumber", "required") }}</div>
       } @if(form.get('customerPhoneNumber').errors?.['pattern']){
       <div>
-        Số điện thoại khách hàng chỉ chứa số và phải chứa chính xác 10 số
+        {{ getErrorMessage("customerPhoneNumber", "pattern") }}
       </div>
       }
     </div>
@@ -85,7 +86,7 @@
     @if(form.get('inventoryId').invalid && form.get('inventoryId').touched){
     <div class="error-message">
       @if(form.get('inventoryId').errors?.['supplierRequired']){
-      <div>Mã kho bắt buộc phải chọn</div>
+      <div>{{ getErrorMessage("inventoryId", "supplierRequired") }}</div>
       }
     </div>
     } @if(selectedInventory){
@@ -116,11 +117,11 @@
             detail.get('quantity')?.touched){
             <div class="error-message">
               @if(detail.get('quantity')?.errors?.['required']){
-              <div>Số Lượng ko được để trống</div>
+              <div>{{ getErrorMessage("quantity", "required", i) }}</div>
               } @if(detail.get('quantity')?.errors?.['pattern']){
-              <div>Số lượng chỉ chứa số</div>
+              <div>{{ getErrorMessage("quantity", "pattern", i) }}</div>
               }@if(detail.get('quantity')?.errors?.['min']){
-              <div>Số lượng phải lớn hơn 1</div>
+              <div>{{ getErrorMessage("quantity", "min", i) }}</div>
               }
             </div>
             }
@@ -131,11 +132,11 @@
             detail.get('unitPrice')?.touched){
             <div class="error-message">
               @if(detail.get('unitPrice')?.errors?.['required']){
-              <div>Số Lượng ko được để trống</div>
+              <div>{{ getErrorMessage("unitPrice", "required", i) }}</div>
               } @if(detail.get('unitPrice')?.errors?.['pattern']){
-              <div>Số lượng chỉ chứa số</div>
+              <div>{{ getErrorMessage("unitPrice", "pattern", i) }}</div>
               }@if(detail.get('unitPrice')?.errors?.['min']){
-              <div>Số lượng phải lớn hơn 1</div>
+              <div>{{ getErrorMessage("unitPrice", "min", i) }}</div>
               }
             </div>
             }
@@ -150,7 +151,7 @@
     </table>
     @if(orderDetails.invalid && orderDetails.errors?.['minFormArrayLength']){
     <div class="error-message">
-      <div>Phải có ít nhất 1 đơn hàng</div>
+      <div>{{ getErrorMessage("orderDetails", "minFormArrayLength") }}</div>
     </div>
     }
 

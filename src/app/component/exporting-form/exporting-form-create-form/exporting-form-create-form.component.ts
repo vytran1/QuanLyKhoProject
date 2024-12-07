@@ -19,6 +19,10 @@ import { ProductQuantity } from '../../../model/product_inventory/product-quanti
 import { ExportingFormDTO } from '../../../model/exporting_form/exporting-form-dto.model';
 import { MessageModalComponent } from '../../../message-modal/message-modal.component';
 import { Router } from '@angular/router';
+import {
+  ExportingFormValidationMessage,
+  ValidationMessages,
+} from '../../../../environments/validation_message_for_exportingform';
 
 @Component({
   selector: 'app-exporting-form-create-form',
@@ -41,6 +45,8 @@ export class ExportingFormCreateFormComponent implements OnInit, OnDestroy {
   showModalResponse = false;
   message: string = '';
   type: 'success' | 'error' = 'success';
+
+  errorMessages: ValidationMessages = ExportingFormValidationMessage;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -202,5 +208,24 @@ export class ExportingFormCreateFormComponent implements OnInit, OnDestroy {
     this.message = '';
     this.type = 'success';
     this.showModalResponse = false;
+  }
+
+  getErrorMessage(
+    controlName: string,
+    errorName: string,
+    index?: number
+  ): string {
+    if (index !== undefined) {
+      //console.log('Get Message Error For Detail', index);
+      const exportingFormDetails = this.errorMessages[
+        'exportingDetails'
+      ] as ValidationMessages;
+      const controlErrors = exportingFormDetails[
+        controlName
+      ] as ValidationMessages;
+      return (controlErrors[errorName] as string) || '';
+    }
+    const controlErrors = this.errorMessages[controlName] as ValidationMessages;
+    return (controlErrors[errorName] as string) || '';
   }
 }

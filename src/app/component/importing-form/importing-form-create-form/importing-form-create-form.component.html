@@ -13,16 +13,17 @@
     this.form.get('importingFormId').touched){
     <div class="error-message">
       @if(this.form.get('importingFormId').errors?.['required']){
-      <div>Mã Phiếu Nhập là bắt buộc</div>
+      <div>{{ getErrorMessage("importingFormId", "required") }}</div>
       } @if(this.form.get('importingFormId').errors?.['minlength']){
-      <div>Mã Phiếu Nhập phải chứa ít nhất 10 ký tự</div>
+      <div>{{ getErrorMessage("importingFormId", "minlength") }}</div>
       } @if(this.form.get('importingFormId').errors?.['pattern']){
       <div>
-        Mã Phiếu Nhập chỉ được chứa chữ cái, số, dấu gạch ngang (-), và dấu gạch
-        dưới (_).
+        {{ getErrorMessage("importingFormId", "pattern") }}
       </div>
       } @if(this.form.get('importingFormId').errors?.['importingFormIdExists']){
-      <div>Mã Phiếu Nhập đã tồn tại</div>
+      <div>
+        {{ getErrorMessage("importingFormId", "importingFormIdExists") }}
+      </div>
       }
     </div>
     }
@@ -41,7 +42,7 @@
     this.form.get('inventory').touched){
     <div class="error-message">
       @if(this.form.get('inventory').errors?.['supplierRequired']){
-      <div>Mã Kho là bắt buộc</div>
+      <div>{{ getErrorMessage("inventory", "supplierRequired") }}</div>
       }
     </div>
     }
@@ -80,15 +81,14 @@
             detail.get('quantity')?.touched){
             <div class="error-message">
               @if(detail.get('quantity')?.errors?.['required']){
-              <div>Số lượng là bắt buộc</div>
+              <div>{{ getErrorMessage("quantity", "required", i) }}</div>
               } @if(detail.get('quantity')?.errors?.['pattern']){
-              <div>Số lượng bắt buộc phải là số</div>
+              <div>{{ getErrorMessage("quantity", "pattern", i) }}</div>
               } @if(detail.get('quantity')?.errors?.['min']){
-              <div>Số lượng nhỏ nhất là 1</div>
+              <div>{{ getErrorMessage("quantity", "min", i) }}</div>
               } @if(detail.get('quantity')?.errors?.['quantityExceeds']){
               <div>
-                Số lượng bạn nhập vượt quá so với số lượng được yêu cầu. Vui
-                lòng kiểm tra lại đơn hàng
+                {{ getErrorMessage("quantity", "quantityExceeds", i) }}
               </div>
               }
             </div>
@@ -105,11 +105,11 @@
             detail.get('unitPrice')?.touched){
             <div class="error-message">
               @if(detail.get('unitPrice')?.errors?.['required']){
-              <div>Đơn giá là bắt buộc</div>
+              <div>{{ getErrorMessage("unitPrice", "required", i) }}</div>
               } @if(detail.get('unitPrice')?.errors?.['pattern']){
-              <div>Đơn giá bắt buộc phải là số</div>
+              <div>{{ getErrorMessage("unitPrice", "pattern", i) }}</div>
               } @if(detail.get('unitPrice')?.errors?.['min']){
-              <div>Đơn giá nhỏ nhất là 1</div>
+              <div>{{ getErrorMessage("unitPrice", "min", i) }}</div>
               }
             </div>
             }
@@ -125,7 +125,9 @@
     </table>
     @if(importingDetails.invalid &&
     importingDetails.errors?.['minFormArrayLength']){
-    <div class="error-message">Chi tiết phiếu nhập phải có ít nhất một cái</div>
+    <div class="error-message">
+      {{ getErrorMessage("importingDetails", "minFormArrayLength") }}
+    </div>
     }
     <button type="submit" [disabled]="form.invalid">Submit</button>
   </form>
