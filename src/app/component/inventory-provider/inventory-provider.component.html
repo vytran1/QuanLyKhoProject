@@ -1,0 +1,113 @@
+<div class="inventory-order-table-container">
+  <div class="text-center header">
+    <h2>Quản Lý Nhà Cung Cấp</h2>
+  </div>
+  <div class="search-and-date-container">
+    <div class="search-container">
+      <app-search (searchEvent)="onKeyWord($event)"></app-search>
+      <button class="btn btn-primary" routerLink="/inventory/create_provider">
+        Create Provider
+      </button>
+    </div>
+    <!-- <div class="search-date-container">
+      <app-search-date (emitEvent)="onSearchDate($event)"></app-search-date>
+    </div> -->
+  </div>
+  <table class="inventory-order-table">
+    <thead>
+      <tr>
+        <th>
+          <a
+            href="#"
+            (click)="onSortFieldChange('providerId'); $event.preventDefault()"
+          >
+            ID@if(sortField === 'providerId'){
+            <i
+              class="fas"
+              [ngClass]="{
+                'fa-arrow-up': sortDir === 'asc',
+                'fa-arrow-down': sortDir === 'desc'
+              }"
+            >
+            </i>
+            }
+          </a>
+        </th>
+        <th>Tên Nhà Cung Cấp</th>
+        <th>Số Điện Thoại Nhà Cung Cấp</th>
+        <th>Địa Chỉ Nhà Cung Cấp</th>
+        <th>Địa Chỉ Email Nhà Cung Cấp</th>
+        <th>Trạng Thái</th>
+        <th>Thao Tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if(inventoryProviders){ @for (item of inventoryProviders; track $index) {
+      <tr>
+        <td>{{ item.providerId }}</td>
+        <td>{{ item.providerName }}</td>
+        <td>{{ item.providerContactNumber }}</td>
+        <td>{{ item.providerAddress }}</td>
+        <td>{{ item.providerEmail }}</td>
+        <td>
+          <i
+            class="fa fa-2x"
+            [ngClass]="{
+              'fa-check-circle text-success': item.enabled,
+              'fa-times-circle text-danger': !item.enabled
+            }"
+          >
+          </i>
+        </td>
+        <td>
+          <button class="action-button detail" (click)="openModalDetails(item)">
+            Details
+          </button>
+          <button
+            class="action-button edit"
+            [routerLink]="['/inventory/edit_provider', item.providerId]"
+          >
+            Edit
+          </button>
+          <button class="action-button delete" (click)="openModalDelete(item)">
+            Delete
+          </button>
+        </td>
+      </tr>
+      } }
+    </tbody>
+  </table>
+  <div class="pagination-container">
+    <app-improved-pagination
+      [pageNum]="pageNum"
+      [totalItems]="totalItems"
+      [totalPage]="totalPage"
+      (pageChange)="onPageNumChange($event)"
+    ></app-improved-pagination>
+  </div>
+  <div class="page-size-container">
+    <app-change-page-size (pageSizeChange)="onPageSizeChange($event)">
+    </app-change-page-size>
+  </div>
+
+  @if(showModalDetails){
+  <app-inventory-provider-detail-modal
+    [inventoryProvider]="selectedInventoryProvider"
+    (closeEmitEvent)="closeModalDetails()"
+  >
+  </app-inventory-provider-detail-modal>
+  } @if(showModalDelete){
+  <app-delete-inventory-user-warning-modal
+    [isVisible]="showModalDelete"
+    (canceled)="cancelDeleteOperation()"
+    (confirmed)="confirmDeleteOperation()"
+    [message]="deleteMessage"
+  ></app-delete-inventory-user-warning-modal>
+  } @if(showModalMessage){
+  <app-message-modal
+    [message]="message"
+    [type]="type"
+    (close)="closeModalMessage()"
+  ></app-message-modal>
+  }
+</div>

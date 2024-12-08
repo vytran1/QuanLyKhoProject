@@ -29,6 +29,9 @@ import { ProductsEditFormComponent } from './products-management/products-edit-f
 import { UnauthorizedComponent } from './sub-component/unauthorized/unauthorized.component';
 import { Role } from '../environments/role.enum';
 import { AuthenticationGuard } from './guard/authentication.guard';
+import { InventoryProviderComponent } from './component/inventory-provider/inventory-provider.component';
+import { InventoryProviderCreateFormComponent } from './component/inventory-provider/inventory-provider-create-form/inventory-provider-create-form.component';
+import { InventoryProviderEditFormComponent } from './component/inventory-provider/inventory-provider-edit-form/inventory-provider-edit-form.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -98,7 +101,21 @@ export const routes: Routes = [
         component: ProductsEditFormComponent,
         canActivate: [AuthenticationGuard],
       },
-
+      {
+        path: 'inventory_provider',
+        component: InventoryProviderComponent,
+        canActivate: [AuthenticationGuard],
+      },
+      {
+        path: 'create_provider',
+        component: InventoryProviderCreateFormComponent,
+        canActivate: [AuthenticationGuard],
+      },
+      {
+        path: 'edit_provider/:providerId',
+        component: InventoryProviderEditFormComponent,
+        canActivate: [AuthenticationGuard],
+      },
       {
         path: 'inventory_order',
         component: InventoryOrderComponent,
