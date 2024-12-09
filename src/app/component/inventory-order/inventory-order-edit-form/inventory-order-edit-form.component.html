@@ -14,20 +14,14 @@
     </div>
     }
 
-    <label for="supplier">Nhà Cung Cấp</label>
-    <select name="supplier" id="supplier" formControlName="supplier">
-      <option value="">Chọn một nhà cung cấp</option>
-      <option value="Phong Vũ">Phong Vũ</option>
-      <option value="Cell PhoneS">Cell PhoneS</option>
-      <option value="Hoàng Hà Mobile">Hoàng Hà Mobile</option>
-    </select>
-    @if(form.get('supplier').invalid && form.get('supplier').touched){
-    <div class="error-message">
-      @if(form.get('supplier').errors?.['required']){
-      <div>Nhà cung cấp không được để trống</div>
+    <!--Provider Sector-->
+    <label for="providerId">Nhà Cung Cấp</label>
+    <select name="providerId" id="providerId" formControlName="providerId">
+      <option value="">Select A Provider</option>
+      @for (item of inventoryProviders; track $index) {
+      <option value="{{ item.providerId }}">{{ item.providerName }}</option>
       }
-    </div>
-    }
+    </select>
 
     <label for="customerName">Tên Khách Hàng:</label>
     <input

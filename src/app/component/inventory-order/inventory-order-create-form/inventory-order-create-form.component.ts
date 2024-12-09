@@ -22,6 +22,8 @@ import {
   OrderFormValidationMessage,
   ValidationMessages,
 } from '../../../../environments/validation_message_for_orderform';
+import { InventoryProviderService } from '../../../service/inventory-provider.service';
+import { InventoryProvider } from '../../../model/provider/inventory_provider.model';
 
 @Component({
   selector: 'app-inventory-order-create-form',
@@ -37,6 +39,7 @@ import {
 export class InventoryOrderCreateFormComponent implements OnInit, OnDestroy {
   form: any;
   inventories: Inventory[] = [];
+  inventoryProviders: InventoryProvider[] = [];
   selectedInventory: Inventory | null = null;
   subscriptions: Subscription[] = [];
   showProductList = false;
@@ -51,6 +54,7 @@ export class InventoryOrderCreateFormComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private inventoryOrderService: InventoryOrderService,
     private inventoryService: InventoriesManagementService,
+    private inventoryProviderService: InventoryProviderService,
     private router: Router
   ) {}
 
@@ -70,7 +74,7 @@ export class InventoryOrderCreateFormComponent implements OnInit, OnDestroy {
           updateOn: 'blur',
         },
       ],
-      supplier: ['', [Validators.required, supplierValidator]],
+      //supplier: ['', [Validators.required, supplierValidator]],
       customerName: [
         '',
         [
@@ -84,6 +88,7 @@ export class InventoryOrderCreateFormComponent implements OnInit, OnDestroy {
         [Validators.required, Validators.pattern('^[0-9]{10}$')],
       ],
       inventoryId: ['', [Validators.required, supplierValidator]],
+      providerId: ['', [Validators.required, supplierValidator]],
       orderDetails: this.formBuilder.array([], minFormArrayLength(1)),
     });
 
@@ -92,6 +97,16 @@ export class InventoryOrderCreateFormComponent implements OnInit, OnDestroy {
         next: (response) => {
           if (response.body) {
             this.inventories = response.body as Inventory[];
+          }
+        },
+      })
+    );
+
+    this.subscriptions.push(
+      this.inventoryProviderService.findAllWithOnlyIdAndName().subscribe({
+        next: (response) => {
+          if (response.body) {
+            this.inventoryProviders = response.body as InventoryProvider[];
           }
         },
       })
@@ -186,6 +201,7 @@ export class InventoryOrderCreateFormComponent implements OnInit, OnDestroy {
           },
         })
       );
+      console.log(requestBody);
     }
   }
 

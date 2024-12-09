@@ -1,8 +1,9 @@
 export interface OrderWithoutIPF {
   orderId: string;
   createdTime: Date;
-  supplier: string;
+  //supplier: string;
   customerName: string;
   inventoryUser: string;
   inventory: string;
+  inventoryProvider: string;
 }

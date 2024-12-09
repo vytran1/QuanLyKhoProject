@@ -61,7 +61,7 @@
       <tr *ngFor="let order of inventoryOrders">
         <td>{{ order.orderId }}</td>
         <td>{{ order.createdTime | date : "dd/MM/yyyy" }}</td>
-        <td>{{ order.supplier }}</td>
+        <td>{{ order.providerName }}</td>
         <td>{{ order.customerName }}</td>
         <td>{{ order.createUser }}</td>
         <td>{{ order.inventoryId }}</td>

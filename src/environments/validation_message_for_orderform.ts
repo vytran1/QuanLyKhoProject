@@ -10,6 +10,10 @@ export const OrderFormValidationMessage = {
     required: 'Nhà cung cấp không được để trống',
     supplierRequired: 'Bắt buộc phải chọn một nhà cung cấp',
   },
+  providerId: {
+    required: 'Nhà cung cấp không được để trống',
+    supplierRequired: 'Bắt buộc phải chọn một nhà cung cấp',
+  },
   customerName: {
     required: 'Tên khách hàng không được để trống',
     minlength: 'Tên khách hàng phải có độ dài ít nhất là 10 ký tự',

@@ -12,6 +12,9 @@ export class InventoryProviderService {
   inventoryProvidersSubject = new BehaviorSubject<InventoryProvider[]>([]);
   inventoryProviders$ = this.inventoryProvidersSubject.asObservable();
 
+  private providerUpdateSubject = new BehaviorSubject<void>(undefined); // Biến này sẽ thông báo khi provider thay đổi
+  providerUpdated$ = this.providerUpdateSubject.asObservable(); // Observable để các module subscribe
+
   pageNumSubject = new BehaviorSubject<number>(1);
   pageSizeSubject = new BehaviorSubject<number>(2);
   sortFieldSubject = new BehaviorSubject<string>('providerId');
@@ -131,6 +134,12 @@ export class InventoryProviderService {
     });
   }
 
+  findAllWithOnlyIdAndName(): Observable<HttpResponse<any>> {
+    return this.httpClient.get(`${this.host}/api/providers/forCreateOrder`, {
+      observe: 'response',
+    });
+  }
+
   setPageNum(value: number) {
     this.pageNumSubject.next(value);
   }
@@ -146,5 +155,9 @@ export class InventoryProviderService {
 
   setKeyWord(value: string) {
     this.keyWordSubject.next(value);
+  }
+
+  notifyProviderUpdated() {
+    this.providerUpdateSubject.next(); // Gọi phương thức này khi provider được cập nhật
   }
 }

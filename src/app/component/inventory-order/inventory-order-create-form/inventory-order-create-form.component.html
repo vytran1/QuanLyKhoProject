@@ -20,7 +20,7 @@
     </div>
     }
 
-    <label for="supplier">Nhà Cung Cấp</label>
+    <!-- <label for="supplier">Nhà Cung Cấp</label>
     <select name="supplier" id="supplier" formControlName="supplier">
       <option value="">Chọn một nhà cung cấp</option>
       <option value="Phong Vũ">Phong Vũ</option>
@@ -33,6 +33,24 @@
       <div>{{ getErrorMessage("supplier", "required") }}</div>
       } @if(form.get('supplier').errors?.['supplierRequired']){
       <div>{{ getErrorMessage("supplier", "supplierRequired") }}</div>
+      }
+    </div>
+    } -->
+
+    <!--Provider Sector-->
+    <label for="inventoryId">Nhà Cung Cấp</label>
+    <select name="providerId" id="providerId" formControlName="providerId">
+      <option value="">Select A Provider</option>
+      @for (item of inventoryProviders; track $index) {
+      <option value="{{ item.providerId }}">{{ item.providerName }}</option>
+      }
+    </select>
+    @if(form.get('providerId').invalid && form.get('providerId').touched){
+    <div class="error-message">
+      @if(form.get('providerId').errors?.['required']){
+      <div>{{ getErrorMessage("providerId", "required") }}</div>
+      } @if(form.get('providerId').errors?.['supplierRequired']){
+      <div>{{ getErrorMessage("providerId", "supplierRequired") }}</div>
       }
     </div>
     }

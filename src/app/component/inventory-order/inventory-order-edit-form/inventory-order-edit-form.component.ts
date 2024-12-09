@@ -17,6 +17,12 @@ import { ProductListModalComponent } from '../../../sub-component/product-list-m
 import { MessageModalComponent } from '../../../message-modal/message-modal.component';
 import { Inventory } from '../../../model/inventories/inventories.model';
 import { InventoriesManagementService } from '../../../service/inventories-management.service';
+import { InventoryProvider } from '../../../model/provider/inventory_provider.model';
+import { InventoryProviderService } from '../../../service/inventory-provider.service';
+import {
+  ValidationMessages,
+  OrderFormValidationMessage,
+} from '../../../../environments/validation_message_for_orderform';
 
 @Component({
   selector: 'app-inventory-order-edit-form',
@@ -33,9 +39,11 @@ export class InventoryOrderEditFormComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   form: any;
   inventoryOrder: OrderDTO | null = null;
+  inventoryProviders: InventoryProvider[] = [];
   showProductList = false;
   inventories: Inventory[] = [];
   selectedInventory: Inventory | null = null;
+  errorMessages: ValidationMessages = OrderFormValidationMessage;
   //Modal Response
   message = '';
   type: 'success' | 'error' = 'success';
@@ -46,7 +54,8 @@ export class InventoryOrderEditFormComponent implements OnInit, OnDestroy {
     private inventoryOrderService: InventoryOrderService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private inventoryService: InventoriesManagementService
+    private inventoryService: InventoriesManagementService,
+    private inventoryProviderService: InventoryProviderService
   ) {}
 
   ngOnInit(): void {
@@ -62,9 +71,19 @@ export class InventoryOrderEditFormComponent implements OnInit, OnDestroy {
       })
     );
 
+    this.subscriptions.push(
+      this.inventoryProviderService.findAllWithOnlyIdAndName().subscribe({
+        next: (response) => {
+          if (response.body) {
+            this.inventoryProviders = response.body as InventoryProvider[];
+          }
+        },
+      })
+    );
+
     this.form = this.formBuilder.group({
       orderId: [{ value: '', disabled: true }, [Validators.required]],
-      supplier: [{ value: '', disabled: true }, [Validators.required]],
+      providerId: [{ value: '', disabled: true }, [Validators.required]],
       customerName: [
         { value: '', disabled: true },
         [Validators.required, Validators.minLength(10)],
@@ -88,7 +107,7 @@ export class InventoryOrderEditFormComponent implements OnInit, OnDestroy {
               if (this.inventoryOrder) {
                 this.form.patchValue({
                   orderId: this.inventoryOrder.orderId,
-                  supplier: this.inventoryOrder.supplier,
+                  providerId: this.inventoryOrder.providerId,
                   customerName: this.inventoryOrder.customerName,
                   customerPhoneNumber: this.inventoryOrder.customerPhoneNumber,
                   inventoryId: this.inventoryOrder.inventoryId,
@@ -223,5 +242,22 @@ export class InventoryOrderEditFormComponent implements OnInit, OnDestroy {
       this.inventoryOrderService.setPageNum(1);
       this.router.navigate(['/inventory/inventory_order']);
     }
+  }
+
+  getErrorMessage(
+    controlName: string,
+    errorName: string,
+    index?: number
+  ): string {
+    if (index !== undefined) {
+      //console.log('Get Message Error For Detail', index);
+      const orderDetails = this.errorMessages[
+        'orderDetails'
+      ] as ValidationMessages;
+      const controlErrors = orderDetails[controlName] as ValidationMessages;
+      return (controlErrors[errorName] as string) || '';
+    }
+    const controlErrors = this.errorMessages[controlName] as ValidationMessages;
+    return (controlErrors[errorName] as string) || '';
   }
 }
