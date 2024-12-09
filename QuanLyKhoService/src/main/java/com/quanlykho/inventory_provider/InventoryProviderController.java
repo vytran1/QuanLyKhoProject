@@ -119,6 +119,12 @@ public class InventoryProviderController {
 	}
 	
 	
+	@GetMapping("/forCreateOrder")
+	public ResponseEntity<?> getAllWithOnlyIdAndName(){
+		List<InventoryProvider> results = inventoryProviderService.findAllWithOnlyIdAndProvider();
+		List<InventoryProviderDTO> providerDTOs = results.stream().map(this::convertEntityToDTO).toList();
+		return ResponseEntity.ok(providerDTOs);
+	}
 	
 	
 	

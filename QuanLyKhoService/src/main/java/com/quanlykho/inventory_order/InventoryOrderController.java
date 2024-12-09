@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.quanlykho.Utility;
 import com.quanlykho.common.Inventory;
+import com.quanlykho.common.InventoryProvider;
 import com.quanlykho.common.InventoryUser;
 import com.quanlykho.common.Product;
 import com.quanlykho.common.exception.CannotDeleteThisItemException;
@@ -279,10 +280,11 @@ public class InventoryOrderController {
 	public InventoryOrder convertOrderDTOToOrderEntity(InventoryOrderDTO orderDTO) {
 		InventoryOrder inventoryOrder = new InventoryOrder();
 		inventoryOrder.setOrderId(orderDTO.getOrderId());
-		inventoryOrder.setSupplier(orderDTO.getSupplier());
+		//inventoryOrder.setSupplier(orderDTO.getSupplier());
 		inventoryOrder.setCustomerName(orderDTO.getCustomerName());
 		inventoryOrder.setCustomerPhoneNumber(orderDTO.getCustomerPhoneNumber());
 		inventoryOrder.setInventory(new Inventory(orderDTO.getInventoryId()));
+		inventoryOrder.setInventoryProvider(new InventoryProvider(orderDTO.getProviderId()));
 		return inventoryOrder;
 	}
 	

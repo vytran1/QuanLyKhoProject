@@ -7,6 +7,7 @@ public class OrderWithourImportingFormReportDTO {
     private Date createdDate;
     private String supplier;
     private String inventoryUser;
+    private String inventoryProvider;
     private Integer totalQuantity;
     private float totalValue;
 	public OrderWithourImportingFormReportDTO() {
@@ -48,6 +49,12 @@ public class OrderWithourImportingFormReportDTO {
 	}
 	public void setTotalValue(float totalValue) {
 		this.totalValue = totalValue;
+	}
+	public String getInventoryProvider() {
+		return inventoryProvider;
+	}
+	public void setInventoryProvider(String inventoryProvider) {
+		this.inventoryProvider = inventoryProvider;
 	}
     
     

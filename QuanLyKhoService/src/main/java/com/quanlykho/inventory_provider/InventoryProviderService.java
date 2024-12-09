@@ -78,6 +78,10 @@ public class InventoryProviderService {
 		inventoryProviderRepository.delete(providerOTP.get());
 	}
 	
+	public List<InventoryProvider> findAllWithOnlyIdAndProvider(){
+		return inventoryProviderRepository.findAllWithOnlyIdAndName();
+	}
+	
 	public boolean checkUniqueEmail(Integer id, String email) {
 	    boolean isCreatingNew = (id == null || id == 0);
 	    Optional<InventoryProvider> existingProvider = inventoryProviderRepository.findByProviderEmail(email);

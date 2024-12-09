@@ -45,6 +45,14 @@ public class InventoryProvider {
 		super();
 		this.providerId = providerId;
 	}
+	
+	
+
+	public InventoryProvider(Integer providerId, String providerName) {
+		super();
+		this.providerId = providerId;
+		this.providerName = providerName;
+	}
 
 	public Integer getProviderId() {
 		return providerId;

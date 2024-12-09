@@ -103,6 +103,8 @@ public class QuanLyKhoServiceApplication {
 		modelMapper.typeMap(InventoryOrder.class,InventoryOrderDTO.class).addMappings(mapper ->{
 			mapper.map(src -> src.getInventory().getInventoryId(),InventoryOrderDTO::setInventoryId);
 			mapper.map(src -> src.getInventoryUser().getFullName(),InventoryOrderDTO::setCreateUser);
+			mapper.map(src -> src.getInventoryProvider().getProviderName(),InventoryOrderDTO::setProviderName);
+			mapper.map(src -> src.getInventoryProvider().getProviderId(),InventoryOrderDTO::setProviderId);
 		});
 		
 		modelMapper.typeMap(InventoryOrderDTO.class,InventoryOrder.class).addMappings(mapper -> {
@@ -143,6 +145,7 @@ public class QuanLyKhoServiceApplication {
 		modelMapper.typeMap(InventoryOrder.class,InventoryOrderWithoutImportingFormDTO.class).addMappings(mapper -> {
 			mapper.map(src -> src.getInventoryUser().getFullName(),InventoryOrderWithoutImportingFormDTO::setInventoryUser);
 			mapper.map(src -> src.getInventory().getInventoryId(),InventoryOrderWithoutImportingFormDTO::setInventory);
+			mapper.map(src -> src.getInventoryProvider().getProviderName(),InventoryOrderWithoutImportingFormDTO::setInventoryProvider);
 		});
 		
 		//ExportingFormGuideMapper

@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.quanlykho.common.Inventory;
+import com.quanlykho.common.InventoryProvider;
 import com.quanlykho.common.InventoryUser;
 
 import jakarta.persistence.CascadeType;
@@ -46,6 +47,10 @@ public class InventoryOrder {
 	@ManyToOne()
 	@JoinColumn(name = "inventory_id",referencedColumnName = "inventory_id")
 	private Inventory inventory;
+	
+	@ManyToOne()
+	@JoinColumn(name = "provider_id")
+	private InventoryProvider inventoryProvider;
 	
 	
 	@OneToMany(mappedBy = "inventoryOrder",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true,targetEntity = InventoryOrderDetail.class)
@@ -155,6 +160,18 @@ public class InventoryOrder {
 
 	public void setOrderDetails(Set<InventoryOrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
+	}
+    
+	
+	
+
+	public InventoryProvider getInventoryProvider() {
+		return inventoryProvider;
+	}
+
+
+	public void setInventoryProvider(InventoryProvider inventoryProvider) {
+		this.inventoryProvider = inventoryProvider;
 	}
 
 

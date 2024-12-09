@@ -4,15 +4,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.quanlykho.inventory_provider.InventoryProviderDTO;
+
 public class InventoryOrderDTO {
 	
 	private String orderId;
 	private Date createdTime;
-	private String supplier;
+	//private String supplier;
 	private String customerName;
 	private String customerPhoneNumber;
 	private String createUser;
 	private String inventoryId;
+	private String providerName;
+	private Integer providerId;
 	
     private List<InventoryOrderDetailDTO> orderDetails = new ArrayList<>();
 	public InventoryOrderDTO() {
@@ -36,13 +40,13 @@ public class InventoryOrderDTO {
 		this.createdTime = createdTime;
 	}
 
-	public String getSupplier() {
-		return supplier;
-	}
-
-	public void setSupplier(String supplier) {
-		this.supplier = supplier;
-	}
+//	public String getSupplier() {
+//		return supplier;
+//	}
+//
+//	public void setSupplier(String supplier) {
+//		this.supplier = supplier;
+//	}
 
 	public String getCustomerName() {
 		return customerName;
@@ -83,10 +87,34 @@ public class InventoryOrderDTO {
 	public void setOrderDetails(List<InventoryOrderDetailDTO> orderDetails) {
 		this.orderDetails = orderDetails;
 	}
+	
+	
+    
+	
+
+	
+
+	public String getProviderName() {
+		return providerName;
+	}
+
+	public void setProviderName(String providerName) {
+		this.providerName = providerName;
+	}
+
+	
+
+	public Integer getProviderId() {
+		return providerId;
+	}
+
+	public void setProviderId(Integer providerId) {
+		this.providerId = providerId;
+	}
 
 	@Override
 	public String toString() {
-		return "InventoryOrderDTO [orderId=" + orderId + ", createdTime=" + createdTime + ", supplier=" + supplier
+		return "InventoryOrderDTO [orderId=" + orderId + ", createdTime=" + createdTime 
 				+ ", customerName=" + customerName + ", customerPhoneNumber=" + customerPhoneNumber + ", createUser="
 				+ createUser + ", inventoryId=" + inventoryId + ", orderDetails=" + orderDetails + "]";
 	}

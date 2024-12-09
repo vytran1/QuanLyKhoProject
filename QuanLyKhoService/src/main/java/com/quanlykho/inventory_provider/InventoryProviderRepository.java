@@ -1,5 +1,6 @@
 package com.quanlykho.inventory_provider;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -19,4 +20,9 @@ public interface InventoryProviderRepository extends JpaRepository<InventoryProv
 	
 	
 	public Optional<InventoryProvider> findByProviderEmail(String email);
+	
+	
+	@Query("SELECT new com.quanlykho.common.InventoryProvider(ip.providerId, ip.providerName) FROM InventoryProvider ip")
+	List<InventoryProvider> findAllWithOnlyIdAndName();
+
 }

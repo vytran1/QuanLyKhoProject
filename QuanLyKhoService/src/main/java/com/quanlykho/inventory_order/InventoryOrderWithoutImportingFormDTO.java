@@ -9,6 +9,7 @@ public class InventoryOrderWithoutImportingFormDTO {
     private String customerName;
     private String inventoryUser;
     private String inventory;
+    private String inventoryProvider;
     
     public InventoryOrderWithoutImportingFormDTO() {
     	
@@ -60,6 +61,14 @@ public class InventoryOrderWithoutImportingFormDTO {
 
 	public void setInventory(String inventory) {
 		this.inventory = inventory;
+	}
+
+	public String getInventoryProvider() {
+		return inventoryProvider;
+	}
+
+	public void setInventoryProvider(String inventoryProvider) {
+		this.inventoryProvider = inventoryProvider;
 	}
     
     

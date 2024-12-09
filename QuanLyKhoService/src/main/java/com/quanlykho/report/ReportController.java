@@ -313,6 +313,8 @@ public class ReportController {
 		orderWithourImportingFormReportDTO.setSupplier(supplier);
 		String userName = order.getInventoryUser().getFullName();
 		orderWithourImportingFormReportDTO.setInventoryUser(userName);
+		String inventoryProvider = order.getInventoryProvider().getProviderName();
+		orderWithourImportingFormReportDTO.setInventoryProvider(inventoryProvider);
 		
 		Set<InventoryOrderDetail> details = order.getOrderDetails();
 		Integer totalQuantity = 0;
