@@ -1,0 +1,334 @@
+<!-- Created with Jaspersoft Studio version 7.0.1.final using JasperReports Library version 7.0.1-573496633c2b4074e32f433154b543003f7d2498  -->
+<jasperReport name="ReportEmployeeActivity" language="java" pageWidth="950" pageHeight="860" columnWidth="910" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e72c0f30-1437-467d-8c68-602696d44cae">
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<dataset name="Dataset1" uuid="df0f2469-a0c4-47aa-a431-336820978978">
+		<query language="sql"><![CDATA[]]></query>
+		<field name="createDate" class="java.util.Date"/>
+		<field name="formId" class="java.lang.String"/>
+		<field name="typeForm" class="java.lang.String"/>
+		<field name="customerName" class="java.lang.String"/>
+		<field name="productName" class="java.lang.String"/>
+		<field name="quantity" class="java.lang.Integer"/>
+		<field name="unitPrice" class="java.lang.Float"/>
+		<field name="month" class="java.lang.String"/>
+		<field name="triGia" class="java.math.BigDecimal"/>
+		<variable name="totalQuantityOfAll" calculation="Sum" class="java.math.BigDecimal">
+			<expression><![CDATA[$F{quantity}]]></expression>
+		</variable>
+		<variable name="totalUnitPriceOfAll" calculation="Sum" class="java.math.BigDecimal">
+			<expression><![CDATA[$F{triGia}]]></expression>
+		</variable>
+		<variable name="monthTotalQuantity" resetType="Group" calculation="Sum" resetGroup="groupByMonth" class="java.math.BigDecimal">
+			<expression><![CDATA[$F{quantity}]]></expression>
+		</variable>
+		<variable name="monthTotalTriGia" resetType="Group" calculation="Sum" resetGroup="groupByMonth" class="java.math.BigDecimal">
+			<expression><![CDATA[$F{triGia}]]></expression>
+		</variable>
+		<group name="groupByMonth">
+			<expression><![CDATA[$F{month}]]></expression>
+		</group>
+	</dataset>
+	<parameter name="tableData" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="fromDate" class="java.util.Date"/>
+	<parameter name="endDat" class="java.util.Date"/>
+	<parameter name="userName" class="java.lang.String"/>
+	<query language="sql"><![CDATA[]]></query>
+	<variable name="monthGroup" class="java.lang.String"/>
+	<variable name="totalQuantityOfEachMonth" class="java.math.BigDecimal"/>
+	<variable name="totalUnitPriceOfEachMonth" class="java.lang.String"/>
+	<background/>
+	<title height="72">
+		<element kind="frame" uuid="89827ffb-9231-44a5-9cd5-95c0f3e94604" mode="Opaque" x="0" y="-20" width="910" height="92" backcolor="#006699">
+			<element kind="staticText" uuid="fcf68004-d640-43bb-bfde-37906c674a48" x="160" y="10" width="370" height="43" forecolor="#FFFFFF" fontName="DejaVu Serif" fontSize="24.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Hoat Động Nhân Viên]]></text>
+			</element>
+			<element kind="staticText" uuid="ddbf782e-daab-413c-8278-0b7f5744d57c" x="395" y="43" width="180" height="20" forecolor="#FFFFFF" fontSize="14.0" bold="false" hTextAlign="Right">
+				<text><![CDATA[]]></text>
+			</element>
+			<element kind="textField" uuid="c5b90626-8997-4d12-9327-678b6575e4ba" x="140" y="60" width="100" height="30" forecolor="#FFFFFF" backcolor="#FFFFFF" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$P{fromDate}]]></expression>
+			</element>
+			<element kind="staticText" uuid="31f381e7-bc34-4a97-8671-50f8cc06d6cf" mode="Transparent" x="40" y="60" width="100" height="30" forecolor="#FFFFFF" backcolor="#FFFFFF" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Từ Ngày:]]></text>
+			</element>
+			<element kind="staticText" uuid="5bf6167c-9237-4e01-8325-51e3363d54b9" mode="Transparent" x="455" y="60" width="100" height="30" forecolor="#FFFFFF" backcolor="#FFFFFF" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+				<text><![CDATA[Đến ngày:]]></text>
+			</element>
+			<element kind="textField" uuid="10ac132f-4f70-416c-89bc-4644f5705cc5" x="550" y="60" width="100" height="30" forecolor="#FFFFFF" backcolor="#FFFFFF" hTextAlign="Center" vTextAlign="Middle">
+				<expression><![CDATA[$P{endDat}]]></expression>
+			</element>
+		</element>
+	</title>
+	<pageHeader height="13"/>
+	<columnHeader height="44">
+		<element kind="staticText" uuid="8782c5f7-bbc7-429a-a802-e4cb0c4bb4e7" x="0" y="0" width="100" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Họ Tên Nhân Viên:]]></text>
+		</element>
+		<element kind="textField" uuid="c7aeadae-7f09-4fba-b071-5e70089d94c9" x="120" y="0" width="100" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[$P{userName}]]></expression>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="230">
+			<element kind="component" uuid="96097ce3-7239-49fa-bc05-b13a55a0a576" x="0" y="0" width="910" height="230">
+				<component kind="table">
+					<datasetRun uuid="f85124bf-90b0-4c1a-938c-8786eca95911" subDataset="Dataset1">
+						<dataSourceExpression><![CDATA[$P{tableData}]]></dataSourceExpression>
+					</datasetRun>
+					<column kind="single" uuid="e05ba3bf-ea04-4de0-bc6d-3d28581afa2a" width="70">
+						<tableHeader height="30" rowSpan="1" style="Table_TH"/>
+						<tableFooter height="30" rowSpan="1" style="Table_TH">
+							<element kind="staticText" uuid="a8bb573e-54e1-4c39-a549-69bc2c12dec6" x="0" y="0" width="70" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Tổng Kết:]]></text>
+							</element>
+						</tableFooter>
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="54fa5bb1-73eb-436e-9e30-936e1ff41f62" x="0" y="0" width="70" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Ngày]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="77f39dde-6b85-4610-90da-99741b2a170e" x="0" y="0" width="70" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{createDate}]]></expression>
+							</element>
+						</detailCell>
+						<groupHeader groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH">
+								<element kind="textField" uuid="f4d534de-2260-494b-a257-ed40e23da22c" x="0" y="0" width="70" height="30" linkType="None" linkTarget="Self">
+									<expression><![CDATA[$F{month}]]></expression>
+								</element>
+							</cell>
+						</groupHeader>
+						<groupFooter groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH"/>
+						</groupFooter>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+					</column>
+					<column kind="single" uuid="4b8930f7-cfb8-40dd-b44f-ffae6e1deeab" width="70">
+						<tableHeader height="30" rowSpan="1" style="Table_TH"/>
+						<tableFooter height="30" rowSpan="1" style="Table_TH"/>
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="8a7b6338-f6fb-4ea6-b2e7-6d509fdc4fc1" x="0" y="0" width="70" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Mã phiếu]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="3f5d4f89-eaaa-41ad-ba96-e8f795543ce8" x="0" y="0" width="70" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{formId}]]></expression>
+							</element>
+						</detailCell>
+						<groupHeader groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH"/>
+						</groupHeader>
+						<groupFooter groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH"/>
+						</groupFooter>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+					</column>
+					<column kind="single" uuid="dca05fbd-904d-40d1-aaa3-6ae2ad328972" width="80">
+						<tableHeader height="30" rowSpan="1" style="Table_TH"/>
+						<tableFooter height="30" rowSpan="1" style="Table_TH"/>
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="7f89c397-2c7d-4f45-81c6-3c9df71cc3d9" x="0" y="0" width="80" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Loại Phiếu]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="7db63d81-3854-4aab-a63d-33271406d59f" x="0" y="0" width="80" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{typeForm}]]></expression>
+							</element>
+						</detailCell>
+						<groupHeader groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH"/>
+						</groupHeader>
+						<groupFooter groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH"/>
+						</groupFooter>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+					</column>
+					<column kind="single" uuid="b1be5d3c-d7bb-4602-a690-8d0b743c7582" width="70">
+						<tableHeader height="30" rowSpan="1" style="Table_TH"/>
+						<tableFooter height="30" rowSpan="1" style="Table_TH"/>
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="e4b88d1f-84dd-46ed-9823-807a300c8e3e" x="0" y="0" width="70" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Họ tên KH]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="7e986fdd-2271-4a3c-8da6-228611094f4e" x="0" y="0" width="70" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{customerName}]]></expression>
+							</element>
+						</detailCell>
+						<groupHeader groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH"/>
+						</groupHeader>
+						<groupFooter groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH"/>
+						</groupFooter>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+					</column>
+					<column kind="single" uuid="2f1cd884-0fe1-49f1-9be2-8633e913ce8d" width="150">
+						<tableHeader height="30" rowSpan="1" style="Table_TH"/>
+						<tableFooter height="30" rowSpan="1" style="Table_TH">
+							<element kind="staticText" uuid="fe129735-1b18-4dc4-8197-b1b58be8dbda" x="0" y="0" width="150" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Tổng số lượng: ]]></text>
+							</element>
+						</tableFooter>
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="1736a192-c931-4d67-8d2d-8dbb490b0790" x="0" y="0" width="150" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Tên sản phẩm]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="84caaf0c-6602-4a44-90ce-824d120fcbc7" x="0" y="0" width="150" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{productName}]]></expression>
+							</element>
+						</detailCell>
+						<groupHeader groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH"/>
+						</groupHeader>
+						<groupFooter groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH">
+								<element kind="staticText" uuid="7b4ca002-7fc9-47b6-99c9-637100363fad" x="0" y="0" width="150" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+									<text><![CDATA[Tổng số lượng:]]></text>
+								</element>
+							</cell>
+						</groupFooter>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+					</column>
+					<column kind="single" uuid="bcbcc040-6b97-4a51-8f71-ffd4c2fd5e7a" width="140">
+						<tableHeader height="30" rowSpan="1" style="Table_TH"/>
+						<tableFooter height="30" rowSpan="1" style="Table_TH">
+							<element kind="textField" uuid="071a928b-e6bb-44e3-942e-ad6317f3eb79" x="0" y="0" width="140" height="30" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$V{totalQuantityOfAll}]]></expression>
+							</element>
+						</tableFooter>
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="eb2ae9f0-d2a0-4460-853f-09e88029ddfe" x="0" y="0" width="140" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Số lượng]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="5f1a423c-66f7-495f-97e2-dec23f4b4796" x="0" y="0" width="140" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{quantity}]]></expression>
+							</element>
+						</detailCell>
+						<groupHeader groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH"/>
+						</groupHeader>
+						<groupFooter groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH">
+								<element kind="textField" uuid="77ddfb15-2e56-43fa-ba1e-9bfd8f51ad5f" x="0" y="0" width="140" height="30" linkType="None" linkTarget="Self" hTextAlign="Center" vTextAlign="Middle">
+									<expression><![CDATA[$V{monthTotalQuantity}]]></expression>
+								</element>
+							</cell>
+						</groupFooter>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+					</column>
+					<column kind="single" uuid="f7ebf9e5-c35f-49e1-85e4-b549ea8ccb4e" width="140">
+						<tableHeader height="30" rowSpan="1" style="Table_TH"/>
+						<tableFooter height="30" rowSpan="1" style="Table_TH">
+							<element kind="staticText" uuid="126c7fc0-ac8d-4d69-adb8-7ece6337c824" x="0" y="0" width="140" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Tổng số tiền]]></text>
+							</element>
+						</tableFooter>
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="8eeb9f8f-5464-4035-b741-3407a7b0cc4d" x="0" y="0" width="140" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Đơn giá]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="10ce036b-7ea6-4cd3-b700-00456b2076b1" x="0" y="0" width="140" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{unitPrice}]]></expression>
+							</element>
+						</detailCell>
+						<groupHeader groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH"/>
+						</groupHeader>
+						<groupFooter groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH">
+								<element kind="staticText" uuid="a35aa479-c5f3-4d9a-8266-16e0882760ea" x="0" y="0" width="140" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+									<text><![CDATA[Tổng trị giá:]]></text>
+								</element>
+							</cell>
+						</groupFooter>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+					</column>
+					<column kind="single" uuid="61f2d626-182b-4a35-8343-2d165f80a1f9" width="150">
+						<tableHeader height="30" rowSpan="1" style="Table_TH"/>
+						<tableFooter height="30" rowSpan="1" style="Table_TH">
+							<element kind="textField" uuid="a6097af2-7da9-4001-b387-006306a3f4d1" x="0" y="0" width="150" height="30" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$V{totalUnitPriceOfAll}]]></expression>
+							</element>
+						</tableFooter>
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="53669c00-97ef-4a7d-8499-3c428536b09d" x="0" y="0" width="150" height="30" fontName="DejaVu Serif" hTextAlign="Center" vTextAlign="Middle">
+								<text><![CDATA[Trị giá]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="a9af9c2b-a98a-4f25-8f0a-6cd30b1aad37" x="0" y="0" width="150" height="30" linkType="None" linkTarget="Self" hTextAlign="Center" vTextAlign="Middle">
+								<expression><![CDATA[$F{triGia}
+]]></expression>
+							</element>
+						</detailCell>
+						<groupHeader groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH"/>
+						</groupHeader>
+						<groupFooter groupName="groupByMonth">
+							<cell height="30" rowSpan="1" style="Table_CH">
+								<element kind="textField" uuid="45964141-2e7f-4805-8258-b819565b7cee" x="0" y="0" width="150" height="30" hTextAlign="Center" vTextAlign="Middle">
+									<expression><![CDATA[$V{monthTotalTriGia}]]></expression>
+								</element>
+							</cell>
+						</groupFooter>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
+					</column>
+				</component>
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+			</element>
+		</band>
+	</detail>
+	<columnFooter/>
+	<pageFooter height="17">
+		<element kind="textField" uuid="e177ee92-de65-4bce-acc6-346c32aca2a2" mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" hTextAlign="Right">
+			<expression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></expression>
+		</element>
+		<element kind="textField" uuid="cb4fe667-460b-4229-9e07-7fe5ac670b58" mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" evaluationTime="Report">
+			<expression><![CDATA[" " + $V{PAGE_NUMBER}]]></expression>
+		</element>
+		<element kind="textField" uuid="031b4ecd-c4ad-459c-af87-b7a0988cb4a4" x="0" y="4" width="100" height="13" pattern="EEEEE dd MMMMM yyyy">
+			<expression><![CDATA[new java.util.Date()]]></expression>
+		</element>
+	</pageFooter>
+	<summary/>
+</jasperReport>
